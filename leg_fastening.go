@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/ByteArena/box2d"
-	"github.com/hajimehoshi/ebiten/v2"
 )
 
 var legFasteningVerts = []box2d.B2Vec2{
@@ -22,9 +21,9 @@ type LegFastening struct {
 	verts []box2d.B2Vec2
 }
 
-func NewLegFastening(cfg LegFasteningCfg, img *ebiten.Image) *LegFastening {
+func NewLegFastening(cfg LegFasteningCfg) *LegFastening {
 	return &LegFastening{
-		PartBase: PartBase{img: img, dir: cfg.Dir},
+		PartBase: PartBase{img: legFasteningImg, dir: cfg.Dir},
 		cfg:      cfg,
 		verts:    Rotate(cfg.Dir.GetAng(), legFasteningVerts...),
 	}

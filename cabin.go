@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/ByteArena/box2d"
-	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type CabinCfg struct {
@@ -24,9 +23,9 @@ type Cabin struct {
 	verts []box2d.B2Vec2
 }
 
-func NewCabin(cfg CabinCfg, img *ebiten.Image) *Cabin {
+func NewCabin(cfg CabinCfg) *Cabin {
 	return &Cabin{
-		PartBase: PartBase{img: img, dir: cfg.Dir},
+		PartBase: PartBase{img: cabinImg, dir: cfg.Dir},
 		verts:    Rotate(cfg.Dir.GetAng(), cabinVerts...),
 	}
 }

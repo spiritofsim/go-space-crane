@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/ByteArena/box2d"
-	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type TankCfg struct {
@@ -16,9 +15,9 @@ type Tank struct {
 	MaxFuel float64
 }
 
-func NewTank(cfg TankCfg, img *ebiten.Image) *Tank {
+func NewTank(cfg TankCfg) *Tank {
 	return &Tank{
-		PartBase: PartBase{img: img, dir: DirectionRight},
+		PartBase: PartBase{img: tankImg, dir: DirectionRight},
 		Fuel:     cfg.Fuel,
 		MaxFuel:  cfg.MaxFuel,
 	}

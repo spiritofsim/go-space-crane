@@ -27,14 +27,14 @@ type Engine struct {
 	isActive bool
 }
 
-func NewEngine(cfg EngineCfg, img *ebiten.Image) *Engine {
+func NewEngine(cfg EngineCfg) *Engine {
 	km := make(map[ebiten.Key]struct{})
 	for _, key := range cfg.Keys {
 		km[key] = struct{}{}
 	}
 
 	return &Engine{
-		PartBase: PartBase{img: img, dir: cfg.Dir},
+		PartBase: PartBase{img: engineImg, dir: cfg.Dir},
 		cfg:      cfg,
 		km:       km,
 		verts:    Rotate(cfg.Dir.GetAng(), engineVerts...),

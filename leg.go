@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/ByteArena/box2d"
-	"github.com/hajimehoshi/ebiten/v2"
 )
 
 const legThickness = 0.1
@@ -24,9 +23,9 @@ type Leg struct {
 	verts []box2d.B2Vec2
 }
 
-func NewLeg(cfg LegCfg, img *ebiten.Image) *Leg {
+func NewLeg(cfg LegCfg) *Leg {
 	return &Leg{
-		PartBase: PartBase{img: img, dir: cfg.Dir},
+		PartBase: PartBase{img: legImg, dir: cfg.Dir},
 		cfg:      cfg,
 		verts:    Rotate(cfg.Dir.GetAng(), legVerts...),
 	}

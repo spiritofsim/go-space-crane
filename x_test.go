@@ -69,5 +69,4 @@ func ParseShipParts(reader io.Reader) [][]Part {
 func TestName(t *testing.T) {
 	parts := ParseShipParts(strings.NewReader(j))
 	t.Log(parts)
-
 }

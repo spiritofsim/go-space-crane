@@ -19,9 +19,9 @@ type Crane struct {
 	currentCargo *Cargo
 }
 
-func NewCrain(cfg CraneCfg, img *ebiten.Image) *Crane {
+func NewCrain(cfg CraneCfg) *Crane {
 	return &Crane{
-		PartBase: PartBase{img: img, dir: DirectionRight},
+		PartBase: PartBase{img: crainImg, dir: DirectionRight},
 	}
 }
 
