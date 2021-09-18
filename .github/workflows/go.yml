@@ -31,7 +31,7 @@ jobs:
     - name: Test
       env:
         DISPLAY: ':99.0'
-      run: go test -v ./...
+      run: go test ./... -coverprofile coverage.txt
 
     - name: Upload Coverage report to CodeCov
       uses: codecov/codecov-action@v1.0.0
