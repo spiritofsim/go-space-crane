@@ -4,53 +4,41 @@ import (
 	"encoding/xml"
 	"fmt"
 	"github.com/ByteArena/box2d"
-	"io"
-	"io/ioutil"
-	"os"
 	"strconv"
 	"strings"
 )
 
-func Load(fileName string) ([][]box2d.B2Vec2, error) {
-	file, err := os.Open(fileName)
-	if err != nil {
-		return nil, err
-	}
-	defer file.Close()
-	return Parse(file)
+type Path struct {
+	ID          string
+	Title       string
+	Description string
+	Verts       []box2d.B2Vec2
 }
 
-// Parse only find path element and parse simple line fragments
-func Parse(file io.Reader) ([][]box2d.B2Vec2, error) {
-	data, err := ioutil.ReadAll(file)
-	if err != nil {
-		return nil, err
-	}
-
+func (p *Path) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	var prj struct {
-		XMLName xml.Name `xml:"svg"`
-		G       struct {
-			Path []struct {
-				D           string `xml:"d,attr"`
-				Title       string `xml:"title"`
-				Description string `xml:"description"`
-			} `xml:"path"`
-		} `xml:"g"`
+		ID          string `xml:"id,attr"`
+		Data        string `xml:"d,attr"`
+		Title       string `xml:"title"`
+		Description string `xml:"desc"`
 	}
 
-	if err := xml.Unmarshal(data, &prj); err != nil {
-		return nil, err
+	if err := d.DecodeElement(&prj, &start); err != nil {
+		return err
 	}
 
-	result := make([][]box2d.B2Vec2, len(prj.G.Path))
-	for i, pth := range prj.G.Path {
-		verts, err := parsePath(pth.D)
-		if err != nil {
-			return nil, err
-		}
-		result[i] = verts
+	verts, err := parsePath(prj.Data)
+	if err != nil {
+		return err
 	}
-	return result, nil
+
+	*p = Path{
+		ID:          prj.ID,
+		Title:       prj.Title,
+		Description: prj.Description,
+		Verts:       verts,
+	}
+	return nil
 }
 
 func parsePath(str string) ([]box2d.B2Vec2, error) {

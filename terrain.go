@@ -13,12 +13,13 @@ type Terrain struct {
 }
 
 func NewTerrain(world *box2d.B2World, asset string) *Terrain {
-	parts, err := svg.Load(path.Join(AssetsDir, asset))
+	svg, err := svg.Load(path.Join(AssetsDir, asset))
 	checkErr(err)
 
 	terrain := &Terrain{}
-	bodies := make([]*box2d.B2Body, len(parts))
-	for i, verts := range parts {
+	bodies := make([]*box2d.B2Body, len(svg.Layers[0].Pathes))
+	for i, path := range svg.Layers[0].Pathes {
+		verts := path.Verts
 		shape := box2d.MakeB2ChainShape()
 		shape.CreateLoop(verts, len(verts))
 		fd := box2d.MakeB2FixtureDef()

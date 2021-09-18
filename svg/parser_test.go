@@ -3,10 +3,45 @@ package svg
 import (
 	"github.com/ByteArena/box2d"
 	"github.com/stretchr/testify/require"
+	"strings"
 	"testing"
 )
 
-func TestParseSvgPath(t *testing.T) {
+func TestParseSvg(t *testing.T) {
+	data := `<?xml?>
+<svg>
+  <g
+     inkscape:label="Слой 1"
+     inkscape:groupmode="layer"
+     id="layer_id">
+    <path d="M 1,2 3,4 5,6 7,8 Z" id="path_id">
+		<title>title</title>
+        <desc>desc</desc>
+	</path>
+    <rect id="rect_id" width="3" height="4" x="1" y="2">
+      <desc>desc</desc>
+      <title>title</title>
+    </rect>
+  </g>
+</svg>`
+
+	s, err := Parse(strings.NewReader(data))
+	require.NoError(t, err)
+	require.Equal(t, "layer_id", s.Layers[0].ID)
+	require.Equal(t, "path_id", s.Layers[0].Pathes[0].ID)
+	require.Equal(t, "title", s.Layers[0].Pathes[0].Title)
+	require.Equal(t, "desc", s.Layers[0].Pathes[0].Description)
+	require.Len(t, s.Layers[0].Pathes[0].Verts, 4)
+	require.Equal(t, "rect_id", s.Layers[0].Rects[0].ID)
+	require.Equal(t, "title", s.Layers[0].Rects[0].Title)
+	require.Equal(t, "desc", s.Layers[0].Rects[0].Description)
+	require.Equal(t, float64(1), s.Layers[0].Rects[0].Pos.X)
+	require.Equal(t, float64(2), s.Layers[0].Rects[0].Pos.Y)
+	require.Equal(t, float64(3), s.Layers[0].Rects[0].Size.X)
+	require.Equal(t, float64(4), s.Layers[0].Rects[0].Size.Y)
+}
+
+func TestParsePath(t *testing.T) {
 	verts, err := parsePath("M 324.59604,0.08457427 325.01891,0.16914854 509.13709,108.25506 598.10922,285.86103 507.44561,513.19666 279.77168,590.66669 91.340209,465.49677 1.3531883,290.59718 105.88698,108.59336 Z")
 	require.NoError(t, err)
 	require.Len(t, verts, 9)

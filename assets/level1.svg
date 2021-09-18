@@ -24,8 +24,8 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="1.5554293"
-     inkscape:cx="315.24817"
-     inkscape:cy="-249.4497"
+     inkscape:cx="389.88846"
+     inkscape:cy="79.143845"
      inkscape:window-width="2560"
      inkscape:window-height="1361"
      inkscape:window-x="2391"
@@ -36,7 +36,7 @@
   <defs
      id="defs2" />
   <g
-     inkscape:label="Слой 1"
+     inkscape:label="layer1"
      inkscape:groupmode="layer"
      id="layer1">
     <path
@@ -70,7 +70,13 @@
     <path
        style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;image-rendering:optimizeSpeed"
        d="m 10.013726,-21.286341 -3.5338022,-2.604418 1.5940368,-4.229327 6.3260224,-2.117442 3.571769,0.05315 5.249832,1.609225 1.792461,5.300453 -3.249318,1.142499 -4.269825,1.127311 -4.249575,-0.233363 z"
-       id="path292" />
+       id="id_xxxxx"
+       inkscape:label="label_xxxxx">
+      <title
+         id="title308">title_xxxxx</title>
+      <desc
+         id="desc283">desc_xxxxxxx</desc>
+    </path>
     <path
        style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 37.499036,-16.284022 -2.135161,-5.135433 2.236406,-1.667937 5.265018,0.588718 3.234131,-0.121993 2.345746,2.416615 -0.06834,4.592275 -6.125564,0.07896 z"
@@ -87,5 +93,31 @@
        style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 128.8859,4.4698665 -2.01823,-1.5611321 -1.65528,-3.08682793 1.73374,-2.18578397 3.917,-0.2819523 3.3536,3.28222362 -1.39864,2.53101468 z"
        id="path300" />
+    <rect
+       style="fill:#0000ff;fill-rule:evenodd;stroke-width:0.264583"
+       id="id_1"
+       width="7.6267548"
+       height="1.6642865"
+       x="0.17063725"
+       y="23.119257"
+       inkscape:label="label_1">
+      <desc
+         id="desc147">desc_1</desc>
+      <title
+         id="title145">title_1</title>
+    </rect>
+    <rect
+       style="fill:#0000ff;fill-rule:evenodd;stroke-width:0.264583"
+       id="id_1-8"
+       width="7.6267548"
+       height="1.6642865"
+       x="25.20574"
+       y="13.093313"
+       inkscape:label="label_1">
+      <desc
+         id="desc147-6">desc_1</desc>
+      <title
+         id="title145-4">title_1</title>
+    </rect>
   </g>
 </svg>

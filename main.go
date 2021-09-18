@@ -49,40 +49,40 @@ func main() {
 		{
 			nil,
 			nil,
-			NewCabin(CabinCfg{Dir: DirectionUp}, cabinImg),
+			NewCabin(CabinCfg{Dir: DirectionUp}),
 			nil,
 			nil,
 		},
 		{
-			NewLegFastening(LegFasteningCfg{DirectionRight}, legFasteningImg),
+			NewLegFastening(LegFasteningCfg{DirectionRight}),
 			NewTank(TankCfg{
 				Fuel:    5000,
 				MaxFuel: 5000,
-			}, tankImg),
+			}),
 			NewTank(TankCfg{
 				Fuel:    5000,
 				MaxFuel: 5000,
-			}, tankImg),
+			}),
 			NewTank(TankCfg{
 				Fuel:    5000,
 				MaxFuel: 5000,
-			}, tankImg),
-			NewLegFastening(LegFasteningCfg{DirectionDown}, legFasteningImg),
+			}),
+			NewLegFastening(LegFasteningCfg{DirectionDown}),
 		},
 		{
-			NewLeg(LegCfg{DirectionDown}, legImg),
+			NewLeg(LegCfg{DirectionDown}),
 			NewEngine(EngineCfg{
 				Dir:   DirectionDown,
 				Power: 100,
 				Keys:  []ebiten.Key{ebiten.KeyRight, ebiten.KeyUp},
-			}, engineImg),
-			NewCrain(CraneCfg{}, crainImg),
+			}),
+			NewCrain(CraneCfg{}),
 			NewEngine(EngineCfg{
 				Dir:   DirectionDown,
 				Power: 100,
 				Keys:  []ebiten.Key{ebiten.KeyLeft, ebiten.KeyUp},
-			}, engineImg),
-			NewLeg(LegCfg{DirectionDown}, legImg),
+			}),
+			NewLeg(LegCfg{DirectionDown}),
 		},
 	}, particles, 100)
 
