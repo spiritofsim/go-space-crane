@@ -8,8 +8,6 @@ import (
 	"image/color"
 )
 
-const platformHeight = 1.0
-
 type Platform struct {
 	body *box2d.B2Body
 	fuel float64
@@ -17,7 +15,7 @@ type Platform struct {
 	ship *Ship
 }
 
-func NewPlatform(world *box2d.B2World, pos box2d.B2Vec2, length float64, fuel float64) *Platform {
+func NewPlatform(world *box2d.B2World, pos box2d.B2Vec2, size box2d.B2Vec2, fuel float64) *Platform {
 	bd := box2d.MakeB2BodyDef()
 	bd.Position.Set(pos.X, pos.Y)
 	bd.Type = box2d.B2BodyType.B2_staticBody
@@ -25,10 +23,10 @@ func NewPlatform(world *box2d.B2World, pos box2d.B2Vec2, length float64, fuel fl
 	body := world.CreateBody(&bd)
 
 	verts := []box2d.B2Vec2{
-		{-length / 2, -platformHeight / 2},
-		{length / 2, -platformHeight / 2},
-		{length / 2, platformHeight / 2},
-		{-length / 2, platformHeight / 2},
+		{-size.X / 2, -size.Y / 2},
+		{size.X / 2, -size.Y / 2},
+		{size.X / 2, size.Y / 2},
+		{-size.X / 2, size.Y / 2},
 	}
 
 	shape := box2d.MakeB2PolygonShape()

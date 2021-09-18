@@ -10,17 +10,17 @@ type Cargo struct {
 	body *box2d.B2Body
 }
 
-func NewCargo(world *box2d.B2World, pos box2d.B2Vec2, size float64) *Cargo {
+func NewCargo(world *box2d.B2World, pos box2d.B2Vec2, size box2d.B2Vec2) *Cargo {
 	bd := box2d.MakeB2BodyDef()
 	bd.Position.Set(pos.X, pos.Y)
 	bd.Type = box2d.B2BodyType.B2_dynamicBody
 	body := world.CreateBody(&bd)
 
 	verts := []box2d.B2Vec2{
-		{-size / 2, -size / 2},
-		{size / 2, -size / 2},
-		{size / 2, size / 2},
-		{-size / 2, size / 2},
+		{-size.X / 2, -size.Y / 2},
+		{size.X / 2, -size.Y / 2},
+		{size.X / 2, size.Y / 2},
+		{-size.X / 2, size.Y / 2},
 	}
 
 	shape := box2d.MakeB2PolygonShape()

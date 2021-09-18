@@ -33,19 +33,9 @@ func main() {
 	world := box2d.MakeB2World(gravity)
 
 	cam := NewCam()
-
-	platforms := []*Platform{
-		NewPlatform(&world, box2d.MakeB2Vec2(5, 24), 5.0, 1500),
-		NewPlatform(&world, box2d.MakeB2Vec2(29.7, 14), 5.0, 1500),
-		NewPlatform(&world, box2d.MakeB2Vec2(44, 34), 5.0, 1500),
-		NewPlatform(&world, box2d.MakeB2Vec2(75, 23), 5.0, 1500),
-		NewPlatform(&world, box2d.MakeB2Vec2(110, 12), 5.0, 1500),
-		NewPlatform(&world, box2d.MakeB2Vec2(143, 11), 5.0, 1500),
-	}
-
 	particles := NewParticleSystem(&world, gravity)
 
-	ship := NewShip(&world, box2d.MakeB2Vec2(5, 23), [][]Part{
+	ship := NewShip(&world, box2d.MakeB2Vec2(5, 20), [][]Part{
 		{
 			nil,
 			nil,
@@ -86,11 +76,7 @@ func main() {
 		},
 	}, particles, 100)
 
-	terrain := NewTerrain(&world, "level1.svg")
-
-	cargos := []*Cargo{
-		NewCargo(&world, box2d.MakeB2Vec2(20, 4), 1),
-	}
+	terrain, platforms, cargos := LoadLevel(&world, "level1")
 
 	game := NewGame(&world, cam, ship, terrain, particles, platforms, cargos)
 	world.SetContactListener(game)

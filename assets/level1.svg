@@ -23,9 +23,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="1.5554293"
-     inkscape:cx="389.88846"
-     inkscape:cy="79.143845"
+     inkscape:zoom="35.195347"
+     inkscape:cx="89.192359"
+     inkscape:cy="19.24655"
      inkscape:window-width="2560"
      inkscape:window-height="1361"
      inkscape:window-x="2391"
@@ -102,9 +102,9 @@
        y="23.119257"
        inkscape:label="label_1">
       <desc
-         id="desc147">desc_1</desc>
+         id="desc147">10000</desc>
       <title
-         id="title145">title_1</title>
+         id="title145">platform</title>
     </rect>
     <rect
        style="fill:#0000ff;fill-rule:evenodd;stroke-width:0.264583"
@@ -115,9 +115,19 @@
        y="13.093313"
        inkscape:label="label_1">
       <desc
-         id="desc147-6">desc_1</desc>
+         id="desc147-6">10000</desc>
       <title
-         id="title145-4">title_1</title>
+         id="title145-4">platform</title>
+    </rect>
+    <rect
+       style="fill:#fc0000;fill-opacity:1;fill-rule:evenodd;stroke-width:0.264583"
+       id="rect613"
+       width="1.074137"
+       height="0.92099446"
+       x="19.425135"
+       y="4.0608287">
+      <title
+         id="title1733">cargo</title>
     </rect>
   </g>
 </svg>
