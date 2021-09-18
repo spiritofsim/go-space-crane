@@ -32,3 +32,9 @@ jobs:
       env:
         DISPLAY: ':99.0'
       run: go test -v ./...
+
+    - name: Upload Coverage report to CodeCov
+      uses: codecov/codecov-action@v1.0.0
+      with:
+        token: ${{secrets.CODECOV_TOKEN}}
+        file: ./coverage.txt
