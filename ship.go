@@ -120,7 +120,7 @@ func (s *Ship) Update() {
 
 func (s *Ship) Draw(screen *ebiten.Image, cam Cam) {
 	DrawDebugBody(screen, s.body, cam, color.White)
-
+	return // TODO: remove
 	for _, row := range s.parts {
 		for _, part := range row {
 			if part == nil {

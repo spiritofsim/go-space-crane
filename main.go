@@ -7,21 +7,21 @@ import (
 	"time"
 )
 
-var tankImg *ebiten.Image
-var engineImg *ebiten.Image
-var legImg *ebiten.Image
-var legFasteningImg *ebiten.Image
-var cabinImg *ebiten.Image
-var crainImg *ebiten.Image
+var tankSprite *Sprite
+var engineSprite *Sprite
+var legSprite *Sprite
+var legFasteningSprite *Sprite
+var cabinSprite *Sprite
+var crainSprite *Sprite
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
-	tankImg = loadImage("tank.png")
-	engineImg = loadImage("engine.png")
-	legImg = loadImage("leg.png")
-	legFasteningImg = loadImage("leg_fastening.png")
-	cabinImg = loadImage("cabin.png")
-	crainImg = loadImage("crane.png")
+	tankSprite = LoadSpriteObj("tank")
+	engineSprite = LoadSpriteObj("engine")
+	legSprite = LoadSpriteObj("leg")
+	legFasteningSprite = LoadSpriteObj("leg_fastening")
+	cabinSprite = LoadSpriteObj("cabin")
+	crainSprite = LoadSpriteObj("crane")
 }
 
 func main() {
@@ -66,7 +66,7 @@ func main() {
 				Power: 100,
 				Keys:  []ebiten.Key{ebiten.KeyRight, ebiten.KeyUp},
 			}),
-			NewCrain(CraneCfg{}),
+			NewCrane(CraneCfg{}),
 			NewEngine(EngineCfg{
 				Dir:   DirectionDown,
 				Power: 100,

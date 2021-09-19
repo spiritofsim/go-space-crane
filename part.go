@@ -14,21 +14,21 @@ type Part interface {
 }
 
 type PartBase struct {
-	img  *ebiten.Image
-	ship *Ship
-	pos  box2d.B2Vec2
-	dir  Direction
+	sprite *Sprite
+	ship   *Ship
+	pos    box2d.B2Vec2
+	dir    Direction
 }
 
 func (p PartBase) Update() {
 }
 
 func (p PartBase) Draw(screen *ebiten.Image, cam Cam) {
-	if p.img == nil {
+	if p.sprite.img == nil {
 		return
 	}
 
-	bounds := p.img.Bounds()
+	bounds := p.sprite.img.Bounds()
 	shipPos := p.ship.body.GetPosition()
 
 	opts := &ebiten.DrawImageOptions{}
@@ -43,5 +43,5 @@ func (p PartBase) Draw(screen *ebiten.Image, cam Cam) {
 	opts.GeoM.Rotate(cam.Ang)
 	opts.GeoM.Translate(ScreenWidth/2, ScreenHeight/2)
 
-	screen.DrawImage(p.img, opts)
+	screen.DrawImage(p.sprite.img, opts)
 }

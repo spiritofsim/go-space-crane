@@ -19,9 +19,9 @@ type Crane struct {
 	currentCargo *Cargo
 }
 
-func NewCrain(cfg CraneCfg) *Crane {
+func NewCrane(cfg CraneCfg) *Crane {
 	return &Crane{
-		PartBase: PartBase{img: crainImg, dir: DirectionRight},
+		PartBase: PartBase{sprite: crainSprite, dir: DirectionRight},
 	}
 }
 

@@ -4,28 +4,23 @@ import (
 	"github.com/ByteArena/box2d"
 )
 
-var legFasteningVerts = []box2d.B2Vec2{
-	{0.5, -legThickness / 2},
-	{0.5, legThickness / 2},
-	{legThickness / 2, 0.5},
-	{-legThickness / 2, 0.5},
-}
-
 type LegFasteningCfg struct {
 	Dir Direction
 }
 
 type LegFastening struct {
 	PartBase
-	cfg   LegFasteningCfg
-	verts []box2d.B2Vec2
+	cfg LegFasteningCfg
 }
 
 func NewLegFastening(cfg LegFasteningCfg) *LegFastening {
+	s := &Sprite{
+		img:   legFasteningSprite.img,
+		verts: Rotate(cfg.Dir.GetAng(), legFasteningSprite.verts...),
+	}
 	return &LegFastening{
-		PartBase: PartBase{img: legFasteningImg, dir: cfg.Dir},
+		PartBase: PartBase{sprite: s, dir: cfg.Dir},
 		cfg:      cfg,
-		verts:    Rotate(cfg.Dir.GetAng(), legFasteningVerts...),
 	}
 }
 
@@ -37,7 +32,7 @@ func (l *LegFastening) Construct(ship *Ship, pos box2d.B2Vec2, size box2d.B2Vec2
 	l.pos = pos
 	pos.OperatorPlusInplace(box2d.B2Vec2MulScalar(0.5, size).OperatorNegate())
 	pos.OperatorPlusInplace(box2d.MakeB2Vec2(0.5, 0.5))
-	verts := Translate(pos, l.verts...)
+	verts := Translate(pos, l.sprite.verts...)
 
 	shape := box2d.MakeB2PolygonShape()
 	shape.Set(verts, len(verts))

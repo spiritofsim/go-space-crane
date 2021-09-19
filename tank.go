@@ -17,7 +17,7 @@ type Tank struct {
 
 func NewTank(cfg TankCfg) *Tank {
 	return &Tank{
-		PartBase: PartBase{img: tankImg, dir: DirectionRight},
+		PartBase: PartBase{sprite: tankSprite, dir: DirectionRight},
 		Fuel:     cfg.Fuel,
 		MaxFuel:  cfg.MaxFuel,
 	}
@@ -29,20 +29,10 @@ func (t *Tank) GetPos() box2d.B2Vec2 {
 
 func (t *Tank) Construct(ship *Ship, pos box2d.B2Vec2, size box2d.B2Vec2) {
 	t.pos = pos
-	verts := []box2d.B2Vec2{
-		{-0.5, -0.25},
-		{-0.25, -0.5},
-		{0.25, -0.5},
-		{0.5, -0.25},
-		{0.5, 0.25},
-		{0.25, 0.5},
-		{-0.25, 0.5},
-		{-0.5, 0.25},
-	}
 
 	pos.OperatorPlusInplace(box2d.B2Vec2MulScalar(0.5, size).OperatorNegate())
 	pos.OperatorPlusInplace(box2d.MakeB2Vec2(0.5, 0.5))
-	verts = Translate(pos, verts...)
+	verts := Translate(pos, t.sprite.verts...)
 
 	shape := box2d.MakeB2PolygonShape()
 	shape.Set(verts, len(verts))

@@ -6,13 +6,6 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
-var engineVerts = []box2d.B2Vec2{
-	{-0.5, -0.25},
-	{0.25, -0.4},
-	{0.25, 0.4},
-	{-0.5, 0.25},
-}
-
 type EngineCfg struct {
 	Dir   Direction
 	Power float64
@@ -22,7 +15,6 @@ type EngineCfg struct {
 type Engine struct {
 	PartBase
 	cfg      EngineCfg
-	verts    []box2d.B2Vec2
 	km       map[ebiten.Key]struct{}
 	isActive bool
 }
@@ -33,11 +25,15 @@ func NewEngine(cfg EngineCfg) *Engine {
 		km[key] = struct{}{}
 	}
 
+	s := &Sprite{
+		img:   engineSprite.img,
+		verts: Rotate(cfg.Dir.GetAng(), engineSprite.verts...),
+	}
+
 	return &Engine{
-		PartBase: PartBase{img: engineImg, dir: cfg.Dir},
+		PartBase: PartBase{sprite: s, dir: cfg.Dir},
 		cfg:      cfg,
 		km:       km,
-		verts:    Rotate(cfg.Dir.GetAng(), engineVerts...),
 	}
 }
 
@@ -91,7 +87,7 @@ func (e *Engine) Construct(ship *Ship, pos box2d.B2Vec2, size box2d.B2Vec2) {
 	e.pos = pos
 	pos.OperatorPlusInplace(box2d.B2Vec2MulScalar(0.5, size).OperatorNegate())
 	pos.OperatorPlusInplace(box2d.MakeB2Vec2(0.5, 0.5))
-	verts := Translate(pos, e.verts...)
+	verts := Translate(pos, e.sprite.verts...)
 
 	shape := box2d.MakeB2PolygonShape()
 	shape.Set(verts, len(verts))

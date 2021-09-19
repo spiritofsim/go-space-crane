@@ -41,7 +41,7 @@ func ParseShipParts(reader io.Reader) [][]Part {
 				continue
 			}
 			if cp.Crain != nil {
-				result[y][x] = NewCrain(*cp.Crain)
+				result[y][x] = NewCrane(*cp.Crain)
 				continue
 			}
 			if cp.Engine != nil {
