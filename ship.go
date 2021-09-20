@@ -16,11 +16,7 @@ type Ship struct {
 	parts [][]Part
 	size  box2d.B2Vec2
 
-	// TODO: get rid of tanks and engines
-	// store fuel in ship
-	engines []*Engine
-	tanks   []*Tank
-	ps      *ParticleSystem
+	ps *ParticleSystem
 
 	energy  float64
 	fuel    float64
@@ -47,14 +43,10 @@ func NewShip(
 	bd.AllowSleep = false
 	body := world.CreateBody(&bd)
 
-	engines := make([]*Engine, 0)
-	tanks := make([]*Tank, 0)
-
 	ship := &Ship{
 		body:    body,
 		parts:   parts,
 		size:    size,
-		engines: engines,
 		ps:      ps,
 		energy:  energy,
 		fuel:    fuel,
@@ -66,17 +58,8 @@ func NewShip(
 				continue
 			}
 			part.Construct(ship, box2d.MakeB2Vec2(float64(x), float64(y)), size)
-
-			if engine, ok := part.(*Engine); ok {
-				engines = append(engines, engine)
-			}
-			if tank, ok := part.(*Tank); ok {
-				tanks = append(tanks, tank)
-			}
 		}
 	}
-	ship.engines = engines
-	ship.tanks = tanks
 
 	body.SetUserData(ship)
 	return ship
@@ -118,19 +101,4 @@ func (s *Ship) Draw(screen *ebiten.Image, cam Cam) {
 			part.Draw(screen, cam)
 		}
 	}
-
-	for _, engine := range s.engines {
-		if !engine.isActive {
-			continue
-		}
-
-		ev := box2d.B2Vec2MulScalar(0.5, engine.cfg.Dir.GetVec())
-		pt := box2d.B2RotVec2Mul(
-			*box2d.NewB2RotFromAngle(s.body.GetAngle()),
-			box2d.MakeB2Vec2(engine.GetPos().X-s.size.X/2+0.5+ev.X, engine.GetPos().Y-s.size.Y/2+0.5+ev.Y))
-		pt = box2d.B2Vec2Add(pt, s.body.GetPosition())
-		s.ps.Emit(pt, engine.cfg.Dir.GetAng()+s.body.GetAngle(), math.Pi/2)
-
-	}
-
 }

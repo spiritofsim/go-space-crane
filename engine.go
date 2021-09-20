@@ -4,6 +4,7 @@ import (
 	"github.com/ByteArena/box2d"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
+	"math"
 )
 
 type EngineCfg struct {
@@ -39,6 +40,21 @@ func NewEngine(cfg EngineCfg) *Engine {
 
 func (e *Engine) GetPos() box2d.B2Vec2 {
 	return e.pos
+}
+
+func (e *Engine) Draw(screen *ebiten.Image, cam Cam) {
+	e.PartBase.Draw(screen, cam)
+
+	if !e.isActive {
+		return
+	}
+
+	ev := box2d.B2Vec2MulScalar(0.5, e.cfg.Dir.GetVec())
+	pt := box2d.B2RotVec2Mul(
+		*box2d.NewB2RotFromAngle(e.ship.body.GetAngle()),
+		box2d.MakeB2Vec2(e.GetPos().X-e.ship.size.X/2+0.5+ev.X, e.GetPos().Y-e.ship.size.Y/2+0.5+ev.Y))
+	pt = box2d.B2Vec2Add(pt, e.ship.body.GetPosition())
+	e.ship.ps.Emit(pt, e.cfg.Dir.GetAng()+e.ship.body.GetAngle(), math.Pi/2)
 }
 
 func (engine *Engine) Update() {
