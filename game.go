@@ -5,6 +5,7 @@ import (
 	"github.com/ByteArena/box2d"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
+	"image/color"
 )
 
 type Game struct {
@@ -60,6 +61,16 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	g.ps.Draw(screen, *g.cam)
 
 	g.drawHood(screen)
+
+	if Debug {
+		g.drawDebugBodies(screen)
+	}
+}
+
+func (g *Game) drawDebugBodies(screen *ebiten.Image) {
+	for body := g.world.GetBodyList(); body != nil; body = body.GetNext() {
+		DrawDebugBody(screen, body, *g.cam, color.White)
+	}
 }
 
 func (g *Game) Layout(w, h int) (int, int) {

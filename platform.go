@@ -5,7 +5,6 @@ import (
 	"github.com/ByteArena/box2d"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
-	"image/color"
 )
 
 type Platform struct {
@@ -47,7 +46,7 @@ func NewPlatform(world *box2d.B2World, pos box2d.B2Vec2, size box2d.B2Vec2, fuel
 }
 
 func (p *Platform) Draw(screen *ebiten.Image, cam Cam) {
-	DrawDebugBody(screen, p.body, cam, color.White)
+	//DrawDebugBody(screen, p.body, cam, color.White)
 
 	pos := p.body.GetPosition()
 	x := box2d.MakeB2Vec2(-1, -0.5)

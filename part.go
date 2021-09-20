@@ -13,6 +13,8 @@ type Part interface {
 	Draw(screen *ebiten.Image, cam Cam)
 }
 
+// TODO: Get rid of interface
+// TODO: Use part class for most parts (legs, cabin, tank)
 type PartBase struct {
 	sprite *Sprite
 	ship   *Ship

@@ -4,8 +4,8 @@ import (
 	"github.com/ByteArena/box2d"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
-	"image/color"
 	"math"
+	"time"
 )
 
 type CraneCfg struct{}
@@ -15,6 +15,8 @@ type CraneCfg struct{}
 type Crane struct {
 	PartBase
 	elements []*box2d.B2Body
+
+	lastControlled time.Time
 
 	currentCargo *Cargo
 }
@@ -31,9 +33,9 @@ func (c *Crane) GetPos() box2d.B2Vec2 {
 
 func (c *Crane) Draw(screen *ebiten.Image, cam Cam) {
 	c.PartBase.Draw(screen, cam)
-	for _, element := range c.elements {
-		DrawDebugBody(screen, element, cam, color.White)
-	}
+	//for _, element := range c.elements {
+	//	DrawDebugBody(screen, element, cam, color.White)
+	//}
 }
 
 func (c *Crane) Construct(ship *Ship, pos box2d.B2Vec2, size box2d.B2Vec2) {
@@ -61,6 +63,12 @@ func (c *Crane) Construct(ship *Ship, pos box2d.B2Vec2, size box2d.B2Vec2) {
 }
 
 func (c *Crane) Update() {
+	// TODO: delay to const
+	if c.lastControlled.Add(time.Second / 3).After(time.Now()) {
+		return
+	}
+	c.lastControlled = time.Now()
+
 	// TODO: pass keys from game
 	keys := inpututil.PressedKeys()
 	for _, key := range keys {
@@ -137,6 +145,7 @@ func (c *Crane) unwind() {
 	const elLen = 0.1
 	const elTh = 0.1
 
+	// TODO: to svg
 	verts := []box2d.B2Vec2{
 		{-elTh, -elLen / 2},
 		{elTh, -elLen / 2},

@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/ByteArena/box2d"
 	"github.com/hajimehoshi/ebiten/v2"
-	"image/color"
 )
 
 type Cargo struct {
@@ -40,5 +39,4 @@ func NewCargo(world *box2d.B2World, pos box2d.B2Vec2, size box2d.B2Vec2) *Cargo 
 }
 
 func (c *Cargo) Draw(screen *ebiten.Image, cam Cam) {
-	DrawDebugBody(screen, c.body, cam, color.White)
 }
