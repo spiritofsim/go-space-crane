@@ -22,13 +22,23 @@ type Ship struct {
 	tanks   []*Tank
 	ps      *ParticleSystem
 
-	energy float64
+	energy  float64
+	fuel    float64
+	maxFuel float64
 
 	// if ship is landed, it is a pointer to platform to refuel ship
 	currentPlatform *Platform
 }
 
-func NewShip(world *box2d.B2World, pos box2d.B2Vec2, parts [][]Part, ps *ParticleSystem, energy float64) *Ship {
+func NewShip(
+	world *box2d.B2World,
+	pos box2d.B2Vec2,
+	parts [][]Part,
+	ps *ParticleSystem,
+	energy float64,
+	fuel float64,
+	maxFuel float64) *Ship {
+
 	size := box2d.MakeB2Vec2(float64(len(parts[0])), float64(len(parts)))
 
 	bd := box2d.MakeB2BodyDef()
@@ -47,6 +57,8 @@ func NewShip(world *box2d.B2World, pos box2d.B2Vec2, parts [][]Part, ps *Particl
 		engines: engines,
 		ps:      ps,
 		energy:  energy,
+		fuel:    fuel,
+		maxFuel: maxFuel,
 	}
 	for y, row := range parts {
 		for x, part := range row {
@@ -70,22 +82,6 @@ func NewShip(world *box2d.B2World, pos box2d.B2Vec2, parts [][]Part, ps *Particl
 	return ship
 }
 
-func (s *Ship) GetFuel() float64 {
-	fuel := 0.0
-	for _, tank := range s.tanks {
-		fuel += tank.Fuel
-	}
-	return fuel
-}
-
-func (s *Ship) GetMaxFuel() float64 {
-	fuel := 0.0
-	for _, tank := range s.tanks {
-		fuel += tank.MaxFuel
-	}
-	return fuel
-}
-
 func (s *Ship) GetVelocity() float64 {
 	lVel := s.body.GetLinearVelocity()
 	return math.Sqrt(lVel.X*lVel.X + lVel.Y*lVel.Y)
@@ -106,13 +102,9 @@ func (s *Ship) Update() {
 
 	// TODO: align angle ! it can be negative or > 2*pi
 	if s.currentPlatform != nil && s.currentPlatform.fuel > 0 && FloatEquals(ang, 0) && FloatEquals(vel, 0) {
-		for _, tank := range s.tanks {
-			if tank.Fuel >= tank.MaxFuel {
-				continue
-			}
-
+		if s.fuel < s.maxFuel {
 			s.currentPlatform.fuel--
-			tank.Fuel++
+			s.fuel++
 		}
 	}
 }

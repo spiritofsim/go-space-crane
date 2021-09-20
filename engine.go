@@ -46,7 +46,7 @@ func (engine *Engine) Update() {
 	keys := inpututil.PressedKeys()
 
 	engine.isActive = false
-	if engine.ship.GetFuel() <= 0 {
+	if engine.ship.fuel <= 0 {
 		return
 	}
 
@@ -73,14 +73,10 @@ func (engine *Engine) Update() {
 	p.OperatorPlusInplace(pt)
 	engine.ship.body.ApplyForce(force, p, true)
 
-	fSpent := engine.cfg.Power * EngineFuelConsumption
-	for _, tank := range engine.ship.tanks {
-		tank.Fuel -= fSpent / float64(len(engine.ship.tanks))
-		if tank.Fuel < 0 {
-			tank.Fuel = 0
-		}
+	engine.ship.fuel -= engine.cfg.Power * EngineFuelConsumption
+	if engine.ship.fuel < 0 {
+		engine.ship.fuel = 0
 	}
-
 }
 
 func (e *Engine) Construct(ship *Ship, pos box2d.B2Vec2, size box2d.B2Vec2) {

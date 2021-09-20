@@ -5,21 +5,15 @@ import (
 )
 
 type TankCfg struct {
-	Fuel    float64
-	MaxFuel float64
 }
 
 type Tank struct {
 	PartBase
-	Fuel    float64
-	MaxFuel float64
 }
 
 func NewTank(cfg TankCfg) *Tank {
 	return &Tank{
 		PartBase: PartBase{sprite: tankSprite, dir: DirectionRight},
-		Fuel:     cfg.Fuel,
-		MaxFuel:  cfg.MaxFuel,
 	}
 }
 

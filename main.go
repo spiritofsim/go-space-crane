@@ -45,18 +45,9 @@ func main() {
 		},
 		{
 			NewLegFastening(LegFasteningCfg{DirectionRight}),
-			NewTank(TankCfg{
-				Fuel:    5000,
-				MaxFuel: 5000,
-			}),
-			NewTank(TankCfg{
-				Fuel:    5000,
-				MaxFuel: 5000,
-			}),
-			NewTank(TankCfg{
-				Fuel:    5000,
-				MaxFuel: 5000,
-			}),
+			NewTank(TankCfg{}),
+			NewTank(TankCfg{}),
+			NewTank(TankCfg{}),
 			NewLegFastening(LegFasteningCfg{DirectionDown}),
 		},
 		{
@@ -74,7 +65,7 @@ func main() {
 			}),
 			NewLeg(LegCfg{DirectionDown}),
 		},
-	}, particles, 100)
+	}, particles, 100, 3000, 3000)
 
 	terrain, platforms, cargos := LoadLevel(&world, "level1")
 

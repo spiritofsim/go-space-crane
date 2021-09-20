@@ -82,7 +82,7 @@ func (g *Game) drawHood(screen *ebiten.Image) {
 		screen,
 		fmt.Sprintf(
 			"Fuel: %0.2f/%02.f\nEnergy: %0.2f",
-			g.ship.GetFuel(), g.ship.GetMaxFuel(),
+			g.ship.fuel, g.ship.maxFuel,
 			g.ship.energy),
 		10, 10)
 }
