@@ -22,7 +22,9 @@ func DrawDebugBody(screen *ebiten.Image, body *box2d.B2Body, cam Cam, clr color.
 		}
 	}
 
-	// Center
+	// TODO: draw angle
+
+	// Center cross
 	crossSize := 0.3
 	pos := body.GetPosition()
 	ang := body.GetAngle()

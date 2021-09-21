@@ -10,7 +10,11 @@ const (
 	ShipImpulseThreshold = 20
 )
 
+// TODO: think about construct ship from multiple bodies and joint them with Weld joint
+// With this joints we can destroy ship parts in the future
 type Ship struct {
+	box2d.B2RopeJoint
+
 	body *box2d.B2Body
 	// TODO: maybe store as flat slice?
 	parts [][]Part

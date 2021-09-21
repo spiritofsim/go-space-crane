@@ -17,6 +17,7 @@ const chainElTh = 0.1
 // TODO: add direction!!!!
 // TODO: try to add elements near to ship, not at the end
 type Crane struct {
+	world *box2d.B2World // We need world here to construct chain elements
 	PartBase
 	elements []*box2d.B2Body
 
@@ -25,8 +26,9 @@ type Crane struct {
 	currentCargo *Cargo
 }
 
-func NewCrane(cfg CraneCfg) *Crane {
+func NewCrane(cfg CraneCfg, world *box2d.B2World) *Crane {
 	return &Crane{
+		world:    world,
 		PartBase: PartBase{sprite: crainSprite, dir: DirectionRight},
 	}
 }
@@ -37,9 +39,6 @@ func (c *Crane) GetPos() box2d.B2Vec2 {
 
 func (c *Crane) Draw(screen *ebiten.Image, cam Cam) {
 	c.PartBase.Draw(screen, cam)
-	//for _, element := range c.elements {
-	//	DrawDebugBody(screen, element, cam, color.White)
-	//}
 }
 
 func (c *Crane) Construct(ship *Ship, pos box2d.B2Vec2, size box2d.B2Vec2) {
@@ -62,7 +61,7 @@ func (c *Crane) Construct(ship *Ship, pos box2d.B2Vec2, size box2d.B2Vec2) {
 
 func (c *Crane) Update() {
 	// TODO: delay to const
-	if c.lastControlled.Add(time.Second / 10).After(time.Now()) {
+	if c.lastControlled.Add(time.Second / 5).After(time.Now()) {
 		return
 	}
 	c.lastControlled = time.Now()
@@ -80,12 +79,9 @@ func (c *Crane) Update() {
 		}
 	}
 
-	// TODO: get cargos from game
-	world := c.ship.body.GetWorld()
-
 	// crain deployed and no cargo
 	if len(c.elements) > 0 && c.currentCargo == nil {
-		for body := world.GetBodyList(); body != nil; body = body.GetNext() {
+		for body := c.world.GetBodyList(); body != nil; body = body.GetNext() {
 			chainEl := c.elements[len(c.elements)-1] //TODO:  c.elements[ len(c.elements)-1] -> getLast
 
 			cargo, ok := body.GetUserData().(*Cargo)
@@ -102,13 +98,10 @@ func (c *Crane) Update() {
 			}
 
 			djd := box2d.MakeB2DistanceJointDef()
-			djd.BodyA = chainEl //TODO:  c.elements[ len(c.elements)-1] -> getLast
-			//djd.LocalAnchorA = anchorA // TODO: h:-elsize/2
+			djd.BodyA = chainEl
 			djd.BodyB = cargo.body
-			//djd.LocalAnchorB = box2d.MakeB2Vec2(0, 0)
 			djd.CollideConnected = true
-			//djd.Length = elLen
-			world.CreateJoint(&djd)
+			c.world.CreateJoint(&djd)
 			c.currentCargo = cargo
 		}
 	}
@@ -119,16 +112,15 @@ func (c *Crane) windup() {
 	if len(c.elements) == 0 {
 		return
 	}
-	world := c.ship.body.GetWorld()
 
 	x := box2d.MakeB2Vec2(c.pos.X-c.ship.size.X/2+0.5, c.pos.Y-c.ship.size.Y/2+0.5)
 	shipAnchor := box2d.B2Vec2Add(x, box2d.MakeB2Vec2(0, chainElLen/2))
-	world.DestroyBody(c.elements[0])
+	c.world.DestroyBody(c.elements[0])
 	c.elements = c.elements[1:]
 
 	if len(c.elements) > 0 {
 		// TODO: check if previous join destroyed
-		c.createChainJoint(world, c.ship.body, shipAnchor, c.elements[0], box2d.MakeB2Vec2(0, -chainElLen/2))
+		c.createChainJoint(c.world, c.ship.body, shipAnchor, c.elements[0], box2d.MakeB2Vec2(0, -chainElLen/2))
 	}
 }
 
@@ -190,7 +182,7 @@ func (c *Crane) createChainJoint(
 	rjd.LocalAnchorA = lpA
 	rjd.BodyB = bodyB
 	rjd.LocalAnchorB = lpB
-	rjd.CollideConnected = true
+	rjd.CollideConnected = false
 	world.CreateJoint(&rjd)
 
 	//djd := box2d.MakeB2DistanceJointDef()
