@@ -10,6 +10,10 @@ import (
 
 type CraneCfg struct{}
 
+// TODO: get rid
+const chainElLen = 0.5
+const chainElTh = 0.1
+
 // TODO: add direction!!!!
 // TODO: try to add elements near to ship, not at the end
 type Crane struct {
@@ -40,16 +44,10 @@ func (c *Crane) Draw(screen *ebiten.Image, cam Cam) {
 
 func (c *Crane) Construct(ship *Ship, pos box2d.B2Vec2, size box2d.B2Vec2) {
 	c.pos = pos
-	verts := []box2d.B2Vec2{
-		{-0.5, -0.5},
-		{0.5, -0.5},
-		{0.5, 0},
-		{-0.5, 0},
-	}
 
 	tPos := box2d.B2Vec2Add(pos, box2d.B2Vec2MulScalar(0.5, size).OperatorNegate())
 	tPos = box2d.B2Vec2Add(tPos, box2d.MakeB2Vec2(0.5, 0.5))
-	verts = Translate(tPos, verts...)
+	verts := Translate(tPos, c.sprite.verts...)
 
 	shape := box2d.MakeB2PolygonShape()
 	shape.Set(verts, len(verts))
@@ -64,7 +62,7 @@ func (c *Crane) Construct(ship *Ship, pos box2d.B2Vec2, size box2d.B2Vec2) {
 
 func (c *Crane) Update() {
 	// TODO: delay to const
-	if c.lastControlled.Add(time.Second / 3).After(time.Now()) {
+	if c.lastControlled.Add(time.Second / 10).After(time.Now()) {
 		return
 	}
 	c.lastControlled = time.Now()
@@ -117,40 +115,32 @@ func (c *Crane) Update() {
 
 }
 
-// TODO: slowdown
 func (c *Crane) windup() {
-	// todo: fix it. well be great to change chain len
-	if c.currentCargo != nil {
-		return
-	}
-
 	if len(c.elements) == 0 {
 		return
 	}
 	world := c.ship.body.GetWorld()
 
-	world.DestroyBody(c.elements[len(c.elements)-1])
-	c.elements = c.elements[:len(c.elements)-1]
+	x := box2d.MakeB2Vec2(c.pos.X-c.ship.size.X/2+0.5, c.pos.Y-c.ship.size.Y/2+0.5)
+	shipAnchor := box2d.B2Vec2Add(x, box2d.MakeB2Vec2(0, chainElLen/2))
+	world.DestroyBody(c.elements[0])
+	c.elements = c.elements[1:]
+
+	if len(c.elements) > 0 {
+		// TODO: check if previous join destroyed
+		c.createChainJoint(world, c.ship.body, shipAnchor, c.elements[0], box2d.MakeB2Vec2(0, -chainElLen/2))
+	}
 }
 
-// TODO: slowdown
 // TODO: unwind only on good ship orientation
 // TODO: if last segment has a contact or body near, do not unwind
 func (c *Crane) unwind() {
-	// todo: fix it. well be great to change chain len
-	if c.currentCargo != nil {
-		return
-	}
-
-	const elLen = 0.1
-	const elTh = 0.1
-
 	// TODO: to svg
 	verts := []box2d.B2Vec2{
-		{-elTh, -elLen / 2},
-		{elTh, -elLen / 2},
-		{elTh, elLen / 2},
-		{-elTh, elLen / 2},
+		{-chainElTh / 2, -chainElLen / 2},
+		{chainElTh / 2, -chainElLen / 2},
+		{chainElTh / 2, chainElLen / 2},
+		{-chainElTh / 2, chainElLen / 2},
 	}
 
 	world := c.ship.body.GetWorld()
@@ -158,14 +148,13 @@ func (c *Crane) unwind() {
 
 	bd := box2d.MakeB2BodyDef()
 	// TODO: use prev body(element) position and angle, not c.pos!!!!!
-	x := box2d.MakeB2Vec2(c.pos.X-c.ship.size.X/2+0.5, (c.pos.Y-c.ship.size.Y/2+0.5)+float64(len(c.elements))*elLen+elLen/2)
+	x := box2d.MakeB2Vec2(c.pos.X-c.ship.size.X/2+0.5, c.pos.Y-c.ship.size.Y/2+0.5)
 
 	elPos := box2d.B2Vec2Add(bPos, x)
 	bd.Position.Set(elPos.X, elPos.Y)
 	bd.Type = box2d.B2BodyType.B2_dynamicBody
 	bd.AllowSleep = false
 	elBody := world.CreateBody(&bd)
-
 	shape := box2d.MakeB2PolygonShape()
 	shape.Set(verts, len(verts))
 	fd := box2d.MakeB2FixtureDef()
@@ -175,32 +164,55 @@ func (c *Crane) unwind() {
 	fd.Restitution = FixtureRestitution
 	elBody.CreateFixtureFromDef(&fd)
 
-	prevBody := c.ship.body
 	if len(c.elements) > 0 {
-		prevBody = c.elements[len(c.elements)-1]
-	}
-	anchorA := box2d.B2Vec2Add(x, box2d.MakeB2Vec2(0, -elLen/2))
-	if len(c.elements) > 0 {
-		anchorA = box2d.MakeB2Vec2(0, elLen/2)
+		// TODO: apply force to prev body if not ship
+		prevBody := c.elements[0]
+		c.destroyShipJoints(world, prevBody)
+		c.createChainJoint(world, prevBody, box2d.MakeB2Vec2(0, -chainElLen/2), elBody, box2d.MakeB2Vec2(0, chainElLen/2))
+		c.createChainJoint(world, c.ship.body, box2d.B2Vec2Add(x, box2d.MakeB2Vec2(0, chainElLen/2)), elBody, box2d.MakeB2Vec2(0, -chainElLen/2))
+	} else {
+		c.createChainJoint(world, c.ship.body, box2d.B2Vec2Add(x, box2d.MakeB2Vec2(0, chainElLen/2)), elBody, box2d.MakeB2Vec2(0, -chainElLen/2))
 	}
 
+	// TODO: use linked list?
+	c.elements = append([]*box2d.B2Body{elBody}, c.elements...)
+}
+
+func (c *Crane) createChainJoint(
+	world *box2d.B2World,
+	bodyA *box2d.B2Body,
+	lpA box2d.B2Vec2,
+	bodyB *box2d.B2Body,
+	lpB box2d.B2Vec2) {
+
 	rjd := box2d.MakeB2RevoluteJointDef()
-	rjd.BodyA = prevBody
-	rjd.LocalAnchorA = anchorA
-	rjd.BodyB = elBody
-	rjd.LocalAnchorB = box2d.MakeB2Vec2(0, -elLen/2)
+	rjd.BodyA = bodyA
+	rjd.LocalAnchorA = lpA
+	rjd.BodyB = bodyB
+	rjd.LocalAnchorB = lpB
 	rjd.CollideConnected = true
 	world.CreateJoint(&rjd)
 
-	djd := box2d.MakeB2DistanceJointDef()
-	djd.BodyA = prevBody
-	//djd.LocalAnchorA = anchorA // TODO: h:-elsize/2
-	djd.LocalAnchorA = box2d.B2Vec2Add(anchorA, box2d.MakeB2Vec2(0, -elLen/2))
-	djd.BodyB = elBody
-	djd.LocalAnchorB = box2d.MakeB2Vec2(0, 0)
-	djd.CollideConnected = true
-	djd.Length = elLen
-	world.CreateJoint(&djd)
+	//djd := box2d.MakeB2DistanceJointDef()
+	//djd.BodyA = bodyA
+	//djd.LocalAnchorA = lpA
+	//djd.BodyB = bodyB
+	//djd.LocalAnchorB = lpB
+	//djd.CollideConnected = false
+	//djd.Length = chainElLen
+	//world.CreateJoint(&djd)
+}
 
-	c.elements = append(c.elements, elBody)
+func (c *Crane) destroyShipJoints(world *box2d.B2World, body *box2d.B2Body) {
+	type IHaveBodyA interface {
+		GetBodyA() *box2d.B2Body
+	}
+
+	for joint := body.GetJointList(); joint != nil; joint = joint.Next {
+		ja, ok := joint.Joint.(IHaveBodyA)
+		if ok && ja.GetBodyA() == c.ship.body {
+			world.DestroyJoint(joint.Joint)
+			continue
+		}
+	}
 }
