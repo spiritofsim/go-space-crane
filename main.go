@@ -57,7 +57,7 @@ func main() {
 				Power: 100,
 				Keys:  []ebiten.Key{ebiten.KeyRight, ebiten.KeyUp},
 			},
-			nil,
+			CraneDef{Dir: DirectionDown},
 			EngineDef{
 				Dir:   DirectionDown,
 				Power: 100,

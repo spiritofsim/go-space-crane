@@ -7,8 +7,9 @@ import (
 )
 
 type GameObj struct {
-	body *box2d.B2Body
-	img  *ebiten.Image
+	world *box2d.B2World
+	body  *box2d.B2Body
+	img   *ebiten.Image
 }
 
 func (g *GameObj) GetVel() float64 {
@@ -68,7 +69,8 @@ func NewGameObj(
 	body.SetLinearVelocity(lVel)
 
 	return &GameObj{
-		body: body,
-		img:  sprite.img,
+		world: world,
+		body:  body,
+		img:   sprite.img,
 	}
 }

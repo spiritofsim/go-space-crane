@@ -42,7 +42,7 @@
      id="layer1">
     <path
        style="fill:none;stroke:#000000;stroke-width:0.01;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
-       d="M -0.5,-0.5 0.5,-0.5 0.5,0 -0.5,0 Z"
+       d="M -0.5,-0.5 0,-0.5 0,0.5 -0.5,0.5 Z"
        id="path2094" />
   </g>
 </svg>
