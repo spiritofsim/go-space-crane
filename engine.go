@@ -4,6 +4,7 @@ import (
 	"github.com/ByteArena/box2d"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
+	"math"
 )
 
 type EngineDef struct {
@@ -40,7 +41,7 @@ func (d EngineDef) Construct(
 		km[key] = struct{}{}
 	}
 
-	return &Engine{
+	engine := &Engine{
 		GameObj: NewGameObj(
 			world,
 			engineSprite,
@@ -52,6 +53,9 @@ func (d EngineDef) Construct(
 		ps:    ps,
 		km:    km,
 	}
+	engine.GetBody().SetUserData(engine)
+
+	return engine
 }
 
 func (e *Engine) Draw(screen *ebiten.Image, cam Cam) {
@@ -61,13 +65,11 @@ func (e *Engine) Draw(screen *ebiten.Image, cam Cam) {
 		return
 	}
 
-	// Flame
-	//ev := box2d.B2Vec2MulScalar(0.5, e.cfg.Dir.GetVec())
-	//pt := box2d.B2RotVec2Mul(
-	//	*box2d.NewB2RotFromAngle(e.ship.body.GetAngle()),
-	//	box2d.MakeB2Vec2(e.GetPos().X-e.ship.size.X/2+0.5+ev.X, e.GetPos().Y-e.ship.size.Y/2+0.5+ev.Y))
-	//pt = box2d.B2Vec2Add(pt, e.ship.body.GetPosition())
-	//e.ps.Emit(pt, e.cfg.Dir.GetAng()+e.ship.body.GetAngle(), math.Pi/2)
+	// Flame particles
+	pos := box2d.B2Vec2Add(
+		e.GetPos(),
+		box2d.B2RotVec2Mul(*box2d.NewB2RotFromAngle(e.GetAng()), box2d.MakeB2Vec2(1, 0)))
+	e.ps.Emit(pos, e.GetAng(), math.Pi/2)
 }
 
 func (e *Engine) GetBody() *box2d.B2Body {

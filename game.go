@@ -95,12 +95,12 @@ func (g *Game) resolveContact(ct ContactType, contact box2d.B2ContactInterface, 
 	a := contact.GetFixtureA().GetBody().GetUserData()
 	b := contact.GetFixtureB().GetBody().GetUserData()
 
-	if ship, ok := a.(*Ship); ok {
-		g.ShipContact(ct, contact, impulse, ship, b)
+	if part, ok := a.(Part); ok {
+		g.PartContact(ct, contact, impulse, part, b)
 		return
 	}
-	if ship, ok := b.(*Ship); ok {
-		g.ShipContact(ct, contact, impulse, ship, a)
+	if part, ok := b.(Part); ok {
+		g.PartContact(ct, contact, impulse, part, a)
 		return
 	}
 }
@@ -121,40 +121,39 @@ func (g *Game) PostSolve(contact box2d.B2ContactInterface, impulse *box2d.B2Cont
 	g.resolveContact(ContactTypePostSolve, contact, impulse)
 }
 
-func (g *Game) ShipContact(
+func (g *Game) PartContact(
 	ct ContactType,
 	contact box2d.B2ContactInterface,
 	impulse *box2d.B2ContactImpulse,
-	ship *Ship,
+	part Part,
 	other interface{}) {
 
 	if ct == ContactTypePostSolve {
 		imp := impulse.NormalImpulses[0]
 		if imp > ShipImpulseThreshold {
-			ship.energy -= imp
+			g.ship.energy -= imp
 		}
 	}
 
 	switch obj := other.(type) {
 	case *Platform:
-		g.ShipPlatformContact(ct, ship, obj)
+		g.PlatformContact(ct, obj)
 	default:
 		//fmt.Printf("unknown body %v\n", obj)
 	}
 }
 
-func (g *Game) ShipPlatformContact(
+func (g *Game) PlatformContact(
 	ct ContactType,
-	ship *Ship,
 	platform *Platform) {
 
 	switch ct {
 	case ContactTypeBegin:
 		// ship must be aligned to refuel
-		ship.currentPlatform = platform
-		platform.ship = ship
+		g.ship.currentPlatform = platform
+		platform.ship = g.ship
 	case ContactTypeEnd:
-		ship.currentPlatform = nil
+		g.ship.currentPlatform = nil
 		platform.ship = nil
 	}
 }

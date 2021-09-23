@@ -27,13 +27,15 @@ func ConstructBasicPart(
 	pos.OperatorPlusInplace(shipHalfSize.OperatorNegate())
 	pos.OperatorPlusInplace(box2d.MakeB2Vec2(0.5, 0.5))
 
-	return &BasicPart{GameObj: NewGameObj(
+	part := &BasicPart{GameObj: NewGameObj(
 		world,
 		sprite,
 		box2d.B2Vec2Add(shipPos, pos),
 		ang,
 		0,
 		box2d.B2Vec2_zero)}
+	part.GetBody().SetUserData(part)
+	return part
 }
 
 type CabinDef struct {

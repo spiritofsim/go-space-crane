@@ -16,7 +16,7 @@ const (
 type Ship struct {
 	parts []Part
 	size  box2d.B2Vec2
-	// This is the angle of first part
+	// This is the angle for the first part
 	// We need it to calculate ship orientation. At init it must be 0
 	originalAng float64
 
@@ -108,8 +108,7 @@ func NewShip(
 	}
 
 	ship.parts = parts
-	// TODO: Use cabin!
-	ship.originalAng = parts[0].GetAng()
+	ship.originalAng = parts[0].GetAng() // TODO: Use cabin for ship center and angle!
 
 	return ship
 }
