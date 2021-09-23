@@ -23,7 +23,7 @@ func (d Direction) GetAng() float64 {
 	case DirectionLeft:
 		return math.Pi
 	case DirectionUp:
-		return -math.Pi / 2
+		return math.Pi + math.Pi/2
 	}
 	panic("bad direction")
 }

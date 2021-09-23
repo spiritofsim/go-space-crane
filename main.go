@@ -7,12 +7,12 @@ import (
 	"time"
 )
 
-var tankSprite *Sprite
-var engineSprite *Sprite
-var legSprite *Sprite
-var legFasteningSprite *Sprite
-var cabinSprite *Sprite
-var crainSprite *Sprite
+var tankSprite Sprite
+var engineSprite Sprite
+var legSprite Sprite
+var legFasteningSprite Sprite
+var cabinSprite Sprite
+var crainSprite Sprite
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
@@ -35,80 +35,57 @@ func main() {
 	cam := NewCam()
 	particles := NewParticleSystem(&world, gravity)
 
-	ship := NewShip(&world, box2d.MakeB2Vec2(5, 20), [][]Part{
+	ship := NewShip(&world, box2d.MakeB2Vec2(0, 0), PartDefs{
 		{
 			nil,
 			nil,
-			NewCabin(CabinCfg{Dir: DirectionUp}),
+			CabinDef{Dir: DirectionUp},
 			nil,
 			nil,
 		},
 		{
-			NewLegFastening(LegFasteningCfg{DirectionRight}),
-			NewTank(TankCfg{}),
-			NewTank(TankCfg{}),
-			NewTank(TankCfg{}),
-			NewLegFastening(LegFasteningCfg{DirectionDown}),
+			LegFasteningDef{DirectionRight},
+			TankDef{},
+			TankDef{},
+			TankDef{},
+			LegFasteningDef{DirectionDown},
 		},
 		{
-			NewLeg(LegCfg{DirectionDown}),
-			NewEngine(EngineCfg{
+			LegDef{Dir: DirectionDown},
+			EngineDef{
 				Dir:   DirectionDown,
 				Power: 100,
 				Keys:  []ebiten.Key{ebiten.KeyRight, ebiten.KeyUp},
-			}),
-			NewCrane(CraneCfg{}, &world),
-			NewEngine(EngineCfg{
+			},
+			nil,
+			EngineDef{
 				Dir:   DirectionDown,
 				Power: 100,
 				Keys:  []ebiten.Key{ebiten.KeyLeft, ebiten.KeyUp},
-			}),
-			NewLeg(LegCfg{DirectionDown}),
+			},
+			LegDef{Dir: DirectionDown},
 		},
 	}, particles, 100, 30000, 30000)
 
+	//ship := NewShip(&world, box2d.MakeB2Vec2(0, 0), PartDefs{
+	//	{
+	//		nil,
+	//		CabinDef{Dir: DirectionUp},
+	//		nil,
+	//	},
+	//	{
+	//		CabinDef{Dir: DirectionLeft},
+	//		TankDef{},
+	//		CabinDef{Dir: DirectionRight},
+	//	},
+	//	{
+	//		nil,
+	//		CabinDef{Dir: DirectionDown},
+	//		nil,
+	//	},
+	//}, particles, 100, 30000, 30000)
+
 	terrain, platforms, cargos := LoadLevel(&world, "level1")
-
-	// TODO: sandbox
-	func() {
-		return
-		bd := box2d.MakeB2BodyDef()
-		bd.Position.Set(5, 18)
-		bd.Type = box2d.B2BodyType.B2_dynamicBody
-		bd.AllowSleep = false
-		elBody := world.CreateBody(&bd)
-		shape := box2d.MakeB2PolygonShape()
-		shape.SetAsBox(0.5, 0.5)
-		fd := box2d.MakeB2FixtureDef()
-		fd.Filter = box2d.MakeB2Filter()
-		fd.Shape = &shape
-		fd.Density = FixtureDensity
-		fd.Restitution = FixtureRestitution
-		elBody.CreateFixtureFromDef(&fd)
-		elBody.ApplyLinearImpulse(box2d.B2Vec2{1000, 1000}, box2d.B2Vec2{0, 0}, true)
-
-		bd2 := box2d.MakeB2BodyDef()
-		bd2.Position.Set(5, 17)
-		bd2.Type = box2d.B2BodyType.B2_dynamicBody
-		bd2.AllowSleep = false
-		elBody2 := world.CreateBody(&bd2)
-		shape2 := box2d.MakeB2PolygonShape()
-		shape2.SetAsBox(0.5, 0.5)
-		fd2 := box2d.MakeB2FixtureDef()
-		fd2.Filter = box2d.MakeB2Filter()
-		fd2.Shape = &shape
-		fd2.Density = FixtureDensity
-		fd2.Restitution = FixtureRestitution
-		elBody2.CreateFixtureFromDef(&fd2)
-
-		jd := box2d.MakeB2WeldJointDef()
-		jd.BodyA = elBody
-		jd.LocalAnchorA = box2d.B2Vec2{0, -0.5}
-		jd.BodyB = elBody2
-		jd.LocalAnchorB = box2d.B2Vec2{0, 0.5}
-		jd.CollideConnected = false
-		world.CreateJoint(&jd)
-	}()
 
 	game := NewGame(&world, cam, ship, terrain, particles, platforms, cargos)
 	world.SetContactListener(game)

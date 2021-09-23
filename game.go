@@ -31,7 +31,7 @@ func NewGame(world *box2d.B2World, cam *Cam, ship *Ship, terrain *Terrain, ps *P
 }
 
 func (g *Game) Update() error {
-	g.cam.Pos = g.ship.body.GetPosition()
+	g.cam.Pos = g.ship.GetPos()
 	g.cam.Zoom = MaxCamZoom - g.ship.GetVelocity()*10
 	//g.cam.Ang = -g.ship.body.GetAngle()
 

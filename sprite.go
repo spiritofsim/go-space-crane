@@ -13,12 +13,12 @@ type Sprite struct {
 	verts []box2d.B2Vec2
 }
 
-func LoadSpriteObj(name string) *Sprite {
+func LoadSpriteObj(name string) Sprite {
 	img := loadImage(name + ".png")
 	svg, err := svg2.Load(path.Join(AssetsDir, name+".svg"))
 	checkErr(err)
 
-	return &Sprite{
+	return Sprite{
 		img:   img,
 		verts: svg.Layers[0].Pathes[0].Verts,
 	}

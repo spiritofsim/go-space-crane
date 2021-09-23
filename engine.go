@@ -4,71 +4,88 @@ import (
 	"github.com/ByteArena/box2d"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
-	"math"
 )
 
-type EngineCfg struct {
+type EngineDef struct {
 	Dir   Direction
 	Power float64
 	Keys  []ebiten.Key
 }
 
 type Engine struct {
-	PartBase
-	cfg      EngineCfg
+	*GameObj
+	ship     *Ship
+	ps       *ParticleSystem
+	power    float64
 	km       map[ebiten.Key]struct{}
 	isActive bool
 }
 
-func NewEngine(cfg EngineCfg) *Engine {
+func (d EngineDef) Construct(
+	world *box2d.B2World,
+	ship *Ship,
+	ps *ParticleSystem,
+	shipPos box2d.B2Vec2,
+	shipSize box2d.B2Vec2,
+	pos box2d.B2Vec2) Part {
+
+	// TODO: duplicate in basic_part
+	shipHalfSize := box2d.B2Vec2MulScalar(0.5, shipSize)
+	pos.OperatorPlusInplace(shipPos)
+	pos.OperatorPlusInplace(shipHalfSize.OperatorNegate())
+	pos.OperatorPlusInplace(box2d.MakeB2Vec2(0.5, 0.5))
+
 	km := make(map[ebiten.Key]struct{})
-	for _, key := range cfg.Keys {
+	for _, key := range d.Keys {
 		km[key] = struct{}{}
 	}
 
-	s := &Sprite{
-		img:   engineSprite.img,
-		verts: Rotate(cfg.Dir.GetAng(), engineSprite.verts...),
-	}
-
 	return &Engine{
-		PartBase: PartBase{sprite: s, dir: cfg.Dir},
-		cfg:      cfg,
-		km:       km,
+		GameObj: NewGameObj(
+			world,
+			engineSprite,
+			box2d.B2Vec2Add(shipPos, pos),
+			d.Dir.GetAng(), 0,
+			box2d.B2Vec2_zero),
+		ship:  ship,
+		power: d.Power,
+		ps:    ps,
+		km:    km,
 	}
-}
-
-func (e *Engine) GetPos() box2d.B2Vec2 {
-	return e.pos
 }
 
 func (e *Engine) Draw(screen *ebiten.Image, cam Cam) {
-	e.PartBase.Draw(screen, cam)
+	e.GameObj.Draw(screen, cam)
 
 	if !e.isActive {
 		return
 	}
 
-	ev := box2d.B2Vec2MulScalar(0.5, e.cfg.Dir.GetVec())
-	pt := box2d.B2RotVec2Mul(
-		*box2d.NewB2RotFromAngle(e.ship.body.GetAngle()),
-		box2d.MakeB2Vec2(e.GetPos().X-e.ship.size.X/2+0.5+ev.X, e.GetPos().Y-e.ship.size.Y/2+0.5+ev.Y))
-	pt = box2d.B2Vec2Add(pt, e.ship.body.GetPosition())
-	e.ship.ps.Emit(pt, e.cfg.Dir.GetAng()+e.ship.body.GetAngle(), math.Pi/2)
+	// Flame
+	//ev := box2d.B2Vec2MulScalar(0.5, e.cfg.Dir.GetVec())
+	//pt := box2d.B2RotVec2Mul(
+	//	*box2d.NewB2RotFromAngle(e.ship.body.GetAngle()),
+	//	box2d.MakeB2Vec2(e.GetPos().X-e.ship.size.X/2+0.5+ev.X, e.GetPos().Y-e.ship.size.Y/2+0.5+ev.Y))
+	//pt = box2d.B2Vec2Add(pt, e.ship.body.GetPosition())
+	//e.ps.Emit(pt, e.cfg.Dir.GetAng()+e.ship.body.GetAngle(), math.Pi/2)
 }
 
-func (engine *Engine) Update() {
+func (e *Engine) GetBody() *box2d.B2Body {
+	return e.body
+}
+
+func (e *Engine) Update() {
 	// TODO: pass keys from game
 	keys := inpututil.PressedKeys()
-
-	engine.isActive = false
-	if engine.ship.fuel <= 0 {
+	e.isActive = false
+	if e.ship.fuel <= 0 {
 		return
 	}
 
+	// TODO: to func
 	keyFound := false
 	for _, key := range keys {
-		if _, ok := engine.km[key]; ok {
+		if _, ok := e.km[key]; ok {
 			keyFound = true
 			break
 		}
@@ -76,38 +93,16 @@ func (engine *Engine) Update() {
 	if !keyFound {
 		return
 	}
-	engine.isActive = true
+	e.isActive = true
 
-	fAng := engine.ship.body.GetAngle() + engine.cfg.Dir.Negative().GetAng()
-	rot := box2d.NewB2RotFromAngle(fAng)
-	force := box2d.B2RotVec2Mul(*rot, box2d.MakeB2Vec2(engine.cfg.Power, 0))
+	rot := box2d.NewB2RotFromAngle(e.GetAng())
+	force := box2d.B2RotVec2Mul(*rot, box2d.MakeB2Vec2(e.power, 0))
+	force = force.OperatorNegate()
+	e.body.ApplyForce(force, e.body.GetPosition(), true)
 
-	p := engine.ship.body.GetPosition()
-	pt := box2d.B2RotVec2Mul(
-		*box2d.NewB2RotFromAngle(engine.ship.body.GetAngle()),
-		box2d.MakeB2Vec2(float64(engine.GetPos().X)-engine.ship.size.X/2+0.5, float64(engine.GetPos().Y)-engine.ship.size.Y/2+0.5))
-	p.OperatorPlusInplace(pt)
-	engine.ship.body.ApplyForce(force, p, true)
-
-	engine.ship.fuel -= engine.cfg.Power * EngineFuelConsumption
-	if engine.ship.fuel < 0 {
-		engine.ship.fuel = 0
+	// Reduce fuel
+	e.ship.fuel -= e.power * EngineFuelConsumption
+	if e.ship.fuel < 0 {
+		e.ship.fuel = 0
 	}
-}
-
-func (e *Engine) Construct(ship *Ship, pos box2d.B2Vec2, size box2d.B2Vec2) {
-	e.pos = pos
-	pos.OperatorPlusInplace(box2d.B2Vec2MulScalar(0.5, size).OperatorNegate())
-	pos.OperatorPlusInplace(box2d.MakeB2Vec2(0.5, 0.5))
-	verts := Translate(pos, e.sprite.verts...)
-
-	shape := box2d.MakeB2PolygonShape()
-	shape.Set(verts, len(verts))
-	fd := box2d.MakeB2FixtureDef()
-	fd.Filter = box2d.MakeB2Filter()
-	fd.Shape = &shape
-	fd.Density = FixtureDensity
-	fd.Restitution = FixtureRestitution
-	ship.body.CreateFixtureFromDef(&fd)
-	e.ship = ship
 }
