@@ -39,13 +39,12 @@ func NewCraneJaws(c *Crane) *CraneJaws {
 	rjd.UpperAngle = math.Pi / 2
 	rjd.LowerAngle = -math.Pi / 4
 	rjd.MaxMotorTorque = 100
-	//rjd.MotorSpeed = 1
 	m := c.world.CreateJoint(&rjd)
 
 	// joint to last chain element
 	cjd := box2d.MakeB2RevoluteJointDef()
-	cjd.BodyA = c.elements[len(c.elements)-1]
-	cjd.LocalAnchorA = box2d.B2Vec2{0, chainElLen / 2}
+	cjd.BodyA = c.chain[len(c.chain)-1].body
+	cjd.LocalAnchorA = box2d.B2Vec2{0, c.chainElSize.Y / 2}
 	cjd.BodyB = upper.body
 	cjd.LocalAnchorB = box2d.B2Vec2{-0.5, 0}
 	cjd.CollideConnected = false

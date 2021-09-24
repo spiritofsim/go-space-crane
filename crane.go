@@ -11,23 +11,13 @@ type CraneDef struct {
 	Dir Direction
 }
 
-// TODO: move to svg
-const chainElLen = 0.2
-const chainElTh = 0.1
-
-// TODO: to svg
-var chainVerts = []box2d.B2Vec2{
-	{-chainElTh / 2, -chainElLen / 2},
-	{chainElTh / 2, -chainElLen / 2},
-	{chainElTh / 2, chainElLen / 2},
-	{-chainElTh / 2, chainElLen / 2},
-}
-
 type Crane struct {
 	*GameObj
-	elements       []*box2d.B2Body
+	chain          []*GameObj
 	jaws           *CraneJaws
 	lastControlled time.Time
+
+	chainElSize box2d.B2Vec2
 }
 
 func (d CraneDef) Construct(
@@ -57,6 +47,7 @@ func (d CraneDef) Construct(
 
 	crane.unwind()
 	crane.jaws = NewCraneJaws(crane)
+	crane.chainElSize = getShapeSize(chainElSprite.vertsSet[0])
 
 	return crane
 }
@@ -65,6 +56,9 @@ func (d CraneDef) Construct(
 func (c *Crane) Draw(screen *ebiten.Image, cam Cam) {
 	c.jaws.Draw(screen, cam)
 	c.GameObj.Draw(screen, cam)
+	for _, chainEl := range c.chain {
+		chainEl.Draw(screen, cam)
+	}
 }
 
 func (c *Crane) GetBody() *box2d.B2Body {
@@ -97,50 +91,37 @@ func (c *Crane) Update() {
 }
 
 func (c *Crane) windup() {
-	if len(c.elements) <= 1 {
+	if len(c.chain) <= 1 {
 		return
 	}
 
-	c.world.DestroyBody(c.elements[0])
-	c.elements = c.elements[1:]
+	c.world.DestroyBody(c.chain[0].body)
+	c.chain = c.chain[1:]
 
-	if len(c.elements) > 0 {
+	if len(c.chain) > 0 {
 		// TODO: check if previous join destroyed by destroying its body
 		// TODO: use part rotation. now it is hardcoded
-		c.createChainJoint(c.body, box2d.B2Vec2{0, 0}, c.elements[0], box2d.MakeB2Vec2(0, -chainElLen/2))
+		c.createChainJoint(c.body, box2d.B2Vec2{0, 0}, c.chain[0].body, box2d.MakeB2Vec2(0, -c.chainElSize.Y/2))
 	}
 }
 
 func (c *Crane) unwind() {
 	// TODO: use angle (see engine)
-	pos := box2d.B2Vec2Add(c.body.GetPosition(), box2d.B2Vec2{0, 0.5 + chainElLen/2})
+	pos := box2d.B2Vec2Add(c.body.GetPosition(), box2d.B2Vec2{0, 0.5 + c.chainElSize.Y/2})
 
-	bd := box2d.MakeB2BodyDef()
-	elPos := pos
-	bd.Position.Set(elPos.X, elPos.Y)
-	bd.Type = box2d.B2BodyType.B2_dynamicBody
-	bd.AllowSleep = false
-	elBody := c.world.CreateBody(&bd)
-	shape := box2d.MakeB2PolygonShape()
-	shape.Set(chainVerts, len(chainVerts))
-	fd := box2d.MakeB2FixtureDef()
-	fd.Filter = box2d.MakeB2Filter()
-	fd.Shape = &shape
-	fd.Density = DefaultFixtureDensity
-	fd.Restitution = DefaultFixtureRestitution
-	elBody.CreateFixtureFromDef(&fd)
+	chainEl := NewGameObj(c.world, chainElSprite, pos, 0, 0, box2d.B2Vec2_zero, 0)
 
-	if len(c.elements) > 0 {
+	if len(c.chain) > 0 {
 		// TODO: apply force to prev body if not ship
-		prevBody := c.elements[0]
+		prevBody := c.chain[0].body
 		c.destroyCrainJoints(prevBody)
-		c.createChainJoint(prevBody, box2d.MakeB2Vec2(0, -chainElLen/2), elBody, box2d.MakeB2Vec2(0, chainElLen/2))
+		c.createChainJoint(prevBody, box2d.MakeB2Vec2(0, -c.chainElSize.Y/2), chainEl.body, box2d.MakeB2Vec2(0, c.chainElSize.Y/2))
 	}
 	// TODO: use rotation. now its hardcoded
-	c.createChainJoint(c.body, box2d.B2Vec2{0, 0}, elBody, box2d.MakeB2Vec2(0, -chainElLen/2))
+	c.createChainJoint(c.body, box2d.B2Vec2{0, 0}, chainEl.body, box2d.MakeB2Vec2(0, -c.chainElSize.Y/2))
 
 	// TODO: use linked list?
-	c.elements = append([]*box2d.B2Body{elBody}, c.elements...)
+	c.chain = append([]*GameObj{chainEl}, c.chain...)
 }
 
 func (c *Crane) createChainJoint(

@@ -55,3 +55,23 @@ func loadImage(name string) *ebiten.Image {
 	checkErr(err)
 	return img
 }
+
+func getShapeSize(verts []box2d.B2Vec2) box2d.B2Vec2 {
+	min, max := verts[0], verts[0]
+	for i := 1; i < len(verts); i++ {
+		if verts[i].X < min.X {
+			min.X = verts[i].X
+		}
+		if verts[i].Y < min.Y {
+			min.Y = verts[i].Y
+		}
+		if verts[i].X > max.X {
+			max.X = verts[i].X
+		}
+		if verts[i].Y > max.Y {
+			max.Y = verts[i].Y
+		}
+	}
+
+	return box2d.B2Vec2{max.X - min.X, max.Y - min.Y}
+}

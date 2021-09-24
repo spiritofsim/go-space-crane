@@ -15,6 +15,7 @@ var cabinSprite Sprite
 var craneSprite Sprite
 var craneUpperJawSprite Sprite
 var craneLowerJawSprite Sprite
+var chainElSprite Sprite
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
@@ -26,6 +27,7 @@ func init() {
 	craneSprite = LoadSpriteObj("crane")
 	craneUpperJawSprite = LoadSpriteObj("crane_upper_jaw")
 	craneLowerJawSprite = LoadSpriteObj("crane_lower_jaw")
+	chainElSprite = LoadSpriteObj("chain_el")
 }
 
 func main() {
