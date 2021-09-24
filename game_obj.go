@@ -46,7 +46,8 @@ func NewGameObj(
 	pos box2d.B2Vec2,
 	ang float64,
 	aVel float64,
-	lVel box2d.B2Vec2) *GameObj {
+	lVel box2d.B2Vec2,
+	friction float64) *GameObj {
 
 	bd := box2d.MakeB2BodyDef()
 	bd.Position.Set(pos.X, pos.Y)
@@ -55,15 +56,18 @@ func NewGameObj(
 	bd.AllowSleep = false
 	body := world.CreateBody(&bd)
 
-	shape := box2d.MakeB2PolygonShape()
-	shape.Set(sprite.verts, len(sprite.verts))
+	for _, verts := range sprite.vertsSet {
+		shape := box2d.MakeB2PolygonShape()
+		shape.Set(verts, len(verts))
 
-	fd := box2d.MakeB2FixtureDef()
-	fd.Filter = box2d.MakeB2Filter()
-	fd.Shape = &shape
-	fd.Density = FixtureDensity
-	fd.Restitution = FixtureRestitution
-	body.CreateFixtureFromDef(&fd)
+		fd := box2d.MakeB2FixtureDef()
+		fd.Filter = box2d.MakeB2Filter()
+		fd.Shape = &shape
+		fd.Friction = friction
+		fd.Density = DefaultFixtureDensity
+		fd.Restitution = DefaultFixtureRestitution
+		body.CreateFixtureFromDef(&fd)
+	}
 
 	body.SetAngularVelocity(aVel)
 	body.SetLinearVelocity(lVel)

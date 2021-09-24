@@ -12,7 +12,9 @@ var engineSprite Sprite
 var legSprite Sprite
 var legFasteningSprite Sprite
 var cabinSprite Sprite
-var crainSprite Sprite
+var craneSprite Sprite
+var craneUpperJawSprite Sprite
+var craneLowerJawSprite Sprite
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
@@ -21,7 +23,9 @@ func init() {
 	legSprite = LoadSpriteObj("leg")
 	legFasteningSprite = LoadSpriteObj("leg_fastening")
 	cabinSprite = LoadSpriteObj("cabin")
-	crainSprite = LoadSpriteObj("crane")
+	craneSprite = LoadSpriteObj("crane")
+	craneUpperJawSprite = LoadSpriteObj("crane_upper_jaw")
+	craneLowerJawSprite = LoadSpriteObj("crane_lower_jaw")
 }
 
 func main() {
@@ -46,7 +50,7 @@ func main() {
 		{
 			LegFasteningDef{DirectionRight},
 			TankDef{},
-			TankDef{},
+			CraneDef{Dir: DirectionDown},
 			TankDef{},
 			LegFasteningDef{DirectionDown},
 		},
@@ -57,7 +61,7 @@ func main() {
 				Power: 100,
 				Keys:  []ebiten.Key{ebiten.KeyRight, ebiten.KeyUp},
 			},
-			CraneDef{Dir: DirectionDown},
+			nil,
 			EngineDef{
 				Dir:   DirectionDown,
 				Power: 100,

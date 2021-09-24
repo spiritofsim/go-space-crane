@@ -68,8 +68,15 @@ func (g *Game) Draw(screen *ebiten.Image) {
 }
 
 func (g *Game) drawDebugBodies(screen *ebiten.Image) {
+	clr := color.RGBA{
+		R: 0xff,
+		G: 0,
+		B: 0xff,
+		A: 0xff,
+	}
+
 	for body := g.world.GetBodyList(); body != nil; body = body.GetNext() {
-		DrawDebugBody(screen, body, *g.cam, color.White)
+		DrawDebugBody(screen, body, *g.cam, clr)
 	}
 }
 

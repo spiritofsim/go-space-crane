@@ -111,7 +111,7 @@ func NewPParticle(
 	fd := box2d.MakeB2FixtureDef()
 	fd.Filter = box2d.MakeB2Filter()
 	fd.Shape = &shape
-	fd.Density = FixtureDensity
+	fd.Density = DefaultFixtureDensity
 	fd.Restitution = 1
 	body.CreateFixtureFromDef(&fd)
 

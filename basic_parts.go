@@ -33,7 +33,8 @@ func ConstructBasicPart(
 		box2d.B2Vec2Add(shipPos, pos),
 		ang,
 		0,
-		box2d.B2Vec2_zero)}
+		box2d.B2Vec2_zero,
+		DefaultFriction)}
 	part.GetBody().SetUserData(part)
 	return part
 }

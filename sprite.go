@@ -9,8 +9,8 @@ import (
 
 // Sprite contains sprite image and shape vertices
 type Sprite struct {
-	img   *ebiten.Image
-	verts []box2d.B2Vec2
+	img      *ebiten.Image
+	vertsSet [][]box2d.B2Vec2
 }
 
 func LoadSpriteObj(name string) Sprite {
@@ -18,8 +18,13 @@ func LoadSpriteObj(name string) Sprite {
 	svg, err := svg2.Load(path.Join(AssetsDir, name+".svg"))
 	checkErr(err)
 
+	vSet := make([][]box2d.B2Vec2, len(svg.Layers[0].Pathes))
+	for i, path := range svg.Layers[0].Pathes {
+		vSet[i] = path.Verts
+	}
+
 	return Sprite{
-		img:   img,
-		verts: svg.Layers[0].Pathes[0].Verts,
+		img:      img,
+		vertsSet: vSet,
 	}
 }

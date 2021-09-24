@@ -33,8 +33,8 @@ func NewPlatform(world *box2d.B2World, pos box2d.B2Vec2, size box2d.B2Vec2, fuel
 	fd := box2d.MakeB2FixtureDef()
 	fd.Filter = box2d.MakeB2Filter()
 	fd.Shape = &shape
-	fd.Density = FixtureDensity
-	fd.Restitution = FixtureRestitution
+	fd.Density = DefaultFixtureDensity
+	fd.Restitution = DefaultFixtureRestitution
 	body.CreateFixtureFromDef(&fd)
 
 	platform := &Platform{

@@ -24,8 +24,8 @@ func LoadLevel(world *box2d.B2World, name string) (*Terrain, []*Platform, []*Car
 		fd := box2d.MakeB2FixtureDef()
 		fd.Filter = box2d.MakeB2Filter()
 		fd.Shape = &shape
-		fd.Density = FixtureDensity
-		fd.Restitution = FixtureRestitution
+		fd.Density = DefaultFixtureDensity
+		fd.Restitution = DefaultFixtureRestitution
 
 		bd := box2d.MakeB2BodyDef()
 		bd.Position.Set(0, 0)
