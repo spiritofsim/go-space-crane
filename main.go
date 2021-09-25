@@ -41,7 +41,7 @@ func main() {
 	cam := NewCam()
 	particles := NewParticleSystem(&world, gravity)
 
-	ship := NewShip(&world, box2d.MakeB2Vec2(0, 0), PartDefs{
+	ship := NewShip(&world, box2d.MakeB2Vec2(6, 80), PartDefs{
 		{
 			nil,
 			nil,
@@ -73,25 +73,7 @@ func main() {
 		},
 	}, particles, 100, 30000, 30000)
 
-	//ship := NewShip(&world, box2d.MakeB2Vec2(0, 0), PartDefs{
-	//	{
-	//		nil,
-	//		CabinDef{Dir: DirectionUp},
-	//		nil,
-	//	},
-	//	{
-	//		CabinDef{Dir: DirectionLeft},
-	//		TankDef{},
-	//		CabinDef{Dir: DirectionRight},
-	//	},
-	//	{
-	//		nil,
-	//		CabinDef{Dir: DirectionDown},
-	//		nil,
-	//	},
-	//}, particles, 100, 30000, 30000)
-
-	terrain, platforms, cargos := LoadLevel(&world, "level1")
+	terrain, platforms, cargos := LoadLevel(&world, "level2")
 
 	game := NewGame(&world, cam, ship, terrain, particles, platforms, cargos)
 	world.SetContactListener(game)

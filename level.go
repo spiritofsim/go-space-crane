@@ -16,8 +16,13 @@ func LoadLevel(world *box2d.B2World, name string) (*Terrain, []*Platform, []*Car
 	checkErr(err)
 
 	terrain := &Terrain{}
-	bodies := make([]*box2d.B2Body, len(svg.Layers[0].Pathes))
-	for i, path := range svg.Layers[0].Pathes {
+	tbd := box2d.MakeB2BodyDef()
+	tbd.Position.Set(0, 0)
+	tbd.Type = box2d.B2BodyType.B2_staticBody
+	tBody := world.CreateBody(&tbd)
+	tBody.SetUserData(terrain)
+	terrain.body = tBody
+	for _, path := range svg.Layers[0].Pathes {
 		verts := path.Verts
 		shape := box2d.MakeB2ChainShape()
 		shape.CreateLoop(verts, len(verts))
@@ -26,17 +31,8 @@ func LoadLevel(world *box2d.B2World, name string) (*Terrain, []*Platform, []*Car
 		fd.Shape = &shape
 		fd.Density = DefaultFixtureDensity
 		fd.Restitution = DefaultFixtureRestitution
-
-		bd := box2d.MakeB2BodyDef()
-		bd.Position.Set(0, 0)
-		bd.Type = box2d.B2BodyType.B2_staticBody
-		body := world.CreateBody(&bd)
-		body.CreateFixtureFromDef(&fd)
-
-		bodies[i] = body
-		body.SetUserData(terrain)
+		tBody.CreateFixtureFromDef(&fd)
 	}
-	terrain.bodies = bodies
 
 	platforms := make([]*Platform, 0)
 	cargos := make([]*Cargo, 0)

@@ -23,14 +23,20 @@ func ConstructBasicPart(
 	ang float64) Part {
 
 	shipHalfSize := box2d.B2Vec2MulScalar(0.5, shipSize)
-	pos.OperatorPlusInplace(shipPos)
-	pos.OperatorPlusInplace(shipHalfSize.OperatorNegate())
-	pos.OperatorPlusInplace(box2d.MakeB2Vec2(0.5, 0.5))
+	worldPos := box2d.B2Vec2Add(shipPos, pos)
+	worldPos = box2d.B2Vec2Add(worldPos, shipHalfSize.OperatorNegate())
+	worldPos = box2d.B2Vec2Add(worldPos, box2d.MakeB2Vec2(0.5, 0.5))
 
+	// TODO: fix ship pos. now we use ship pos twice
+	//pos.OperatorPlusInplace(shipPos)
+	//pos.OperatorPlusInplace(shipHalfSize.OperatorNegate())
+	//pos.OperatorPlusInplace(box2d.MakeB2Vec2(0.5, 0.5))
+	////x := box2d.B2Vec2Add(shipPos, pos)
+	//x := pos
 	part := &BasicPart{GameObj: NewGameObj(
 		world,
 		sprite,
-		box2d.B2Vec2Add(shipPos, pos),
+		worldPos,
 		ang,
 		0,
 		box2d.B2Vec2_zero,

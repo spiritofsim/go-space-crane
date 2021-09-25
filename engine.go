@@ -32,9 +32,9 @@ func (d EngineDef) Construct(
 
 	// TODO: duplicate in basic_part
 	shipHalfSize := box2d.B2Vec2MulScalar(0.5, shipSize)
-	pos.OperatorPlusInplace(shipPos)
-	pos.OperatorPlusInplace(shipHalfSize.OperatorNegate())
-	pos.OperatorPlusInplace(box2d.MakeB2Vec2(0.5, 0.5))
+	worldPos := box2d.B2Vec2Add(shipPos, pos)
+	worldPos = box2d.B2Vec2Add(worldPos, shipHalfSize.OperatorNegate())
+	worldPos = box2d.B2Vec2Add(worldPos, box2d.MakeB2Vec2(0.5, 0.5))
 
 	km := make(map[ebiten.Key]struct{})
 	for _, key := range d.Keys {
@@ -45,7 +45,7 @@ func (d EngineDef) Construct(
 		GameObj: NewGameObj(
 			world,
 			engineSprite,
-			box2d.B2Vec2Add(shipPos, pos),
+			worldPos,
 			d.Dir.GetAng(), 0,
 			box2d.B2Vec2_zero,
 			DefaultFriction),

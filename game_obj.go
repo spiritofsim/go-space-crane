@@ -12,34 +12,6 @@ type GameObj struct {
 	img   *ebiten.Image
 }
 
-func (g *GameObj) GetVel() float64 {
-	lVel := g.body.GetLinearVelocity()
-	return math.Sqrt(lVel.X*lVel.X + lVel.Y*lVel.Y)
-}
-
-func (g *GameObj) GetAng() float64 {
-	return g.body.GetAngle()
-}
-
-func (g *GameObj) GetPos() box2d.B2Vec2 {
-	return g.body.GetPosition()
-}
-
-func (g *GameObj) Draw(screen *ebiten.Image, cam Cam) {
-	opts := &ebiten.DrawImageOptions{}
-	bounds := g.img.Bounds()
-	pos := g.body.GetPosition()
-	opts.GeoM.Translate(-float64(bounds.Max.X/2), -float64(bounds.Max.Y/2))
-	opts.GeoM.Scale(1/float64(bounds.Max.X), 1/float64(bounds.Max.Y))
-	opts.GeoM.Rotate(g.body.GetAngle())
-	opts.GeoM.Translate(pos.X, pos.Y)
-	opts.GeoM.Translate(-cam.Pos.X, -cam.Pos.Y)
-	opts.GeoM.Scale(cam.Zoom, cam.Zoom)
-	opts.GeoM.Rotate(cam.Ang)
-	opts.GeoM.Translate(ScreenWidth/2, ScreenHeight/2)
-	screen.DrawImage(g.img, opts)
-}
-
 func NewGameObj(
 	world *box2d.B2World,
 	sprite Sprite,
@@ -77,4 +49,32 @@ func NewGameObj(
 		body:  body,
 		img:   sprite.img,
 	}
+}
+
+func (g *GameObj) GetVel() float64 {
+	lVel := g.body.GetLinearVelocity()
+	return math.Sqrt(lVel.X*lVel.X + lVel.Y*lVel.Y)
+}
+
+func (g *GameObj) GetAng() float64 {
+	return g.body.GetAngle()
+}
+
+func (g *GameObj) GetPos() box2d.B2Vec2 {
+	return g.body.GetPosition()
+}
+
+func (g *GameObj) Draw(screen *ebiten.Image, cam Cam) {
+	opts := &ebiten.DrawImageOptions{}
+	bounds := g.img.Bounds()
+	pos := g.body.GetPosition()
+	opts.GeoM.Translate(-float64(bounds.Max.X/2), -float64(bounds.Max.Y/2))
+	opts.GeoM.Scale(1/float64(bounds.Max.X), 1/float64(bounds.Max.Y))
+	opts.GeoM.Rotate(g.body.GetAngle())
+	opts.GeoM.Translate(pos.X, pos.Y)
+	opts.GeoM.Translate(-cam.Pos.X, -cam.Pos.Y)
+	opts.GeoM.Scale(cam.Zoom, cam.Zoom)
+	opts.GeoM.Rotate(cam.Ang)
+	opts.GeoM.Translate(ScreenWidth/2, ScreenHeight/2)
+	screen.DrawImage(g.img, opts)
 }

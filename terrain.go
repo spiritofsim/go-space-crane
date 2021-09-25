@@ -6,7 +6,7 @@ import (
 )
 
 type Terrain struct {
-	bodies []*box2d.B2Body
+	body *box2d.B2Body
 }
 
 func (t *Terrain) Draw(screen *ebiten.Image, cam Cam) {
