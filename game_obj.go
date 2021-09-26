@@ -25,7 +25,6 @@ func NewGameObj(
 	bd.Position.Set(pos.X, pos.Y)
 	bd.Angle = ang
 	bd.Type = box2d.B2BodyType.B2_dynamicBody
-	bd.AllowSleep = false
 	body := world.CreateBody(&bd)
 
 	for _, verts := range sprite.vertsSet {
@@ -66,6 +65,7 @@ func (g *GameObj) GetPos() box2d.B2Vec2 {
 
 func (g *GameObj) Draw(screen *ebiten.Image, cam Cam) {
 	opts := &ebiten.DrawImageOptions{}
+
 	bounds := g.img.Bounds()
 	pos := g.body.GetPosition()
 	opts.GeoM.Translate(-float64(bounds.Max.X/2), -float64(bounds.Max.Y/2))
@@ -76,5 +76,6 @@ func (g *GameObj) Draw(screen *ebiten.Image, cam Cam) {
 	opts.GeoM.Scale(cam.Zoom, cam.Zoom)
 	opts.GeoM.Rotate(cam.Ang)
 	opts.GeoM.Translate(ScreenWidth/2, ScreenHeight/2)
+
 	screen.DrawImage(g.img, opts)
 }

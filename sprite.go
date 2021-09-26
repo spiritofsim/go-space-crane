@@ -13,6 +13,10 @@ type Sprite struct {
 	vertsSet [][]box2d.B2Vec2
 }
 
+func NewSprite(img *ebiten.Image, vertsSet [][]box2d.B2Vec2) Sprite {
+	return Sprite{img: img, vertsSet: vertsSet}
+}
+
 func LoadSpriteObj(name string) Sprite {
 	img := loadImage(name + ".png")
 	svg, err := svg2.Load(path.Join(AssetsDir, name+".svg"))

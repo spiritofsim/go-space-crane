@@ -15,10 +15,18 @@ type Game struct {
 	terrain   *Terrain
 	ps        *ParticleSystem
 	platforms []*Platform
-	cargos    []*Cargo
+	cargos    []*GameObj
 }
 
-func NewGame(world *box2d.B2World, cam *Cam, ship *Ship, terrain *Terrain, ps *ParticleSystem, platforms []*Platform, cargos []*Cargo) *Game {
+func NewGame(
+	world *box2d.B2World,
+	cam *Cam,
+	ship *Ship,
+	terrain *Terrain,
+	ps *ParticleSystem,
+	platforms []*Platform,
+	cargos []*GameObj) *Game {
+
 	return &Game{
 		world:     world,
 		cam:       cam,
@@ -60,6 +68,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	}
 	g.ps.Draw(screen, *g.cam)
 
+	g.terrain.Draw(screen, *g.cam)
 	g.drawHood(screen)
 
 	if Debug {

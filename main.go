@@ -16,6 +16,7 @@ var craneSprite Sprite
 var craneUpperJawSprite Sprite
 var craneLowerJawSprite Sprite
 var chainElSprite Sprite
+var cargoSprite Sprite
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
@@ -28,6 +29,7 @@ func init() {
 	craneUpperJawSprite = LoadSpriteObj("crane_upper_jaw")
 	craneLowerJawSprite = LoadSpriteObj("crane_lower_jaw")
 	chainElSprite = LoadSpriteObj("chain_el")
+	cargoSprite = LoadSpriteObj("cargo")
 }
 
 func main() {
@@ -41,7 +43,8 @@ func main() {
 	cam := NewCam()
 	particles := NewParticleSystem(&world, gravity)
 
-	ship := NewShip(&world, box2d.MakeB2Vec2(6, 80), PartDefs{
+	shipPos, terrain, platforms, cargos := LoadLevel(&world, "test_level")
+	ship := NewShip(&world, shipPos, PartDefs{
 		{
 			nil,
 			nil,
@@ -72,8 +75,6 @@ func main() {
 			LegDef{Dir: DirectionDown},
 		},
 	}, particles, 100, 30000, 30000)
-
-	terrain, platforms, cargos := LoadLevel(&world, "level2")
 
 	game := NewGame(&world, cam, ship, terrain, particles, platforms, cargos)
 	world.SetContactListener(game)

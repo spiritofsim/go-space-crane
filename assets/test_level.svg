@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   sodipodi:docname="test_level.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="24.886869"
+     inkscape:cx="58.685567"
+     inkscape:cy="38.474105"
+     inkscape:window-width="2560"
+     inkscape:window-height="1361"
+     inkscape:window-x="2391"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Слой 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 0.07517566,14.91485 7.98365474,-0.07518 0.2856675,-0.240562 0.4360187,-0.375878 0.105246,-0.405948 0.255597,-0.511195 0.4209838,-0.541265 0.1804215,-0.496159 -0.045105,-0.330773 0.4209831,-0.601405 0.150351,-0.360843 0.105246,-0.420984 0.180422,-0.330773 0.120281,-0.195457 0.105246,-0.390913 0.180422,-0.1503514 0.135316,-0.255597 0.300702,-0.6164405 0.300703,-0.2856675 0.315738,-0.5111945 0.345808,-0.1653863 0.436019,-0.4811242 0.09021,-0.1503513 6.901126,-0.075176 0.330773,0.090211 0.481124,0.4209838 0.240562,0.4811241 0.360843,0.8720376 0.541265,0.5713351 0.390913,0.7216861 0.180422,0.811897 0.06014,1.443373 0.300703,1.082529 0.270632,0.811897 0.09021,1.323092 -0.03007,1.533583 0.571335,1.714005 0.120281,1.022389 -0.330773,1.1126 0.150351,7.397285 -0.150351,1.563653 L 22.97368,31.874478 0,31.724126 Z"
+       id="path2236" />
+    <rect
+       style="fill:#000080;stroke:#140000;stroke-width:0.01"
+       id="rect2260"
+       width="6.3147554"
+       height="0.6314711"
+       x="13.26948"
+       y="6.6124353">
+      <title
+         id="title2559">platform</title>
+      <desc
+         id="desc2342">10000</desc>
+    </rect>
+    <rect
+       style="fill:#000080;stroke:#140000;stroke-width:0.01"
+       id="rect2260-4"
+       width="6.3147554"
+       height="0.6314711"
+       x="0.84196764"
+       y="14.388623">
+      <title
+         id="title2557">platform</title>
+      <desc
+         id="desc2342-7">10000</desc>
+    </rect>
+    <rect
+       style="fill:#000080;stroke:#140000;stroke-width:0.01"
+       id="rect2473"
+       width="0.84196734"
+       height="0.57133502"
+       x="3.7587829"
+       y="13.621829">
+      <title
+         id="title2555">cargo</title>
+    </rect>
+    <rect
+       style="fill:#000080;stroke:#140000;stroke-width:0.01"
+       id="rect2583"
+       width="0.8118971"
+       height="0.8118971"
+       x="3.7587829"
+       y="6.7056684">
+      <title
+         id="title2665">ship</title>
+    </rect>
+  </g>
+</svg>
