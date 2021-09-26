@@ -23,9 +23,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="24.886869"
-     inkscape:cx="58.685567"
-     inkscape:cy="38.474105"
+     inkscape:zoom="8.7988368"
+     inkscape:cx="94.842082"
+     inkscape:cy="43.244353"
      inkscape:window-width="2560"
      inkscape:window-height="1361"
      inkscape:window-x="2391"
@@ -83,6 +83,43 @@
        height="0.8118971"
        x="3.7587829"
        y="6.7056684">
+      <desc
+         id="desc2697">parts:
+  - - null
+    - null
+    - cabin:
+          dir: U
+    - null
+    - null
+  - - legfastening:
+          dir: R
+    - tank: {}
+    - crane:
+          dir: D
+    - tank: {}
+    - legfastening:
+          dir: D
+  - - leg:
+          dir: D
+    - engine:
+          dir: D
+          power: 100
+          keys:
+            - 30
+            - 31
+    - null
+    - engine:
+          dir: D
+          power: 100
+          keys:
+            - 29
+            - 31
+    - leg:
+          dir: D
+energy: 100
+fuel: 5000
+maxfuel: 5000
+</desc>
       <title
          id="title2665">ship</title>
     </rect>

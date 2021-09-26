@@ -45,38 +45,8 @@ func main() {
 	cam := NewCam()
 	particles := NewParticleSystem(&world, gravity)
 
-	shipPos, terrain, platforms, cargos := LoadLevel(&world, "test_level")
-	ship := NewShip(&world, shipPos, PartDefs{
-		{
-			nil,
-			nil,
-			CabinDef{Dir: DirectionUp},
-			nil,
-			nil,
-		},
-		{
-			LegFasteningDef{DirectionRight},
-			TankDef{},
-			CraneDef{Dir: DirectionDown},
-			TankDef{},
-			LegFasteningDef{DirectionDown},
-		},
-		{
-			LegDef{Dir: DirectionDown},
-			EngineDef{
-				Dir:   DirectionDown,
-				Power: 100,
-				Keys:  []ebiten.Key{ebiten.KeyRight, ebiten.KeyUp},
-			},
-			nil,
-			EngineDef{
-				Dir:   DirectionDown,
-				Power: 100,
-				Keys:  []ebiten.Key{ebiten.KeyLeft, ebiten.KeyUp},
-			},
-			LegDef{Dir: DirectionDown},
-		},
-	}, particles, 100, 30000, 30000)
+	shipDef, shipPos, terrain, platforms, cargos := LoadLevel(&world, "test_level")
+	ship := NewShip(&world, particles, shipPos, shipDef)
 
 	game := NewGame(&world, cam, ship, terrain, particles, platforms, cargos)
 	world.SetContactListener(game)

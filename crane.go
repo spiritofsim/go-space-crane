@@ -52,7 +52,6 @@ func (d CraneDef) Construct(
 	return crane
 }
 
-// TODO: try to remove. Draw is already in GameObj
 func (c *Crane) Draw(screen *ebiten.Image, cam Cam) {
 	c.jaws.Draw(screen, cam)
 	c.GameObj.Draw(screen, cam)

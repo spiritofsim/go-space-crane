@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/ByteArena/box2d"
 	svg2 "go-space-crane/svg"
+	"gopkg.in/yaml.v3"
 	"path"
 	"strconv"
 )
@@ -11,7 +12,7 @@ import (
 // All rects with "platform" title are platforms
 //   platform fuel stored in description
 // All rects with "cargo" title are carcos
-func LoadLevel(world *box2d.B2World, name string) (shipPos box2d.B2Vec2, terrain *Terrain, platforms []*Platform, cargos []*GameObj) {
+func LoadLevel(world *box2d.B2World, name string) (shipDef ShipDef, shipPos box2d.B2Vec2, terrain *Terrain, platforms []*Platform, cargos []*GameObj) {
 	svg, err := svg2.Load(path.Join(AssetsDir, name+".svg"))
 	checkErr(err)
 
@@ -39,6 +40,7 @@ func LoadLevel(world *box2d.B2World, name string) (shipPos box2d.B2Vec2, terrain
 			cargos = append(cargos, cargo)
 		case "ship":
 			shipPos = rect.Pos
+			checkErr(yaml.Unmarshal([]byte(rect.Description), &shipDef))
 		}
 	}
 

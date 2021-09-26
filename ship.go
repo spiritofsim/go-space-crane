@@ -11,6 +11,13 @@ const (
 	ShipImpulseThreshold = 20
 )
 
+type ShipDef struct {
+	Parts   OneOfParts
+	Energy  float64
+	Fuel    float64
+	MaxFuel float64
+}
+
 // TODO: think about construct ship from multiple bodies and joint them with Weld joint
 // With this joints we can destroy ship parts in the future
 type Ship struct {
@@ -32,30 +39,27 @@ type Ship struct {
 
 func NewShip(
 	world *box2d.B2World,
-	pos box2d.B2Vec2,
-	partDefs PartDefs,
 	ps *ParticleSystem,
-	energy float64,
-	fuel float64,
-	maxFuel float64) *Ship {
+	pos box2d.B2Vec2,
+	def ShipDef) *Ship {
 
-	shipSize := box2d.MakeB2Vec2(float64(len(partDefs[0])), float64(len(partDefs)))
+	shipSize := box2d.MakeB2Vec2(float64(len(def.Parts[0])), float64(len(def.Parts)))
 
 	ship := &Ship{
 		size:    shipSize,
 		ps:      ps,
-		energy:  energy,
-		fuel:    fuel,
-		maxFuel: maxFuel,
+		energy:  def.Energy,
+		fuel:    def.Fuel,
+		maxFuel: def.MaxFuel,
 	}
 
 	parts := make([]Part, 0)
-	iparts := make([][]Part, len(partDefs))
-	for y, row := range partDefs {
+	iparts := make([][]Part, len(def.Parts))
+	for y, row := range def.Parts {
 		iparts[y] = make([]Part, len(row))
 		for x, partDef := range row {
 			if partDef != nil {
-				part := partDef.Construct(
+				part := partDef.ToPartDef().Construct(
 					world,
 					ship,
 					ps,
