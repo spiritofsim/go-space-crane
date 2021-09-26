@@ -25,7 +25,7 @@
      showgrid="false"
      inkscape:zoom="8.7988368"
      inkscape:cx="94.842082"
-     inkscape:cy="61.201272"
+     inkscape:cy="70.520685"
      inkscape:window-width="2560"
      inkscape:window-height="1361"
      inkscape:window-x="2391"
@@ -132,8 +132,8 @@ maxfuel: 5000
          id="title2665">ship</title>
     </rect>
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 0.07517566,14.91485 0,0.03007026 H 25.409372 L 24.02614,32.626233 -0.57133497,32.566094 0.07517566,14.91485 -0.78182681,14.94492 -1.1727402,32.896868 24.838037,32.776586 25.800285,-0.42098367 -0.57133497,-0.3909134 -0.7216863,14.373585 Z"
+       style="fill:none;stroke:#000000;stroke-width:0.298545px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 0.07517566,10.002227 0,-8.949022 H 25.409372 L 24.02614,32.552296 -0.57133497,32.475728 0.07517566,10.002227 -0.78182681,10.040512 -1.1727402,32.896868 24.838037,32.743725 25.800285,-9.5233023 -0.57133497,-9.4850169 -0.7216863,9.3130899 Z"
        id="path2872" />
   </g>
 </svg>
