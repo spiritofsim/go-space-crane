@@ -77,7 +77,7 @@ func NewNPParticleSystem() *NPParticleSystem {
 }
 
 func (ps *NPParticleSystem) Emit(pos box2d.B2Vec2, dir float64, angDisp float64) {
-	count := RandInt(10, 30)
+	count := RandInt(1, 50)
 
 	for i := 0; i < count; i++ {
 		ang := RandFloat(dir-angDisp/2, dir+angDisp/2)
@@ -89,7 +89,7 @@ func (ps *NPParticleSystem) Emit(pos box2d.B2Vec2, dir float64, angDisp float64)
 		lvel := box2d.MakeB2Vec2(c, s)
 		lvel.OperatorScalarMulInplace(speed)
 
-		rpos := box2d.B2Vec2Add(pos, box2d.B2Vec2{RandFloat(-0.2, 0.2), RandFloat(-0.2, 0.2)})
+		rpos := box2d.B2Vec2Add(pos, box2d.B2Vec2{RandFloat(-0.2, 0.2), RandFloat(-0.5, 0.5)})
 
 		p := NewParticle(ttl, rpos, lvel, ang, avel)
 		ps.particles[p] = struct{}{}

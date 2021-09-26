@@ -70,7 +70,8 @@ func (e *Engine) Draw(screen *ebiten.Image, cam Cam) {
 	pos := box2d.B2Vec2Add(
 		e.GetPos(),
 		box2d.B2RotVec2Mul(*box2d.NewB2RotFromAngle(e.GetAng()), box2d.MakeB2Vec2(0.5, 0)))
-	e.ps.Emit(pos, e.GetAng(), math.Pi/2)
+	e.ps.
+		Emit(pos, e.GetAng(), math.Pi/4)
 }
 
 func (e *Engine) GetBody() *box2d.B2Body {
