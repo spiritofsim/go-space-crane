@@ -117,6 +117,13 @@ func NewShip(
 	return ship
 }
 
+func (s *Ship) ApplyForce(force box2d.B2Vec2) {
+	for _, part := range s.parts {
+		body := part.GetBody()
+		body.ApplyForce(force, body.GetPosition(), true)
+	}
+}
+
 func (s *Ship) GetPos() box2d.B2Vec2 {
 	// TODO:
 	return s.parts[0].GetPos()

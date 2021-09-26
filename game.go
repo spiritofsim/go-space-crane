@@ -50,11 +50,30 @@ func (g *Game) Update() error {
 		g.cam.Zoom = MaxCamZoom
 	}
 
+	g.collideWorldBox()
+
 	g.ps.Update()
 	g.ship.Update()
 
 	g.world.Step(1.0/60.0, 8, 3)
 	return nil
+}
+
+func (g *Game) collideWorldBox() {
+	force := 20.0
+	shipPos := g.ship.GetPos()
+	if shipPos.X < 0 {
+		g.ship.ApplyForce(box2d.MakeB2Vec2(force, 0))
+	}
+	if shipPos.Y < 0 {
+		g.ship.ApplyForce(box2d.MakeB2Vec2(0, force))
+	}
+	if shipPos.X > g.terrain.size.X {
+		g.ship.ApplyForce(box2d.MakeB2Vec2(-force, 0))
+	}
+	if shipPos.Y > g.terrain.size.Y {
+		g.ship.ApplyForce(box2d.MakeB2Vec2(0, -force))
+	}
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
