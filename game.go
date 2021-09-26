@@ -53,7 +53,7 @@ func (g *Game) Update() error {
 		g.cam.Zoom = MaxCamZoom
 	}
 
-	g.collideWorldBox()
+	//g.collideWorldBox()
 
 	g.ps.Update()
 	g.ship.Update()
