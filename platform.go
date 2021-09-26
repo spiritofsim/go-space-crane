@@ -46,8 +46,6 @@ func NewPlatform(world *box2d.B2World, pos box2d.B2Vec2, size box2d.B2Vec2, fuel
 }
 
 func (p *Platform) Draw(screen *ebiten.Image, cam Cam) {
-	//DrawDebugBody(screen, p.body, cam, color.White)
-
 	pos := p.body.GetPosition()
 	x := box2d.MakeB2Vec2(-1, -0.5)
 	x = cam.Project(x, pos, 0)

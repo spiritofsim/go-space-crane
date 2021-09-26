@@ -89,7 +89,9 @@ func (ps *NPParticleSystem) Emit(pos box2d.B2Vec2, dir float64, angDisp float64)
 		lvel := box2d.MakeB2Vec2(c, s)
 		lvel.OperatorScalarMulInplace(speed)
 
-		p := NewParticle(ttl, pos, lvel, ang, avel)
+		rpos := box2d.B2Vec2Add(pos, box2d.B2Vec2{RandFloat(-0.2, 0.2), RandFloat(-0.2, 0.2)})
+
+		p := NewParticle(ttl, rpos, lvel, ang, avel)
 		ps.particles[p] = struct{}{}
 	}
 }
