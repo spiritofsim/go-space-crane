@@ -1,7 +1,7 @@
 package main
 
 const (
-	Debug = false
+	Debug = true
 
 	ScreenWidth  = 1920
 	ScreenHeight = 1080
