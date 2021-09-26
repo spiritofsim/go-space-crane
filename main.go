@@ -48,7 +48,8 @@ func main() {
 	shipDef, shipPos, terrain, platforms, cargos := LoadLevel(&world, "test_level")
 	ship := NewShip(&world, particles, shipPos, shipDef)
 
-	game := NewGame(&world, cam, ship, terrain, particles, platforms, cargos)
+	bg := NewBackground()
+	game := NewGame(&world, cam, ship, terrain, bg, particles, platforms, cargos)
 	world.SetContactListener(game)
 	err := ebiten.RunGame(game)
 	checkErr(err)

@@ -6,59 +6,59 @@ import (
 	"math"
 )
 
-type Particle struct {
+type PhysicalParticle struct {
 	*GameObj
 	age int
 	ttl int
 }
 
-func NewParticle(
+func NewPhysicalParticle(
 	world *box2d.B2World,
 	ttl int,
 	pos box2d.B2Vec2,
 	lvel box2d.B2Vec2,
 	ang float64,
-	avel float64) *Particle {
+	avel float64) *PhysicalParticle {
 
 	obj := NewGameObj(world, flameParticleSprite, pos, ang, avel, lvel, DefaultFriction)
-	return &Particle{
+	return &PhysicalParticle{
 		GameObj: obj,
 		age:     0,
 		ttl:     ttl,
 	}
 }
 
-func (p *Particle) IsDead() bool {
+func (p *PhysicalParticle) IsDead() bool {
 	return p.age > p.ttl
 }
 
-func (p *Particle) IncAge() {
+func (p *PhysicalParticle) IncAge() {
 	p.age++
 }
 
-func (p *Particle) Destroy() {
+func (p *PhysicalParticle) Destroy() {
 	p.world.DestroyBody(p.body)
 }
 
-func (p *Particle) Update() {
+func (p *PhysicalParticle) Update() {
 	p.age++
 }
 
-type ParticleSystem struct {
+type PhysicalParticleSystem struct {
 	world     *box2d.B2World
 	gravity   box2d.B2Vec2
-	particles map[*Particle]struct{}
+	particles map[*PhysicalParticle]struct{}
 }
 
-func NewParticleSystem(world *box2d.B2World, gravity box2d.B2Vec2) *ParticleSystem {
-	return &ParticleSystem{
+func NewParticleSystem(world *box2d.B2World, gravity box2d.B2Vec2) *PhysicalParticleSystem {
+	return &PhysicalParticleSystem{
 		world:     world,
 		gravity:   box2d.B2Vec2MulScalar(0.001, gravity),
-		particles: make(map[*Particle]struct{}),
+		particles: make(map[*PhysicalParticle]struct{}),
 	}
 }
 
-func (ps *ParticleSystem) Emit(pos box2d.B2Vec2, dir float64, angDisp float64) {
+func (ps *PhysicalParticleSystem) Emit(pos box2d.B2Vec2, dir float64, angDisp float64) {
 	count := RandInt(5, 20)
 
 	for i := 0; i < count; i++ {
@@ -71,12 +71,12 @@ func (ps *ParticleSystem) Emit(pos box2d.B2Vec2, dir float64, angDisp float64) {
 		lvel := box2d.MakeB2Vec2(c, s)
 		lvel.OperatorScalarMulInplace(speed)
 
-		p := NewParticle(ps.world, ttl, pos, lvel, ang, avel)
+		p := NewPhysicalParticle(ps.world, ttl, pos, lvel, ang, avel)
 		ps.particles[p] = struct{}{}
 	}
 }
 
-func (ps *ParticleSystem) Update() {
+func (ps *PhysicalParticleSystem) Update() {
 	for p := range ps.particles {
 		p.IncAge()
 		p.Update()
@@ -87,7 +87,7 @@ func (ps *ParticleSystem) Update() {
 	}
 }
 
-func (ps *ParticleSystem) Draw(screen *ebiten.Image, cam Cam) {
+func (ps *PhysicalParticleSystem) Draw(screen *ebiten.Image, cam Cam) {
 	for p := range ps.particles {
 		p.Draw(screen, cam)
 	}

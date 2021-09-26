@@ -9,13 +9,14 @@ import (
 )
 
 type Game struct {
-	world     *box2d.B2World
-	cam       *Cam
-	ship      *Ship
-	terrain   *Terrain
-	ps        *ParticleSystem
-	platforms []*Platform
-	cargos    []*GameObj
+	world      *box2d.B2World
+	cam        *Cam
+	ship       *Ship
+	terrain    *Terrain
+	background Background
+	ps         *PhysicalParticleSystem
+	platforms  []*Platform
+	cargos     []*GameObj
 }
 
 func NewGame(
@@ -23,25 +24,27 @@ func NewGame(
 	cam *Cam,
 	ship *Ship,
 	terrain *Terrain,
-	ps *ParticleSystem,
+	background Background,
+	ps *PhysicalParticleSystem,
 	platforms []*Platform,
 	cargos []*GameObj) *Game {
 
 	return &Game{
-		world:     world,
-		cam:       cam,
-		ship:      ship,
-		terrain:   terrain,
-		ps:        ps,
-		platforms: platforms,
-		cargos:    cargos,
+		world:      world,
+		cam:        cam,
+		ship:       ship,
+		terrain:    terrain,
+		background: background,
+		ps:         ps,
+		platforms:  platforms,
+		cargos:     cargos,
 	}
 }
 
 func (g *Game) Update() error {
 	g.cam.Pos = g.ship.GetPos()
 	g.cam.Zoom = MaxCamZoom - g.ship.GetVelocity()*10
-	//g.cam.Ang = -g.ship.body.GetAngle()
+	//g.cam.Ang = -g.ship.GetAng()
 
 	if g.cam.Zoom <= MinCamZoom {
 		g.cam.Zoom = MinCamZoom
@@ -78,6 +81,7 @@ func (g *Game) collideWorldBox() {
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
+	g.background.Draw(screen, *g.cam)
 	g.ship.Draw(screen, *g.cam)
 	g.terrain.Draw(screen, *g.cam)
 	for _, platform := range g.platforms {

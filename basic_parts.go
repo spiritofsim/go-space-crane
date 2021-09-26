@@ -15,7 +15,7 @@ func (p *BasicPart) Update() {}
 func ConstructBasicPart(
 	world *box2d.B2World,
 	ship *Ship,
-	ps *ParticleSystem,
+	ps *PhysicalParticleSystem,
 	shipPos box2d.B2Vec2,
 	shipSize box2d.B2Vec2,
 	pos box2d.B2Vec2,
@@ -52,7 +52,7 @@ type CabinDef struct {
 func (d CabinDef) Construct(
 	world *box2d.B2World,
 	ship *Ship,
-	ps *ParticleSystem,
+	ps *PhysicalParticleSystem,
 	shipPos box2d.B2Vec2,
 	shipSize box2d.B2Vec2,
 	pos box2d.B2Vec2) Part {
@@ -65,7 +65,7 @@ type TankDef struct {
 func (d TankDef) Construct(
 	world *box2d.B2World,
 	ship *Ship,
-	ps *ParticleSystem,
+	ps *PhysicalParticleSystem,
 	shipPos box2d.B2Vec2,
 	shipSize box2d.B2Vec2,
 	pos box2d.B2Vec2) Part {
@@ -79,7 +79,7 @@ type LegDef struct {
 func (d LegDef) Construct(
 	world *box2d.B2World,
 	ship *Ship,
-	ps *ParticleSystem,
+	ps *PhysicalParticleSystem,
 	shipPos box2d.B2Vec2, // TODO: remove. use ship
 	shipSize box2d.B2Vec2,
 	pos box2d.B2Vec2) Part {
@@ -94,7 +94,7 @@ type LegFasteningDef struct {
 func (d LegFasteningDef) Construct(
 	world *box2d.B2World,
 	ship *Ship,
-	ps *ParticleSystem,
+	ps *PhysicalParticleSystem,
 	shipPos box2d.B2Vec2,
 	shipSize box2d.B2Vec2,
 	pos box2d.B2Vec2) Part {

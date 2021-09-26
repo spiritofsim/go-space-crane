@@ -34,6 +34,7 @@ func NewTerrain(
 		body.CreateFixtureFromDef(&fd)
 
 		// calc level size
+		// TODO: add bounds to world metadata
 		for _, vert := range verts {
 			if vert.X > size.X {
 				size.X = vert.X
