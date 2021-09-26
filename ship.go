@@ -7,8 +7,7 @@ import (
 )
 
 const (
-	// TODO: rename to ShipImpulseDestructionThreshold
-	ShipImpulseThreshold = 20
+	ShipImpulseDestructionThreshold = 20
 )
 
 type ShipDef struct {
@@ -18,8 +17,6 @@ type ShipDef struct {
 	MaxFuel float64
 }
 
-// TODO: think about construct ship from multiple bodies and joint them with Weld joint
-// With this joints we can destroy ship parts in the future
 type Ship struct {
 	parts []Part
 	size  box2d.B2Vec2

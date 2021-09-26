@@ -98,7 +98,20 @@ func (g *Game) Draw(screen *ebiten.Image) {
 
 	if Debug {
 		g.drawDebugBodies(screen)
+		g.printDebugInfo(screen)
 	}
+}
+
+func (g *Game) printDebugInfo(screen *ebiten.Image) {
+	ebitenutil.DebugPrintAt(
+		screen,
+		fmt.Sprintf(
+			"TPS: %0.2f\nFPS: %0.2f\n",
+			ebiten.CurrentTPS(),
+			ebiten.CurrentFPS(),
+		),
+		20, 100)
+
 }
 
 func (g *Game) drawDebugBodies(screen *ebiten.Image) {
@@ -171,7 +184,7 @@ func (g *Game) PartContact(
 
 	if ct == ContactTypePostSolve {
 		imp := impulse.NormalImpulses[0]
-		if imp > ShipImpulseThreshold {
+		if imp > ShipImpulseDestructionThreshold {
 			g.ship.energy -= imp
 		}
 	}

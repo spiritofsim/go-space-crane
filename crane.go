@@ -94,6 +94,7 @@ func (c *Crane) windup() {
 	c.world.DestroyBody(c.chain[0].body)
 	c.chain = c.chain[1:]
 
+	// TODO: apply additional force jaws
 	if len(c.chain) > 0 {
 		// TODO: check if previous join destroyed by destroying its body
 		// TODO: use part rotation. now it is hardcoded
@@ -108,7 +109,7 @@ func (c *Crane) unwind() {
 	chainEl := NewGameObj(c.world, chainElSprite, pos, 0, 0, box2d.B2Vec2_zero, 0)
 
 	if len(c.chain) > 0 {
-		// TODO: apply force to prev body if not ship
+		// TODO: apply additional force jaws
 		prevBody := c.chain[0].body
 		c.destroyCrainJoints(prevBody)
 		c.createChainJoint(prevBody, box2d.MakeB2Vec2(0, -c.chainElSize.Y/2), chainEl.body, box2d.MakeB2Vec2(0, c.chainElSize.Y/2))

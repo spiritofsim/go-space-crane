@@ -15,14 +15,14 @@ func NewCraneJaws(c *Crane) *CraneJaws {
 	upper := NewGameObj(
 		c.world,
 		craneUpperJawSprite,
-		box2d.B2Vec2Add(c.GetPos(), box2d.MakeB2Vec2(0, 0.5)), //TODO: 4debug
+		box2d.B2Vec2Add(c.GetPos(), box2d.MakeB2Vec2(0, 0.5)),
 		DirectionDown.GetAng(), 0,
 		box2d.B2Vec2_zero,
 		1)
 	lower := NewGameObj(
 		c.world,
 		craneLowerJawSprite,
-		box2d.B2Vec2Add(c.GetPos(), box2d.MakeB2Vec2(0, 0.5)), //TODO: 4debug
+		box2d.B2Vec2Add(c.GetPos(), box2d.MakeB2Vec2(0, 0.5)),
 		DirectionDown.GetAng(), 0,
 		box2d.B2Vec2_zero,
 		1)
