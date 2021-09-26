@@ -43,13 +43,13 @@ func main() {
 	world := box2d.MakeB2World(gravity)
 
 	cam := NewCam()
-	particles := NewParticleSystem(&world, gravity)
+	ps := NewNPParticleSystem()
 
 	shipDef, shipPos, terrain, platforms, cargos := LoadLevel(&world, "test_level")
-	ship := NewShip(&world, particles, shipPos, shipDef)
+	ship := NewShip(&world, ps, shipPos, shipDef)
 
 	bg := NewBackground()
-	game := NewGame(&world, cam, ship, terrain, bg, particles, platforms, cargos)
+	game := NewGame(&world, cam, ship, terrain, bg, ps, platforms, cargos)
 	world.SetContactListener(game)
 	err := ebiten.RunGame(game)
 	checkErr(err)

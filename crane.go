@@ -23,7 +23,7 @@ type Crane struct {
 func (d CraneDef) Construct(
 	world *box2d.B2World,
 	ship *Ship,
-	ps *PhysicalParticleSystem,
+	ps ParticleSystem,
 	shipPos box2d.B2Vec2,
 	shipSize box2d.B2Vec2,
 	pos box2d.B2Vec2) Part {

@@ -27,8 +27,6 @@ type Ship struct {
 	// We need it to calculate ship orientation. At init it must be 0
 	originalAng float64
 
-	ps *PhysicalParticleSystem
-
 	energy  float64
 	fuel    float64
 	maxFuel float64
@@ -39,7 +37,7 @@ type Ship struct {
 
 func NewShip(
 	world *box2d.B2World,
-	ps *PhysicalParticleSystem,
+	ps ParticleSystem,
 	pos box2d.B2Vec2,
 	def ShipDef) *Ship {
 
@@ -47,7 +45,6 @@ func NewShip(
 
 	ship := &Ship{
 		size:    shipSize,
-		ps:      ps,
 		energy:  def.Energy,
 		fuel:    def.Fuel,
 		maxFuel: def.MaxFuel,

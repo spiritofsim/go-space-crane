@@ -46,14 +46,12 @@ func (p *PhysicalParticle) Update() {
 
 type PhysicalParticleSystem struct {
 	world     *box2d.B2World
-	gravity   box2d.B2Vec2
 	particles map[*PhysicalParticle]struct{}
 }
 
-func NewParticleSystem(world *box2d.B2World, gravity box2d.B2Vec2) *PhysicalParticleSystem {
+func NewPhysicalParticleSystem(world *box2d.B2World) *PhysicalParticleSystem {
 	return &PhysicalParticleSystem{
 		world:     world,
-		gravity:   box2d.B2Vec2MulScalar(0.001, gravity),
 		particles: make(map[*PhysicalParticle]struct{}),
 	}
 }

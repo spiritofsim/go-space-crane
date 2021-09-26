@@ -14,7 +14,7 @@ type Game struct {
 	ship       *Ship
 	terrain    *Terrain
 	background Background
-	ps         *PhysicalParticleSystem
+	ps         ParticleSystem
 	platforms  []*Platform
 	cargos     []*GameObj
 }
@@ -25,7 +25,7 @@ func NewGame(
 	ship *Ship,
 	terrain *Terrain,
 	background Background,
-	ps *PhysicalParticleSystem,
+	ps ParticleSystem,
 	platforms []*Platform,
 	cargos []*GameObj) *Game {
 
@@ -82,6 +82,7 @@ func (g *Game) collideWorldBox() {
 
 func (g *Game) Draw(screen *ebiten.Image) {
 	g.background.Draw(screen, *g.cam)
+	g.ps.Draw(screen, *g.cam)
 	g.ship.Draw(screen, *g.cam)
 	g.terrain.Draw(screen, *g.cam)
 	for _, platform := range g.platforms {
@@ -90,7 +91,6 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	for _, cargo := range g.cargos {
 		cargo.Draw(screen, *g.cam)
 	}
-	g.ps.Draw(screen, *g.cam)
 
 	g.terrain.Draw(screen, *g.cam)
 	g.drawHood(screen)
