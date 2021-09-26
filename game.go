@@ -59,6 +59,7 @@ func (g *Game) Update() error {
 	return nil
 }
 
+// TODO: apply force depends on ship impulse just to stop it
 func (g *Game) collideWorldBox() {
 	force := 20.0
 	shipPos := g.ship.GetPos()

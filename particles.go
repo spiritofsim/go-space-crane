@@ -59,7 +59,7 @@ func NewParticleSystem(world *box2d.B2World, gravity box2d.B2Vec2) *ParticleSyst
 }
 
 func (ps *ParticleSystem) Emit(pos box2d.B2Vec2, dir float64, angDisp float64) {
-	count := RandInt(5, 10)
+	count := RandInt(5, 20)
 
 	for i := 0; i < count; i++ {
 		ang := RandFloat(dir-angDisp/2, dir+angDisp/2)
