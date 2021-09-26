@@ -42,12 +42,12 @@ func (d CraneDef) Construct(
 			d.Dir.GetAng(), 0,
 			box2d.B2Vec2_zero,
 			DefaultFriction),
+		chainElSize: getShapeSize(chainElSprite.vertsSet[0]),
 	}
 	crane.GetBody().SetUserData(crane)
 
 	crane.unwind()
 	crane.jaws = NewCraneJaws(crane)
-	crane.chainElSize = getShapeSize(chainElSprite.vertsSet[0])
 
 	return crane
 }
