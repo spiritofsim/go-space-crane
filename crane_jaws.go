@@ -63,10 +63,10 @@ func (j *CraneJaws) Draw(screen *ebiten.Image, cam Cam) {
 	j.lower.Draw(screen, cam)
 }
 
-func (j *CraneJaws) Open() {
-	j.motor.SetMotorSpeed(10)
-}
-
-func (j *CraneJaws) Close() {
+func (j *CraneJaws) OpenClose() {
+	if j.motor.GetMotorSpeed() < 0 {
+		j.motor.SetMotorSpeed(10)
+		return
+	}
 	j.motor.SetMotorSpeed(-10)
 }

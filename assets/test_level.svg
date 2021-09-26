@@ -84,7 +84,7 @@
        x="3.7587829"
        y="6.7056684">
       <desc
-         id="desc2697">parts:
+         id="desc2747">parts:
   - - null
     - null
     - cabin:
@@ -116,6 +116,14 @@
             - 31
     - leg:
           dir: D
+  - - leg:
+          dir: D
+    - null
+    - null
+    - null
+    - leg:
+          dir: D
+
 energy: 100
 fuel: 5000
 maxfuel: 5000

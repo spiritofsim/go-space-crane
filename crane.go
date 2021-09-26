@@ -80,11 +80,8 @@ func (c *Crane) Update() {
 		if key == ebiten.KeyA {
 			c.unwind()
 		}
-		if key == ebiten.KeyE {
-			c.jaws.Open()
-		}
-		if key == ebiten.KeyW {
-			c.jaws.Close()
+		if key == ebiten.KeyTab {
+			c.jaws.OpenClose()
 		}
 	}
 }
