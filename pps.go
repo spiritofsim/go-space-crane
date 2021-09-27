@@ -20,7 +20,7 @@ func NewPhysicalParticle(
 	ang float64,
 	avel float64) *PhysicalParticle {
 
-	obj := NewGameObj(world, flameParticleSprite, pos, ang, avel, lvel, DefaultFriction)
+	obj := NewGameObj(world, flameParticleSprite, pos, ang, avel, lvel, DefaultFriction, DefaultFixtureDensity, DefaultFixtureRestitution)
 	return &PhysicalParticle{
 		GameObj: obj,
 		age:     0,

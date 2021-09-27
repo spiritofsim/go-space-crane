@@ -19,7 +19,9 @@ func NewGameObj(
 	ang float64,
 	aVel float64,
 	lVel box2d.B2Vec2,
-	friction float64) *GameObj {
+	friction float64,
+	density float64,
+	restitution float64) *GameObj {
 
 	bd := box2d.MakeB2BodyDef()
 	bd.Position.Set(pos.X, pos.Y)
@@ -35,8 +37,8 @@ func NewGameObj(
 		fd.Filter = box2d.MakeB2Filter()
 		fd.Shape = &shape
 		fd.Friction = friction
-		fd.Density = DefaultFixtureDensity
-		fd.Restitution = DefaultFixtureRestitution
+		fd.Density = density
+		fd.Restitution = restitution
 		body.CreateFixtureFromDef(&fd)
 	}
 

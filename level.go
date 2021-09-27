@@ -36,7 +36,7 @@ func LoadLevel(world *box2d.B2World, name string) (shipDef ShipDef, shipPos box2
 				rect.Size,
 				float64(fuel)))
 		case "cargo":
-			cargo := NewGameObj(world, cargoSprite, rect.Pos, 0, 0, box2d.B2Vec2_zero, DefaultFriction)
+			cargo := NewGameObj(world, cargoSprite, rect.Pos, 0, 0, box2d.B2Vec2_zero, DefaultFriction, DefaultFixtureDensity, DefaultFixtureRestitution)
 			cargos = append(cargos, cargo)
 		case "ship":
 			shipPos = rect.Pos

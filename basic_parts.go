@@ -40,7 +40,7 @@ func ConstructBasicPart(
 		ang,
 		0,
 		box2d.B2Vec2_zero,
-		DefaultFriction)}
+		DefaultFriction, DefaultFixtureDensity, DefaultFixtureRestitution)}
 	part.GetBody().SetUserData(part)
 	return part
 }

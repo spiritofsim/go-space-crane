@@ -41,7 +41,7 @@ func (d CraneDef) Construct(
 			worldPos,
 			d.Dir.GetAng(), 0,
 			box2d.B2Vec2_zero,
-			DefaultFriction),
+			DefaultFriction, DefaultFixtureDensity, DefaultFixtureRestitution),
 		chainElSize: getShapeSize(chainElSprite.vertsSet[0]),
 	}
 	crane.GetBody().SetUserData(crane)
@@ -65,6 +65,8 @@ func (c *Crane) GetBody() *box2d.B2Body {
 }
 
 func (c *Crane) Update() {
+	c.jaws.Update()
+
 	// TODO: delay to const
 	if c.lastControlled.Add(time.Second / 5).After(time.Now()) {
 		return
@@ -94,6 +96,13 @@ func (c *Crane) windup() {
 	c.world.DestroyBody(c.chain[0].body)
 	c.chain = c.chain[1:]
 
+	f := 100.0
+	c.jaws.upper.body.ApplyForce(box2d.B2Vec2{0, -f}, c.jaws.upper.body.GetPosition(), true)
+	c.jaws.lower.body.ApplyForce(box2d.B2Vec2{0, -f}, c.jaws.upper.body.GetPosition(), true)
+	//for _, chainEl := range c.chain {
+	//	chainEl.body.ApplyForce(box2d.B2Vec2{0, -f}, c.jaws.upper.body.GetPosition(), true)
+	//}
+
 	// TODO: apply additional force jaws
 	if len(c.chain) > 0 {
 		// TODO: check if previous join destroyed by destroying its body
@@ -106,7 +115,13 @@ func (c *Crane) unwind() {
 	// TODO: use angle (see engine)
 	pos := box2d.B2Vec2Add(c.body.GetPosition(), box2d.B2Vec2{0, 0.5 + c.chainElSize.Y/2})
 
-	chainEl := NewGameObj(c.world, chainElSprite, pos, 0, 0, box2d.B2Vec2_zero, 0)
+	// Chain must be massive (see density) to joint work well
+	chainEl := NewGameObj(
+		c.world,
+		chainElSprite,
+		pos, 0, 0,
+		box2d.B2Vec2_zero,
+		DefaultFriction, 100, DefaultFixtureRestitution)
 
 	if len(c.chain) > 0 {
 		// TODO: apply additional force jaws

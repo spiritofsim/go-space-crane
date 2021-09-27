@@ -9,8 +9,8 @@ const (
 	Gravity                   = 0.6
 	DefaultFixtureDensity     = 20
 	DefaultFixtureRestitution = 0.2
-	EngineFuelConsumption     = 0.01
 	DefaultFriction           = 1
+	EngineFuelConsumption     = 0.01
 	AssetsDir                 = "assets"
 
 	MinCamZoom, MaxCamZoom = 20, 50
