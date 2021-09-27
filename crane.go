@@ -142,7 +142,7 @@ func (c *Crane) createChainJoint(
 	bodyB *box2d.B2Body,
 	lpB box2d.B2Vec2) {
 
-	// TODO: try chainJoint
+	// TODO: try ropeJoint
 	rjd := box2d.MakeB2RevoluteJointDef()
 	rjd.BodyA = bodyA
 	rjd.LocalAnchorA = lpA

@@ -103,14 +103,14 @@
           dir: D
     - engine:
           dir: D
-          power: 100
+          power: 150
           keys:
             - 30
             - 31
     - null
     - engine:
           dir: D
-          power: 100
+          power: 150
           keys:
             - 29
             - 31
