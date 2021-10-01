@@ -45,7 +45,7 @@ func main() {
 	cam := NewCam()
 	ps := NewNPParticleSystem()
 
-	shipDef, shipPos, terrain, platforms, cargos := LoadLevel(&world, "test_level")
+	shipDef, shipPos, terrain, platforms, cargos := LoadLevel(&world, "train_level")
 	ship := NewShip(&world, ps, shipPos, shipDef)
 
 	bg := NewBackground()

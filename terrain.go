@@ -55,9 +55,8 @@ func NewTerrain(
 func (g *Terrain) Draw(screen *ebiten.Image, cam Cam) {
 	opts := &ebiten.DrawImageOptions{}
 
-	//bounds := g.img.Bounds()
-	// PS resolution: 100px/cm
-	opts.GeoM.Scale(0.01, 0.01)
+	// resolution: 500px/cm
+	opts.GeoM.Scale(0.02, 0.02)
 	opts.GeoM.Translate(-cam.Pos.X, -cam.Pos.Y)
 	opts.GeoM.Scale(cam.Zoom, cam.Zoom)
 	opts.GeoM.Rotate(cam.Ang)
