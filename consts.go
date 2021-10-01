@@ -12,6 +12,7 @@ const (
 	DefaultFriction           = 1
 	EngineFuelConsumption     = 0.01
 	AssetsDir                 = "assets"
+	ShipsDir                  = "ships"
 
 	MinCamZoom, MaxCamZoom = 20, 50
 )

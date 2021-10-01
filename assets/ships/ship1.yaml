@@ -1,0 +1,29 @@
+parts:
+  - - null
+    - cabin:
+          dir: U
+    - null
+  - - tank: {}
+    - crane:
+          dir: D
+    - tank: {}
+  - - engine:
+          dir: D
+          power: 150
+          keys:
+            - 30
+            - 31
+    - null
+    - engine:
+          dir: D
+          power: 150
+          keys:
+            - 29
+            - 31
+  - - null
+    - null
+    - null
+
+energy: 100
+fuel: 5000
+maxfuel: 5000

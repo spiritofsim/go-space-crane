@@ -4,6 +4,7 @@ import (
 	"github.com/ByteArena/box2d"
 	svg2 "go-space-crane/svg"
 	"gopkg.in/yaml.v3"
+	"io/ioutil"
 	"path"
 	"strconv"
 )
@@ -40,7 +41,10 @@ func LoadLevel(world *box2d.B2World, name string) (shipDef ShipDef, shipPos box2
 			cargos = append(cargos, cargo)
 		case "ship":
 			shipPos = rect.Pos
-			checkErr(yaml.Unmarshal([]byte(rect.Description), &shipDef))
+			shipName := rect.Description
+			shipData, err := ioutil.ReadFile(path.Join(AssetsDir, ShipsDir, shipName+".yaml"))
+			checkErr(err)
+			checkErr(yaml.Unmarshal(shipData, &shipDef))
 		}
 	}
 
