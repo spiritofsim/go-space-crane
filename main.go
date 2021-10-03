@@ -51,8 +51,12 @@ func main() {
 	shipDef, shipPos, terrain, platforms, cargos := LoadLevel(&world, "train_level")
 	ship := NewShip(&world, ps, shipPos, shipDef)
 
+	tasks := []Task{
+		NewShipPlatformsTask("p1", "p2"),
+	}
+
 	bg := NewBackground()
-	game := NewGame(&world, cam, ship, terrain, bg, ps, platforms, cargos)
+	game := NewGame(&world, cam, ship, terrain, bg, ps, platforms, cargos, tasks)
 	world.SetContactListener(game)
 	err := ebiten.RunGame(game)
 	checkErr(err)

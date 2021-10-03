@@ -8,40 +8,36 @@ import (
 )
 
 type Platform struct {
-	body *box2d.B2Body
+	*GameObj
+	id   string
 	fuel float64
-
 	ship *Ship
 }
 
-func NewPlatform(world *box2d.B2World, pos box2d.B2Vec2, size box2d.B2Vec2, fuel float64) *Platform {
-	bd := box2d.MakeB2BodyDef()
-	bd.Position.Set(pos.X, pos.Y)
-	bd.Type = box2d.B2BodyType.B2_staticBody
-	//bd.AllowSleep = false
-	body := world.CreateBody(&bd)
-
+func NewPlatform(id string, world *box2d.B2World, pos box2d.B2Vec2, size box2d.B2Vec2, fuel float64) *Platform {
 	verts := []box2d.B2Vec2{
 		{-size.X / 2, -size.Y / 2},
 		{size.X / 2, -size.Y / 2},
 		{size.X / 2, size.Y / 2},
 		{-size.X / 2, size.Y / 2},
 	}
-
-	shape := box2d.MakeB2PolygonShape()
-	shape.Set(verts, len(verts))
-	fd := box2d.MakeB2FixtureDef()
-	fd.Filter = box2d.MakeB2Filter()
-	fd.Shape = &shape
-	fd.Density = DefaultFixtureDensity
-	fd.Restitution = DefaultFixtureRestitution
-	body.CreateFixtureFromDef(&fd)
+	gobj := NewGameObj(
+		world,
+		NewSprite(nil, [][]box2d.B2Vec2{verts}),
+		pos,
+		0,
+		0,
+		box2d.B2Vec2_zero,
+		DefaultFriction,
+		DefaultFixtureDensity,
+		DefaultFixtureRestitution)
 
 	platform := &Platform{
-		fuel: fuel,
-		body: body,
+		GameObj: gobj,
+		id:      id,
+		fuel:    fuel,
 	}
-	body.SetUserData(platform)
+	platform.body.SetUserData(platform)
 	return platform
 }
 
@@ -49,6 +45,5 @@ func (p *Platform) Draw(screen *ebiten.Image, cam Cam) {
 	pos := p.body.GetPosition()
 	x := box2d.MakeB2Vec2(-1, -0.5)
 	x = cam.Project(x, pos, 0)
-
 	ebitenutil.DebugPrintAt(screen, fmt.Sprintf("Fuel: %0.2f", p.fuel), int(x.X), int(x.Y))
 }

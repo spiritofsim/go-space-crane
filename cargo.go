@@ -2,41 +2,29 @@ package main
 
 import (
 	"github.com/ByteArena/box2d"
-	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type Cargo struct {
-	body *box2d.B2Body
+	*GameObj
+	id string
 }
 
-func NewCargo(world *box2d.B2World, pos box2d.B2Vec2, size box2d.B2Vec2) *Cargo {
-	bd := box2d.MakeB2BodyDef()
-	bd.Position.Set(pos.X, pos.Y)
-	bd.Type = box2d.B2BodyType.B2_dynamicBody
-	body := world.CreateBody(&bd)
-
-	verts := []box2d.B2Vec2{
-		{-size.X / 2, -size.Y / 2},
-		{size.X / 2, -size.Y / 2},
-		{size.X / 2, size.Y / 2},
-		{-size.X / 2, size.Y / 2},
-	}
-
-	shape := box2d.MakeB2PolygonShape()
-	shape.Set(verts, len(verts))
-	fd := box2d.MakeB2FixtureDef()
-	fd.Filter = box2d.MakeB2Filter()
-	fd.Shape = &shape
-	fd.Density = DefaultFixtureDensity
-	fd.Restitution = DefaultFixtureRestitution
-	body.CreateFixtureFromDef(&fd)
+func NewCargo(id string, world *box2d.B2World, pos box2d.B2Vec2, size box2d.B2Vec2) *Cargo {
+	gobj := NewGameObj(
+		world,
+		cargoSprite,
+		pos,
+		0,
+		0,
+		box2d.B2Vec2_zero,
+		DefaultFriction,
+		DefaultFixtureDensity,
+		DefaultFixtureRestitution)
 
 	cargo := &Cargo{
-		body: body,
+		GameObj: gobj,
+		id:      id,
 	}
-	body.SetUserData(cargo)
+	cargo.body.SetUserData(cargo)
 	return cargo
-}
-
-func (c *Cargo) Draw(screen *ebiten.Image, cam Cam) {
 }

@@ -65,6 +65,7 @@ func (g *GameObj) GetPos() box2d.B2Vec2 {
 	return g.body.GetPosition()
 }
 
+// TODO: move this to sprite
 func (g *GameObj) Draw(screen *ebiten.Image, cam Cam) {
 	opts := &ebiten.DrawImageOptions{}
 

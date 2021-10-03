@@ -28,8 +28,7 @@ type Ship struct {
 	fuel    float64
 	maxFuel float64
 
-	// if ship is landed, it is a pointer to platform to refuel ship
-	currentPlatform *Platform
+	contactPlatform *Platform
 }
 
 func NewShip(
@@ -143,9 +142,9 @@ func (s *Ship) Update() {
 
 	// TODO: land only if ship is in horizontal state
 	// TODO: align angle ! it can be negative or > 2*pi
-	if s.currentPlatform != nil && s.currentPlatform.fuel > 0 && FloatEquals(vel, 0) {
+	if s.contactPlatform != nil && s.contactPlatform.fuel > 0 && FloatEquals(vel, 0) {
 		if s.fuel < s.maxFuel {
-			s.currentPlatform.fuel--
+			s.contactPlatform.fuel--
 			s.fuel++
 		}
 	}

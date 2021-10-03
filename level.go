@@ -18,7 +18,7 @@ func LoadLevel(world *box2d.B2World, name string) (
 	shipPos box2d.B2Vec2,
 	terrain *Terrain,
 	platforms []*Platform,
-	cargos []*GameObj) {
+	cargos []*Cargo) {
 
 	svg, err := svg2.Load(path.Join(AssetsDir, name+".svg"))
 	checkErr(err)
@@ -31,13 +31,14 @@ func LoadLevel(world *box2d.B2World, name string) (
 	terrain = NewTerrain(world, sprite)
 
 	platforms = make([]*Platform, 0)
-	cargos = make([]*GameObj, 0)
+	cargos = make([]*Cargo, 0)
 	for _, rect := range svg.Layers[0].Rects {
 		switch rect.Title {
 		case "platform":
 			fuel, err := strconv.Atoi(rect.Description)
 			checkErr(err)
 			platforms = append(platforms, NewPlatform(
+				rect.ID,
 				world,
 				box2d.B2Vec2Add(rect.Pos, box2d.B2Vec2MulScalar(0.5, rect.Size)),
 				rect.Size,
@@ -48,7 +49,8 @@ func LoadLevel(world *box2d.B2World, name string) (
 	for _, ellipse := range svg.Layers[0].Ellipses {
 		switch ellipse.Title {
 		case "cargo":
-			cargo := NewGameObj(world, cargoSprite, ellipse.Pos, 0, 0, box2d.B2Vec2_zero, DefaultFriction, DefaultFixtureDensity, DefaultFixtureRestitution)
+			cargo := NewCargo(ellipse.ID, world, ellipse.Pos, box2d.MakeB2Vec2(0.5, 0.5))
+			//cargo := NewGameObj(world, cargoSprite, ellipse.Pos, 0, 0, box2d.B2Vec2_zero, DefaultFriction, DefaultFixtureDensity, DefaultFixtureRestitution)
 			cargos = append(cargos, cargo)
 		case "ship":
 			shipPos = ellipse.Pos

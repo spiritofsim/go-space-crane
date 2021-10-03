@@ -24,7 +24,7 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="8.7988368"
-     inkscape:cx="244.52096"
+     inkscape:cx="319.18992"
      inkscape:cy="6.9895602"
      inkscape:window-width="2560"
      inkscape:window-height="1361"
@@ -44,7 +44,7 @@
        id="path1737" />
     <rect
        style="fill:#000080;stroke:#140000;stroke-width:0.0499999;stroke-miterlimit:4;stroke-dasharray:none"
-       id="rect1761"
+       id="p1"
        width="4.9315233"
        height="0.48112419"
        x="70.2174"
@@ -56,7 +56,7 @@
     </rect>
     <rect
        style="fill:#000080;stroke:#140000;stroke-width:0.0499999;stroke-miterlimit:4;stroke-dasharray:none"
-       id="rect1761-5"
+       id="p2"
        width="4.9315233"
        height="0.48112419"
        x="87.177032"

@@ -16,7 +16,8 @@ type Game struct {
 	background Background
 	ps         ParticleSystem
 	platforms  []*Platform
-	cargos     []*GameObj
+	cargos     []*Cargo
+	tasks      []Task
 }
 
 func NewGame(
@@ -27,7 +28,8 @@ func NewGame(
 	background Background,
 	ps ParticleSystem,
 	platforms []*Platform,
-	cargos []*GameObj) *Game {
+	cargos []*Cargo,
+	tasks []Task) *Game {
 
 	return &Game{
 		world:      world,
@@ -38,10 +40,28 @@ func NewGame(
 		ps:         ps,
 		platforms:  platforms,
 		cargos:     cargos,
+		tasks:      tasks,
 	}
 }
 
 func (g *Game) Update() error {
+	// Tasks
+	if len(g.tasks) == 0 {
+		// TODO: level complete
+		fmt.Println("level complete")
+	} else {
+		if g.tasks[0].IsComplete() {
+			g.tasks = g.tasks[1:]
+		}
+
+		for _, task := range g.tasks {
+			// is landed
+			if g.ship.contactPlatform != nil && FloatEquals(g.ship.GetVelocity(), 0) {
+				task.ShipLanded(g.ship.contactPlatform)
+			}
+		}
+	}
+
 	g.cam.Pos = g.ship.GetPos()
 	g.cam.Zoom = MaxCamZoom - g.ship.GetVelocity()*10
 	//g.cam.Ang = -g.ship.GetAng()
@@ -203,11 +223,11 @@ func (g *Game) PlatformContact(
 
 	switch ct {
 	case ContactTypeBegin:
-		// ship must be aligned to refuel
-		g.ship.currentPlatform = platform
+		g.ship.contactPlatform = platform
 		platform.ship = g.ship
+
 	case ContactTypeEnd:
-		g.ship.currentPlatform = nil
+		g.ship.contactPlatform = nil
 		platform.ship = nil
 	}
 }
