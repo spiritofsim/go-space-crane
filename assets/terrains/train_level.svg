@@ -84,7 +84,7 @@
     </ellipse>
     <ellipse
        style="fill:#000080;stroke:#140000;stroke-width:0.01"
-       id="path1534"
+       id="c1"
        cx="67.019096"
        cy="7.8257861"
        rx="0.24807966"
@@ -94,7 +94,7 @@
     </ellipse>
     <ellipse
        style="fill:#000080;stroke:#140000;stroke-width:0.01"
-       id="path1534-1"
+       id="c2"
        cx="68.770691"
        cy="8.2693224"
        rx="0.24807966"
@@ -104,7 +104,7 @@
     </ellipse>
     <ellipse
        style="fill:#000080;stroke:#140000;stroke-width:0.01"
-       id="path1534-4"
+       id="c3"
        cx="77.821838"
        cy="7.3822494"
        rx="0.24807966"

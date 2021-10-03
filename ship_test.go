@@ -7,6 +7,15 @@ import (
 	"testing"
 )
 
+func TestName(t *testing.T) {
+	mp := map[string]int{}
+	mp["x"] = 10
+	mp["y"] = 20
+
+	data, _ := yaml.Marshal(mp)
+	t.Log(string(data))
+}
+
 func TestMarshalShipDef(t *testing.T) {
 	prts := OneOfParts{
 		{

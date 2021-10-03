@@ -20,14 +20,14 @@ func LoadLevel(world *box2d.B2World, name string) (
 	platforms []*Platform,
 	cargos []*Cargo) {
 
-	svg, err := svg2.Load(path.Join(AssetsDir, name+".svg"))
+	svg, err := svg2.Load(path.Join(AssetsDir, TerrainsDir, name+".svg"))
 	checkErr(err)
 
 	vertsSet := make([][]box2d.B2Vec2, len(svg.Layers[0].Pathes))
 	for i, path := range svg.Layers[0].Pathes {
 		vertsSet[i] = path.Verts
 	}
-	sprite := NewSprite(loadImage(name+".png"), vertsSet)
+	sprite := NewSprite(loadImage(path.Join(TerrainsDir, name+".png")), vertsSet)
 	terrain = NewTerrain(world, sprite)
 
 	platforms = make([]*Platform, 0)

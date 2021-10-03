@@ -1,0 +1,25 @@
+terrain: train_level
+name: Level1
+desc: --
+ship:
+  name: ship1
+  energy: 0
+  fuel: 100
+  pos:
+    x: 100
+    y:100
+platforms:
+  - p1:
+    fuel: 100
+  - p2:
+    fuel: 1000
+cargos:
+  - c1:
+      action: delete
+  - c4:
+      action: add
+      pos:
+        x: 100
+        y: 100
+tasks:
+
