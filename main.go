@@ -21,15 +21,18 @@ var flameParticleSprite Sprite
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
-	tankSprite = LoadSpriteObj("tank")
-	engineSprite = LoadSpriteObj("engine")
-	legSprite = LoadSpriteObj("leg")
-	legFasteningSprite = LoadSpriteObj("leg_fastening")
-	cabinSprite = LoadSpriteObj("cabin")
-	craneSprite = LoadSpriteObj("crane")
-	craneUpperJawSprite = LoadSpriteObj("crane_upper_jaw")
-	craneLowerJawSprite = LoadSpriteObj("crane_lower_jaw")
-	chainElSprite = LoadSpriteObj("chain_el")
+
+	// Ship parts
+	tankSprite = LoadPart("tank")
+	engineSprite = LoadPart("engine")
+	legSprite = LoadPart("leg")
+	legFasteningSprite = LoadPart("leg_fastening")
+	cabinSprite = LoadPart("cabin")
+	craneSprite = LoadPart("crane")
+	craneUpperJawSprite = LoadPart("crane_upper_jaw")
+	craneLowerJawSprite = LoadPart("crane_lower_jaw")
+	chainElSprite = LoadPart("chain_el")
+
 	cargoSprite = LoadSpriteObj("cargo")
 	flameParticleSprite = LoadSpriteObj("flame_particle")
 }

@@ -13,6 +13,7 @@ const (
 	EngineFuelConsumption     = 0.01
 	AssetsDir                 = "assets"
 	ShipsDir                  = "ships"
+	PartsDir                  = "parts"
 
 	MinCamZoom, MaxCamZoom = 20, 50
 )
