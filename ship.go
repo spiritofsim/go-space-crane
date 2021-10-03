@@ -110,6 +110,16 @@ func NewShip(
 	return ship
 }
 
+// GetLandedPlatform returns current landed platform or nil if ship is not landed
+// Ship is landed when it has contact with platform and zero velocity
+// TODO: also check orientation!
+func (s *Ship) GetLandedPlatform() *Platform {
+	if s.contactPlatform != nil && FloatEquals(s.GetVelocity(), 0) {
+		return s.contactPlatform
+	}
+	return nil
+}
+
 func (s *Ship) ApplyForce(force box2d.B2Vec2) {
 	for _, part := range s.parts {
 		body := part.GetBody()
@@ -138,11 +148,8 @@ func (s *Ship) Update() {
 		part.Update()
 	}
 
-	vel := s.GetVelocity()
-
-	// TODO: land only if ship is in horizontal state
-	// TODO: align angle ! it can be negative or > 2*pi
-	if s.contactPlatform != nil && s.contactPlatform.fuel > 0 && FloatEquals(vel, 0) {
+	if platform := s.GetLandedPlatform(); platform != nil {
+		// Refueling
 		if s.fuel < s.maxFuel {
 			s.contactPlatform.fuel--
 			s.fuel++

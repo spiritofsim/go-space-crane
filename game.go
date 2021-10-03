@@ -56,14 +56,14 @@ func (g *Game) Update() error {
 
 		for _, task := range g.tasks {
 			// is landed
-			if g.ship.contactPlatform != nil && FloatEquals(g.ship.GetVelocity(), 0) {
+			if platform := g.ship.GetLandedPlatform(); platform != nil {
 				task.ShipLanded(g.ship.contactPlatform)
 			}
 		}
 	}
 
 	g.cam.Pos = g.ship.GetPos()
-	g.cam.Zoom = MaxCamZoom - g.ship.GetVelocity()*10
+	g.cam.Zoom = MaxCamZoom - g.ship.GetVelocity()*20
 	//g.cam.Ang = -g.ship.GetAng()
 
 	if g.cam.Zoom <= MinCamZoom {
