@@ -13,7 +13,13 @@ import (
 // All rects with "platform" title are platforms
 //   platform fuel stored in description
 // All rects with "cargo" title are carcos
-func LoadLevel(world *box2d.B2World, name string) (shipDef ShipDef, shipPos box2d.B2Vec2, terrain *Terrain, platforms []*Platform, cargos []*GameObj) {
+func LoadLevel(world *box2d.B2World, name string) (
+	shipDef ShipDef,
+	shipPos box2d.B2Vec2,
+	terrain *Terrain,
+	platforms []*Platform,
+	cargos []*GameObj) {
+
 	svg, err := svg2.Load(path.Join(AssetsDir, name+".svg"))
 	checkErr(err)
 
@@ -36,12 +42,17 @@ func LoadLevel(world *box2d.B2World, name string) (shipDef ShipDef, shipPos box2
 				box2d.B2Vec2Add(rect.Pos, box2d.B2Vec2MulScalar(0.5, rect.Size)),
 				rect.Size,
 				float64(fuel)))
+		}
+	}
+
+	for _, ellipse := range svg.Layers[0].Ellipses {
+		switch ellipse.Title {
 		case "cargo":
-			cargo := NewGameObj(world, cargoSprite, rect.Pos, 0, 0, box2d.B2Vec2_zero, DefaultFriction, DefaultFixtureDensity, DefaultFixtureRestitution)
+			cargo := NewGameObj(world, cargoSprite, ellipse.Pos, 0, 0, box2d.B2Vec2_zero, DefaultFriction, DefaultFixtureDensity, DefaultFixtureRestitution)
 			cargos = append(cargos, cargo)
 		case "ship":
-			shipPos = rect.Pos
-			shipName := rect.Description
+			shipPos = ellipse.Pos
+			shipName := ellipse.Description
 			shipData, err := ioutil.ReadFile(path.Join(AssetsDir, ShipsDir, shipName+".yaml"))
 			checkErr(err)
 			checkErr(yaml.Unmarshal(shipData, &shipDef))

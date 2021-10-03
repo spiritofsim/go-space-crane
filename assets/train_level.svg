@@ -23,9 +23,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="3.1108586"
-     inkscape:cx="310.68593"
-     inkscape:cy="-27.162919"
+     inkscape:zoom="8.7988368"
+     inkscape:cx="244.52096"
+     inkscape:cy="6.9895602"
      inkscape:window-width="2560"
      inkscape:window-height="1361"
      inkscape:window-x="2391"
@@ -70,27 +70,47 @@
        style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 59.663659,8.3775773 0.51031,-37.6778343 9.483248,-20.284795 h 34.360823 l 7.82474,17.350515 0.085,40.484537 4.16753,-0.4252579 -1.02062,-40.9097921 -8.59021,-19.561858 -40.654632,0.51031 L 56.814433,-29.68299 56.474227,8.25 Z"
        id="path1912" />
-    <rect
-       style="fill:#000080;stroke:#140000;stroke-width:0.0499999;stroke-miterlimit:4;stroke-dasharray:none"
-       id="rect1936"
-       width="0.4465206"
-       height="0.40399486"
-       x="78.864044"
-       y="7.29317">
-      <title
-         id="title2018">cargo</title>
-    </rect>
-    <rect
-       style="fill:#000080;stroke:#140000;stroke-width:0.0499999;stroke-miterlimit:4;stroke-dasharray:none"
-       id="rect2042"
-       width="0.55283505"
-       height="0.51030928"
-       x="72.208763"
-       y="4.3376288">
+    <ellipse
+       style="fill:#000080;stroke:#140000;stroke-width:0.01"
+       id="path1350"
+       cx="72.55954"
+       cy="5.2096729"
+       rx="0.33077288"
+       ry="0.29318506">
       <desc
-         id="desc2126">ship1</desc>
+         id="desc1618">ship1</desc>
       <title
-         id="title2124">ship</title>
-    </rect>
+         id="title1616">ship</title>
+    </ellipse>
+    <ellipse
+       style="fill:#000080;stroke:#140000;stroke-width:0.01"
+       id="path1534"
+       cx="67.019096"
+       cy="7.8257861"
+       rx="0.24807966"
+       ry="0.2180094">
+      <title
+         id="title1620">cargo</title>
+    </ellipse>
+    <ellipse
+       style="fill:#000080;stroke:#140000;stroke-width:0.01"
+       id="path1534-1"
+       cx="68.770691"
+       cy="8.2693224"
+       rx="0.24807966"
+       ry="0.2180094">
+      <title
+         id="title1620-7">cargo</title>
+    </ellipse>
+    <ellipse
+       style="fill:#000080;stroke:#140000;stroke-width:0.01"
+       id="path1534-4"
+       cx="77.821838"
+       cy="7.3822494"
+       rx="0.24807966"
+       ry="0.2180094">
+      <title
+         id="title1620-8">cargo</title>
+    </ellipse>
   </g>
 </svg>

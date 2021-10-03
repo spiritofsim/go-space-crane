@@ -22,6 +22,12 @@ func TestParseSvg(t *testing.T) {
       <desc>desc</desc>
       <title>title</title>
     </rect>
+    <ellipse
+       id="path866"
+       cx="0.0"
+       cy="0.0"
+       rx="1.0"
+       ry="1.0" />
   </g>
 </svg>`
 
@@ -39,6 +45,11 @@ func TestParseSvg(t *testing.T) {
 	require.Equal(t, float64(2), s.Layers[0].Rects[0].Pos.Y)
 	require.Equal(t, float64(3), s.Layers[0].Rects[0].Size.X)
 	require.Equal(t, float64(4), s.Layers[0].Rects[0].Size.Y)
+
+	require.Equal(t, float64(0), s.Layers[0].Ellipses[0].Pos.X)
+	require.Equal(t, float64(0), s.Layers[0].Ellipses[0].Pos.Y)
+	require.Equal(t, float64(1), s.Layers[0].Ellipses[0].Radius.X)
+	require.Equal(t, float64(1), s.Layers[0].Ellipses[0].Radius.Y)
 }
 
 func TestParsePath(t *testing.T) {
