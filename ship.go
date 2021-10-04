@@ -33,7 +33,7 @@ type Ship struct {
 
 func NewShip(
 	world *box2d.B2World,
-	ps ParticleSystem,
+	ps *ParticleSystem,
 	pos box2d.B2Vec2,
 	def ShipDef) *Ship {
 

@@ -16,7 +16,7 @@ type EngineDef struct {
 type Engine struct {
 	*GameObj
 	ship     *Ship
-	ps       ParticleSystem
+	ps       *ParticleSystem
 	power    float64
 	km       map[ebiten.Key]struct{}
 	isActive bool
@@ -25,7 +25,7 @@ type Engine struct {
 func (d EngineDef) Construct(
 	world *box2d.B2World,
 	ship *Ship,
-	ps ParticleSystem,
+	ps *ParticleSystem,
 	shipPos box2d.B2Vec2,
 	shipSize box2d.B2Vec2,
 	pos box2d.B2Vec2) Part {

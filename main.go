@@ -46,7 +46,7 @@ func main() {
 	world := box2d.MakeB2World(gravity)
 
 	cam := NewCam()
-	ps := NewNPParticleSystem()
+	ps := NewParticleSystem()
 
 	shipDef, shipPos, terrain, platforms, cargos := LoadLevel(&world, "train_level")
 	ship := NewShip(&world, ps, shipPos, shipDef)

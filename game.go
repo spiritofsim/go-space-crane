@@ -14,7 +14,7 @@ type Game struct {
 	ship       *Ship
 	terrain    *Terrain
 	background Background
-	ps         ParticleSystem
+	ps         *ParticleSystem
 	platforms  []*Platform
 	cargos     []*Cargo
 	tasks      []Task
@@ -26,7 +26,7 @@ func NewGame(
 	ship *Ship,
 	terrain *Terrain,
 	background Background,
-	ps ParticleSystem,
+	ps *ParticleSystem,
 	platforms []*Platform,
 	cargos []*Cargo,
 	tasks []Task) *Game {
