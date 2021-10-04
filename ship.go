@@ -18,6 +18,7 @@ type ShipDef struct {
 }
 
 type Ship struct {
+	world *box2d.B2World
 	parts []Part
 	size  box2d.B2Vec2
 	// This is the angle for the first part
@@ -40,6 +41,7 @@ func NewShip(
 	shipSize := box2d.MakeB2Vec2(float64(len(def.Parts[0])), float64(len(def.Parts)))
 
 	ship := &Ship{
+		world:   world,
 		size:    shipSize,
 		energy:  def.Energy,
 		fuel:    def.Fuel,
@@ -110,6 +112,14 @@ func NewShip(
 	return ship
 }
 
+func (s *Ship) destruct() {
+	for _, part := range s.parts {
+		for je := part.GetBody().GetJointList(); je != nil; je = je.Next {
+			s.world.DestroyJoint(je.Joint)
+		}
+	}
+}
+
 // GetLandedPlatform returns current landed platform or nil if ship is not landed
 // Ship is landed when it has contact with platform and zero velocity
 // TODO: also check orientation!
@@ -154,6 +164,11 @@ func (s *Ship) Update() {
 			s.contactPlatform.fuel--
 			s.fuel++
 		}
+	}
+
+	// Destroy ship if no energy
+	if s.energy <= 0 {
+		s.destruct()
 	}
 }
 
