@@ -174,7 +174,7 @@ func LoadLevel(world *box2d.B2World, ps *ParticleSystem, name string) Level {
 }
 
 func LoadShip(world *box2d.B2World, pos box2d.B2Vec2, ps *ParticleSystem, def ShipDef) *Ship {
-	data, err := ioutil.ReadFile(path.Join(AssetsDir, ShipsDir, def.Name+".yaml"))
+	data, err := ioutil.ReadFile(path.Join(ShipsDir, def.Name+".yaml"))
 	checkErr(err)
 
 	var parts OneOfParts

@@ -3,7 +3,7 @@ description: todo
 terrain: train_level
 ship:
   name: ship1
-  energy: 100
+  energy: 1000
   fuel: 10000
 #  pos:
 #    x: 100
@@ -15,17 +15,17 @@ platforms:
     fuel: 1000
 
 cargos:
-  - deletecargo:
-      id: c1
-  - deletecargo:
-      id: c2
-  - deletecargo:
-      id: c3
-  - addcargo:
-      id: c4
-      pos:
-        x: 75
-        y: 5
+#  - deletecargo:
+#      id: c1
+#  - deletecargo:
+#      id: c2
+#  - deletecargo:
+#      id: c3
+#  - addcargo:
+#      id: c4
+#      pos:
+#        x: 75
+#        y: 5
 tasks:
    - visitplatforms:
        platforms:

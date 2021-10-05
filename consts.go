@@ -12,7 +12,7 @@ const (
 	DefaultFriction           = 1
 	EngineFuelConsumption     = 0.01
 	AssetsDir                 = "assets"
-	ShipsDir                  = "ships"
+	ShipsDir                  = "assets/ships"
 	PartsDir                  = "parts"
 	TerrainsDir               = "terrains"
 	LevelsDir                 = "levels"
