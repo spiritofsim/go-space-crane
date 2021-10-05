@@ -4,7 +4,7 @@ terrain: train_level
 ship:
   name: ship1
   energy: 100
-  fuel: 1000
+  fuel: 10000
 #  pos:
 #    x: 100
 #    y: 100
