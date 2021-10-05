@@ -11,10 +11,11 @@ const (
 )
 
 type ShipDef struct {
-	Parts   OneOfParts
+	Name    string
 	Energy  float64
 	Fuel    float64
 	MaxFuel float64
+	Pos     *box2d.B2Vec2
 }
 
 type Ship struct {
@@ -36,9 +37,10 @@ func NewShip(
 	world *box2d.B2World,
 	ps *ParticleSystem,
 	pos box2d.B2Vec2,
-	def ShipDef) *Ship {
+	def ShipDef,
+	partDefs OneOfParts) *Ship {
 
-	shipSize := box2d.MakeB2Vec2(float64(len(def.Parts[0])), float64(len(def.Parts)))
+	shipSize := box2d.MakeB2Vec2(float64(len(partDefs[0])), float64(len(partDefs)))
 
 	ship := &Ship{
 		world:   world,
@@ -49,8 +51,8 @@ func NewShip(
 	}
 
 	parts := make([]Part, 0)
-	iparts := make([][]Part, len(def.Parts))
-	for y, row := range def.Parts {
+	iparts := make([][]Part, len(partDefs))
+	for y, row := range partDefs {
 		iparts[y] = make([]Part, len(row))
 		for x, partDef := range row {
 			if partDef != nil {

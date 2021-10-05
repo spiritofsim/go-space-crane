@@ -6,27 +6,38 @@ type Task interface {
 	CargoOnPlatform(p *Platform)
 }
 
-type ShipPlatformsTask struct {
-	PlatformsToVisit []string
+type OneOfTask struct {
+	VisitPlatforms *VisitPlatformsTask `yaml:",omitempty"`
 }
 
-func NewShipPlatformsTask(platformsToVisit ...string) *ShipPlatformsTask {
-	return &ShipPlatformsTask{PlatformsToVisit: platformsToVisit}
+func (t OneOfTask) ToTask() Task {
+	if t.VisitPlatforms != nil {
+		return t.VisitPlatforms
+	}
+	return nil
 }
 
-func (t *ShipPlatformsTask) IsComplete() bool {
-	return len(t.PlatformsToVisit) == 0
+type VisitPlatformsTask struct {
+	Platforms []string
 }
 
-func (t *ShipPlatformsTask) ShipLanded(p *Platform) {
+func NewVisitPlatformsTask(platformsToVisit ...string) *VisitPlatformsTask {
+	return &VisitPlatformsTask{Platforms: platformsToVisit}
+}
+
+func (t *VisitPlatformsTask) IsComplete() bool {
+	return len(t.Platforms) == 0
+}
+
+func (t *VisitPlatformsTask) ShipLanded(p *Platform) {
 	if t.IsComplete() {
 		return
 	}
 
-	if p.id == t.PlatformsToVisit[0] {
-		t.PlatformsToVisit = t.PlatformsToVisit[1:]
+	if p.id == t.Platforms[0] {
+		t.Platforms = t.Platforms[1:]
 	}
 }
 
-func (t *ShipPlatformsTask) CargoOnPlatform(p *Platform) {
+func (t *VisitPlatformsTask) CargoOnPlatform(p *Platform) {
 }

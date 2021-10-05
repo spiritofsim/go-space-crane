@@ -48,15 +48,10 @@ func main() {
 	cam := NewCam()
 	ps := NewParticleSystem()
 
-	shipDef, shipPos, terrain, platforms, cargos := LoadLevel(&world, "train_level")
-	ship := NewShip(&world, ps, shipPos, shipDef)
-
-	tasks := []Task{
-		NewShipPlatformsTask("p1", "p2"),
-	}
+	level := LoadLevel(&world, ps, "level1")
 
 	bg := NewBackground()
-	game := NewGame(&world, cam, ship, terrain, bg, ps, platforms, cargos, tasks)
+	game := NewGame(&world, cam, bg, ps, level)
 	world.SetContactListener(game)
 	err := ebiten.RunGame(game)
 	checkErr(err)

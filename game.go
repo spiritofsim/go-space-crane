@@ -23,24 +23,19 @@ type Game struct {
 func NewGame(
 	world *box2d.B2World,
 	cam *Cam,
-	ship *Ship,
-	terrain *Terrain,
 	background Background,
-	ps *ParticleSystem,
-	platforms []*Platform,
-	cargos []*Cargo,
-	tasks []Task) *Game {
+	ps *ParticleSystem, level Level) *Game {
 
 	return &Game{
 		world:      world,
 		cam:        cam,
-		ship:       ship,
-		terrain:    terrain,
+		ship:       level.Ship,
+		terrain:    level.Terrain,
 		background: background,
 		ps:         ps,
-		platforms:  platforms,
-		cargos:     cargos,
-		tasks:      tasks,
+		platforms:  level.Platforms,
+		cargos:     level.Cargos,
+		tasks:      level.Tasks,
 	}
 }
 

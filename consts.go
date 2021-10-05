@@ -15,6 +15,7 @@ const (
 	ShipsDir                  = "ships"
 	PartsDir                  = "parts"
 	TerrainsDir               = "terrains"
+	LevelsDir                 = "levels"
 
 	MinCamZoom, MaxCamZoom = 20, 80
 )

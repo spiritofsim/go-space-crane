@@ -9,7 +9,7 @@ type Cargo struct {
 	id string
 }
 
-func NewCargo(id string, world *box2d.B2World, pos box2d.B2Vec2, size box2d.B2Vec2) *Cargo {
+func NewCargo(id string, world *box2d.B2World, pos box2d.B2Vec2) *Cargo {
 	gobj := NewGameObj(
 		world,
 		cargoSprite,
