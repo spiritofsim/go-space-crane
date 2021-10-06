@@ -8,7 +8,7 @@ type Background struct {
 
 func NewBackground() Background {
 	return Background{
-		img: loadImage("blueprint.png"),
+		img: loadImage("paper.jpg"),
 	}
 }
 
