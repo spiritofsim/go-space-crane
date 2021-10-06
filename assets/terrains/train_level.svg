@@ -23,9 +23,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="70.390694"
-     inkscape:cx="291.9349"
-     inkscape:cy="28.81773"
+     inkscape:zoom="4.3994184"
+     inkscape:cx="211.95984"
+     inkscape:cy="31.481434"
      inkscape:window-width="2560"
      inkscape:window-height="1361"
      inkscape:window-x="2391"
@@ -66,10 +66,6 @@
       <title
          id="title1843-4">platform</title>
     </rect>
-    <path
-       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 59.663659,8.3775773 0.51031,-37.6778343 9.483248,-20.284795 h 34.360823 l 7.82474,17.350515 0.085,40.484537 4.16753,-0.4252579 -1.02062,-40.9097921 -8.59021,-19.561858 -40.654632,0.51031 L 56.814433,-29.68299 56.474227,8.25 Z"
-       id="path1912" />
     <ellipse
        style="fill:#000080;stroke:#140000;stroke-width:0.01"
        id="path1350"
@@ -110,5 +106,15 @@
       <title
          id="title1620-8">cargo</title>
     </ellipse>
+    <rect
+       style="fill:none;stroke:#140000;stroke-width:0.01"
+       id="rect941"
+       width="65.312607"
+       height="84.798141"
+       x="54.848156"
+       y="-55.088718">
+      <title
+         id="title1125">bounds</title>
+    </rect>
   </g>
 </svg>

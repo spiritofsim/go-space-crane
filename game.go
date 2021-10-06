@@ -19,6 +19,9 @@ type Game struct {
 	platforms  []*Platform
 	cargos     []*Cargo
 	tasks      []Task
+	// TODO: to rect
+	boundsMin box2d.B2Vec2
+	boundsMax box2d.B2Vec2
 }
 
 func NewGame(
@@ -37,6 +40,8 @@ func NewGame(
 		platforms:  level.Platforms,
 		cargos:     level.Cargos,
 		tasks:      level.Tasks,
+		boundsMin:  level.boundsMin,
+		boundsMax:  level.boundsMax,
 	}
 }
 
@@ -69,7 +74,7 @@ func (g *Game) Update() error {
 		g.cam.Zoom = MaxCamZoom
 	}
 
-	//g.collideWorldBox()
+	g.checkWorldBounds()
 
 	g.ps.Update()
 	g.ship.Update()
@@ -79,19 +84,20 @@ func (g *Game) Update() error {
 }
 
 // TODO: apply force depends on ship impulse just to stop it
-func (g *Game) collideWorldBox() {
-	force := 20.0
+func (g *Game) checkWorldBounds() {
+	force := 50.0
 	shipPos := g.ship.GetPos()
-	if shipPos.X < 0 {
+
+	if shipPos.X < g.boundsMin.X {
 		g.ship.ApplyForce(box2d.MakeB2Vec2(force, 0))
 	}
-	if shipPos.Y < 0 {
+	if shipPos.Y < g.boundsMin.Y {
 		g.ship.ApplyForce(box2d.MakeB2Vec2(0, force))
 	}
-	if shipPos.X > g.terrain.size.X {
+	if shipPos.X > g.boundsMax.X {
 		g.ship.ApplyForce(box2d.MakeB2Vec2(-force, 0))
 	}
-	if shipPos.Y > g.terrain.size.Y {
+	if shipPos.Y > g.boundsMax.Y {
 		g.ship.ApplyForce(box2d.MakeB2Vec2(0, -force))
 	}
 }
@@ -149,9 +155,9 @@ func (g *Game) Layout(w, h int) (int, int) {
 
 func (g *Game) drawHood(screen *ebiten.Image) {
 	txt := fmt.Sprintf(
-		"Fuel: %0.2f/%02.f\nEnergy: %0.2f",
-		g.ship.fuel, g.ship.maxFuel,
-		g.ship.energy)
+		"Fuel: %v/%v\nEnergy: %v",
+		int(g.ship.fuel), int(g.ship.maxFuel),
+		int(g.ship.energy))
 	text.Draw(screen, txt, face, 10, 30, color.Black)
 }
 

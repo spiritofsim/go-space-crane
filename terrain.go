@@ -8,7 +8,6 @@ import (
 type Terrain struct {
 	body *box2d.B2Body
 	img  *ebiten.Image
-	size box2d.B2Vec2
 }
 
 func NewTerrain(
@@ -48,7 +47,6 @@ func NewTerrain(
 	return &Terrain{
 		body: body,
 		img:  sprite.img,
-		size: size,
 	}
 }
 

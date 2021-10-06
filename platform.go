@@ -50,6 +50,7 @@ func (p *Platform) Draw(screen *ebiten.Image, cam Cam) {
 	px = cam.Project(px, pos, 0)
 
 	// TODO: draw text on image, then apply cam and copy image to screen
-	msg := fmt.Sprintf("%0.2f", p.fuel)
+	// TODO: use text.BoundString()
+	msg := fmt.Sprintf("%v : %v", p.id, int(p.fuel))
 	text.Draw(screen, msg, face, int(px.X), int(px.Y), color.White)
 }

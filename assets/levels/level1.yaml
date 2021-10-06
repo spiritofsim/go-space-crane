@@ -5,6 +5,7 @@ ship:
   name: ship1
   energy: 1000
   fuel: 10000
+  maxfuel: 10000
 #  pos:
 #    x: 100
 #    y: 100
