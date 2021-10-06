@@ -3,6 +3,9 @@ package main
 import (
 	"github.com/ByteArena/box2d"
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/examples/resources/fonts"
+	"golang.org/x/image/font"
+	"golang.org/x/image/font/opentype"
 	"math/rand"
 	"time"
 )
@@ -18,9 +21,21 @@ var craneLowerJawSprite Sprite
 var chainElSprite Sprite
 var cargoSprite Sprite
 var flameParticleSprite Sprite
+var face font.Face
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
+
+	f, err := opentype.Parse(fonts.MPlus1pRegular_ttf)
+	checkErr(err)
+
+	const dpi = 72
+	face, err = opentype.NewFace(f, &opentype.FaceOptions{
+		Size:    12,
+		DPI:     dpi,
+		Hinting: font.HintingFull,
+	})
+	checkErr(err)
 
 	// Ship parts
 	tankSprite = LoadPart("tank")

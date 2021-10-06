@@ -8,7 +8,7 @@ import (
 
 const (
 	// TODO: 50 is for dummies. Set to 20
-	ShipImpulseDestructionThreshold = 50
+	ShipImpulseDestructionThreshold = 30
 )
 
 type ShipDef struct {

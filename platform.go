@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"github.com/ByteArena/box2d"
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
+	"github.com/hajimehoshi/ebiten/v2/text"
+	"image/color"
 )
 
 type Platform struct {
@@ -12,6 +13,7 @@ type Platform struct {
 	id   string
 	fuel float64
 	ship *Ship
+	size box2d.B2Vec2
 }
 
 func NewPlatform(id string, world *box2d.B2World, pos box2d.B2Vec2, size box2d.B2Vec2, fuel float64) *Platform {
@@ -36,6 +38,7 @@ func NewPlatform(id string, world *box2d.B2World, pos box2d.B2Vec2, size box2d.B
 		GameObj: gobj,
 		id:      id,
 		fuel:    fuel,
+		size:    size,
 	}
 	platform.body.SetUserData(platform)
 	return platform
@@ -43,7 +46,10 @@ func NewPlatform(id string, world *box2d.B2World, pos box2d.B2Vec2, size box2d.B
 
 func (p *Platform) Draw(screen *ebiten.Image, cam Cam) {
 	pos := p.body.GetPosition()
-	x := box2d.MakeB2Vec2(-1, -0.5)
-	x = cam.Project(x, pos, 0)
-	ebitenutil.DebugPrintAt(screen, fmt.Sprintf("Fuel: %0.2f", p.fuel), int(x.X), int(x.Y))
+	px := box2d.MakeB2Vec2(-p.size.X/2, 0)
+	px = cam.Project(px, pos, 0)
+
+	// TODO: draw text on image, then apply cam and copy image to screen
+	msg := fmt.Sprintf("%0.2f", p.fuel)
+	text.Draw(screen, msg, face, int(px.X), int(px.Y), color.White)
 }

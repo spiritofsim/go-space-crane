@@ -5,6 +5,7 @@ import (
 	"github.com/ByteArena/box2d"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
+	"github.com/hajimehoshi/ebiten/v2/text"
 	"image/color"
 )
 
@@ -147,13 +148,11 @@ func (g *Game) Layout(w, h int) (int, int) {
 }
 
 func (g *Game) drawHood(screen *ebiten.Image) {
-	ebitenutil.DebugPrintAt(
-		screen,
-		fmt.Sprintf(
-			"Fuel: %0.2f/%02.f\nEnergy: %0.2f",
-			g.ship.fuel, g.ship.maxFuel,
-			g.ship.energy),
-		10, 10)
+	txt := fmt.Sprintf(
+		"Fuel: %0.2f/%02.f\nEnergy: %0.2f",
+		g.ship.fuel, g.ship.maxFuel,
+		g.ship.energy)
+	text.Draw(screen, txt, face, 10, 30, color.Black)
 }
 
 func (g *Game) resolveContact(ct ContactType, contact box2d.B2ContactInterface, impulse *box2d.B2ContactImpulse) {
