@@ -26,7 +26,7 @@ func NewParticle(
 	avel float64) *Particle {
 
 	return &Particle{
-		img:  flameParticleSprite.img,
+		img:  flameParticleImg,
 		pos:  pos,
 		lvel: lvel,
 		ang:  ang,

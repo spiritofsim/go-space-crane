@@ -1,6 +1,6 @@
 name: Level1
 description: todo
-terrain: train_level
+terrain: flat
 ship:
   name: ship1
   energy: 1000
