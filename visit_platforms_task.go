@@ -1,6 +1,9 @@
 package main
 
-import "github.com/ByteArena/box2d"
+import (
+	"fmt"
+	"github.com/ByteArena/box2d"
+)
 
 type VisitPlatformsTask struct {
 	allPlatforms map[string]*Platform
@@ -18,7 +21,7 @@ func (t *VisitPlatformsTask) TargetName() string {
 	if len(t.Platforms) == 0 {
 		return ""
 	}
-	return t.allPlatforms[t.Platforms[0]].id
+	return fmt.Sprintf("Visit platform %v", t.allPlatforms[t.Platforms[0]].id)
 }
 
 func (t *VisitPlatformsTask) IsComplete() bool {
