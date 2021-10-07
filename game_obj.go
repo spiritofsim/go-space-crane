@@ -68,7 +68,6 @@ func (g *GameObj) GetPos() box2d.B2Vec2 {
 // TODO: move this to sprite
 func (g *GameObj) Draw(screen *ebiten.Image, cam Cam) {
 	opts := &ebiten.DrawImageOptions{}
-
 	bounds := g.img.Bounds()
 	pos := g.body.GetPosition()
 	opts.GeoM.Translate(-float64(bounds.Max.X/2), -float64(bounds.Max.Y/2))

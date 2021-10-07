@@ -20,7 +20,8 @@ var craneLowerJawSprite Sprite
 var chainElSprite Sprite
 var cargoSprite Sprite
 var flameParticleImg *ebiten.Image
-var face font.Face
+var platformFace font.Face
+var cargoFace font.Face
 var hoodFace font.Face
 var radarArrowImg *ebiten.Image
 var hoodImg *ebiten.Image
@@ -31,17 +32,23 @@ func init() {
 	f, err := opentype.Parse(fonts.MPlus1pRegular_ttf)
 	checkErr(err)
 
-	const dpi = 72
-	face, err = opentype.NewFace(f, &opentype.FaceOptions{
-		Size:    12,
-		DPI:     dpi,
+	platformFace, err = opentype.NewFace(f, &opentype.FaceOptions{
+		Size:    50,
+		DPI:     FontDpi,
+		Hinting: font.HintingFull,
+	})
+	checkErr(err)
+
+	cargoFace, err = opentype.NewFace(f, &opentype.FaceOptions{
+		Size:    100,
+		DPI:     FontDpi,
 		Hinting: font.HintingFull,
 	})
 	checkErr(err)
 
 	hoodFace, err = opentype.NewFace(f, &opentype.FaceOptions{
 		Size:    30,
-		DPI:     dpi,
+		DPI:     FontDpi,
 		Hinting: font.HintingFull,
 	})
 	checkErr(err)

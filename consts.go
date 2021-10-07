@@ -5,6 +5,7 @@ const (
 
 	ScreenWidth  = 1920
 	ScreenHeight = 1080
+	FontDpi      = 72
 
 	Gravity                   = 0.6
 	DefaultFixtureDensity     = 20

@@ -49,8 +49,22 @@ func (p *Platform) Draw(screen *ebiten.Image, cam Cam) {
 	px := box2d.MakeB2Vec2(-p.size.X/2, 0)
 	px = cam.Project(px, pos, 0)
 
-	// TODO: draw text on image, then apply cam and copy image to screen
-	// TODO: use text.BoundString()
-	msg := fmt.Sprintf("%v : %v", p.id, int(p.fuel))
-	text.Draw(screen, msg, face, int(px.X), int(px.Y), color.White)
+	pSize := box2d.B2Vec2MulScalar(300, p.size)
+	txt := fmt.Sprintf("%v : %v", p.id, int(p.fuel))
+	textBounds := text.BoundString(platformFace, txt)
+	img := ebiten.NewImage(int(pSize.X), int(pSize.Y))
+	img.DrawImage(cargoSprite.img, nil)
+	text.Draw(img, txt, platformFace, int(pSize.X/2)-textBounds.Max.X/2, int(pSize.Y/2)-textBounds.Min.Y/2, color.White)
+
+	// TODO: dupe from gameObj.Draw
+	opts := &ebiten.DrawImageOptions{}
+	opts.GeoM.Translate(-pSize.X/2, -pSize.Y/2)
+	opts.GeoM.Scale(1/float64(pSize.Y), 1/float64(pSize.Y))
+	opts.GeoM.Translate(pos.X, pos.Y)
+	opts.GeoM.Translate(-cam.Pos.X, -cam.Pos.Y)
+	opts.GeoM.Scale(cam.Zoom, cam.Zoom)
+	opts.GeoM.Rotate(cam.Ang)
+	opts.GeoM.Translate(ScreenWidth/2, ScreenHeight/2)
+
+	screen.DrawImage(img, opts)
 }

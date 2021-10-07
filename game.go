@@ -6,7 +6,9 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/hajimehoshi/ebiten/v2/text"
+	"image"
 	"image/color"
+	"math"
 )
 
 type Game struct {
@@ -122,6 +124,32 @@ func (g *Game) Draw(screen *ebiten.Image) {
 		g.drawDebugBodies(screen)
 		g.printDebugInfo(screen)
 	}
+
+	emptyImage := ebiten.NewImage(3, 3)
+	emptySubImage := emptyImage.SubImage(image.Rect(1, 1, 2, 2)).(*ebiten.Image)
+
+	colorToScale := func(clr color.Color) (float64, float64, float64, float64) {
+		cr, cg, cb, ca := clr.RGBA()
+		if ca == 0 {
+			return 0, 0, 0, 0
+		}
+		return float64(cr) / float64(ca), float64(cg) / float64(ca), float64(cb) / float64(ca), float64(ca) / 0xffff
+	}
+
+	dl := func(dst *ebiten.Image, x1, y1, x2, y2 float64, clr color.Color) {
+		length := math.Hypot(x2-x1, y2-y1)
+
+		op := &ebiten.DrawImageOptions{}
+		op.GeoM.Scale(length, 1)
+		op.GeoM.Rotate(math.Atan2(y2-y1, x2-x1))
+		op.GeoM.Translate(x1, y1)
+		op.ColorM.Scale(colorToScale(clr))
+		// Filter must be 'nearest' filter (default).
+		// Linear filtering would make edges blurred.
+		dst.DrawImage(emptySubImage, op)
+	}
+
+	dl(screen, 0, 0, 1000, 1000, color.Black)
 }
 
 func (g *Game) printDebugInfo(screen *ebiten.Image) {
@@ -180,7 +208,7 @@ func (g *Game) drawRadar(screen *ebiten.Image) {
 	taskLabelsBounds := text.BoundString(hoodFace, taskLabelsTxt)
 
 	text.Draw(screen, taskLabelsTxt, hoodFace, 550, 1000, color.White)
-	text.Draw(screen, fmt.Sprintf("%v\n%v", g.tasks[0].TargetName(), int(dist)), hoodFace, 550+50+taskLabelsBounds.Max.X, 1000, color.White)
+	text.Draw(screen, fmt.Sprintf("%v\n%vm", g.tasks[0].TargetName(), int(dist)), hoodFace, 550+50+taskLabelsBounds.Max.X, 1000, color.White)
 
 	opts := &ebiten.DrawImageOptions{}
 	bounds := radarArrowImg.Bounds()
