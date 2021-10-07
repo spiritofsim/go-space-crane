@@ -27,6 +27,7 @@ cargos:
 #      pos:
 #        x: 75
 #        y: 5
+
 tasks:
    - visitplatforms:
        platforms:

@@ -23,9 +23,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="4.3994184"
-     inkscape:cx="211.95984"
-     inkscape:cy="31.481434"
+     inkscape:zoom="24.886869"
+     inkscape:cx="259.35364"
+     inkscape:cy="26.459737"
      inkscape:window-width="2560"
      inkscape:window-height="1361"
      inkscape:window-x="2391"
@@ -78,33 +78,13 @@
     </ellipse>
     <ellipse
        style="fill:#000080;stroke:#140000;stroke-width:0.01"
-       id="c1"
+       id="1"
        cx="67.041649"
        cy="8.5700254"
        rx="0.24807966"
        ry="0.2180094">
       <title
          id="title1620">cargo</title>
-    </ellipse>
-    <ellipse
-       style="fill:#000080;stroke:#140000;stroke-width:0.01"
-       id="c2"
-       cx="68.800758"
-       cy="8.5286779"
-       rx="0.24807966"
-       ry="0.2180094">
-      <title
-         id="title1620-7">cargo</title>
-    </ellipse>
-    <ellipse
-       style="fill:#000080;stroke:#140000;stroke-width:0.01"
-       id="c3"
-       cx="77.746666"
-       cy="8.4722967"
-       rx="0.24807966"
-       ry="0.2180094">
-      <title
-         id="title1620-8">cargo</title>
     </ellipse>
     <rect
        style="fill:none;stroke:#140000;stroke-width:0.01"

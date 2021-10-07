@@ -154,11 +154,41 @@ func (g *Game) Layout(w, h int) (int, int) {
 }
 
 func (g *Game) drawHood(screen *ebiten.Image) {
-	txt := fmt.Sprintf(
-		"Fuel: %v/%v\nEnergy: %v",
-		int(g.ship.fuel), int(g.ship.maxFuel),
-		int(g.ship.energy))
-	text.Draw(screen, txt, face, 10, 30, color.Black)
+	screen.DrawImage(hoodImg, nil)
+
+	shipLabelsTxt := "FUEL\nENERGY"
+	shipLabelsBounds := text.BoundString(hoodFace, shipLabelsTxt)
+
+	text.Draw(screen, shipLabelsTxt, hoodFace, 50, 1000, color.White)
+	text.Draw(
+		screen,
+		fmt.Sprintf("%v/%v\n%v", int(g.ship.fuel), int(g.ship.maxFuel), int(g.ship.energy)),
+		hoodFace, 50+20+shipLabelsBounds.Max.X, 1000, color.White)
+
+	g.drawRadar(screen)
+}
+
+// drawRadar draws radar, pointing to current task object
+func (g *Game) drawRadar(screen *ebiten.Image) {
+	if len(g.tasks) == 0 {
+		return
+	}
+
+	ang, dist := GetVecsAng(g.ship.GetPos(), g.tasks[0].Pos())
+
+	taskLabelsTxt := "TARGET\nDISTANCE"
+	taskLabelsBounds := text.BoundString(hoodFace, taskLabelsTxt)
+
+	text.Draw(screen, taskLabelsTxt, hoodFace, 550, 1000, color.White)
+	text.Draw(screen, fmt.Sprintf("%v\n%v", g.tasks[0].TargetName(), int(dist)), hoodFace, 550+50+taskLabelsBounds.Max.X, 1000, color.White)
+
+	opts := &ebiten.DrawImageOptions{}
+	bounds := radarArrowImg.Bounds()
+	opts.GeoM.Translate(-float64(bounds.Max.X)/2, -float64(bounds.Max.Y)/2)
+	opts.GeoM.Rotate(ang)
+	opts.GeoM.Translate(470, 1000)
+	screen.DrawImage(radarArrowImg, opts)
+
 }
 
 func (g *Game) resolveContact(ct ContactType, contact box2d.B2ContactInterface, impulse *box2d.B2ContactImpulse) {

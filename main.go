@@ -22,6 +22,9 @@ var chainElSprite Sprite
 var cargoSprite Sprite
 var flameParticleSprite Sprite
 var face font.Face
+var hoodFace font.Face
+var radarArrowImg *ebiten.Image
+var hoodImg *ebiten.Image
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
@@ -32,6 +35,13 @@ func init() {
 	const dpi = 72
 	face, err = opentype.NewFace(f, &opentype.FaceOptions{
 		Size:    12,
+		DPI:     dpi,
+		Hinting: font.HintingFull,
+	})
+	checkErr(err)
+
+	hoodFace, err = opentype.NewFace(f, &opentype.FaceOptions{
+		Size:    30,
 		DPI:     dpi,
 		Hinting: font.HintingFull,
 	})
@@ -50,6 +60,9 @@ func init() {
 
 	cargoSprite = LoadSpriteObj("cargo")
 	flameParticleSprite = LoadSpriteObj("flame_particle")
+
+	radarArrowImg = loadImage("hood/radar_arrow.png")
+	hoodImg = loadImage("hood/hood.png")
 }
 
 func main() {

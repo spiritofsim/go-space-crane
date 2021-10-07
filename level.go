@@ -76,10 +76,10 @@ type LevelDef struct {
 	Cargos []OneOfCargoDef
 }
 
-func (ld LevelDef) GetTasks() []Task {
+func (ld LevelDef) GetTasks(platforms []*Platform, cargos []*Cargo) []Task {
 	result := make([]Task, len(ld.Tasks))
-	for i, task := range ld.Tasks {
-		result[i] = task.ToTask()
+	for i, taskDef := range ld.Tasks {
+		result[i] = taskDef.ToTask(platforms, cargos)
 	}
 	return result
 }
@@ -177,7 +177,7 @@ func LoadLevel(world *box2d.B2World, ps *ParticleSystem, name string) Level {
 		Terrain:   terrain,
 		Platforms: platforms,
 		Cargos:    cargos,
-		Tasks:     levelDef.GetTasks(),
+		Tasks:     levelDef.GetTasks(platforms, cargos),
 		boundsMin: boundsMin,
 		boundsMax: boundsMax,
 	}

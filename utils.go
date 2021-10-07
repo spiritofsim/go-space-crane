@@ -76,3 +76,15 @@ func getShapeSize(verts []box2d.B2Vec2) box2d.B2Vec2 {
 
 	return box2d.B2Vec2{max.X - min.X, max.Y - min.Y}
 }
+
+func GetVecsAng(a, b box2d.B2Vec2) (ang float64, dist float64) {
+	x := box2d.B2Vec2Add(b, a.OperatorNegate())
+	dist = x.Length()
+	x.Normalize()
+	rot := box2d.B2Rot{
+		S: x.Y,
+		C: x.X,
+	}
+	ang = rot.GetAngle()
+	return
+}
