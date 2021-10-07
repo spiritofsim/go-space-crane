@@ -67,7 +67,7 @@ func init() {
 
 func main() {
 	ebiten.SetWindowSize(ScreenWidth, ScreenHeight)
-	ebiten.SetWindowTitle("Lander")
+	ebiten.SetWindowTitle("Space Crane")
 	ebiten.SetWindowResizable(true)
 
 	gravity := box2d.MakeB2Vec2(0, Gravity)
