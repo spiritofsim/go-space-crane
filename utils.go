@@ -19,7 +19,7 @@ func RandInt(min, max int) int {
 	return rand.Intn(max-min) + min
 }
 
-const FloatTolerance = 0.001
+const FloatTolerance = 0.01
 
 func FloatEquals(a, b float64) bool {
 	delta := math.Abs(a - b)

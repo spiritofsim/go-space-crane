@@ -51,7 +51,7 @@ func (g *Game) Update() error {
 	// Tasks
 	if len(g.tasks) == 0 {
 		// TODO: level complete
-		fmt.Println("level complete")
+		//return nil
 	} else {
 		if g.tasks[0].IsComplete() {
 			g.tasks = g.tasks[1:]
@@ -264,6 +264,9 @@ func (g *Game) PartContact(
 		imp := impulse.NormalImpulses[0]
 		if imp > ShipImpulseDestructionThreshold {
 			g.ship.energy -= imp
+			if g.ship.energy < 0 {
+				g.ship.energy = 0
+			}
 		}
 	}
 
