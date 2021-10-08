@@ -53,7 +53,6 @@ func (p *Platform) Draw(screen *ebiten.Image, cam Cam) {
 	txt := fmt.Sprintf("%v : %v", p.id, int(p.fuel))
 	textBounds := text.BoundString(platformFace, txt)
 	img := ebiten.NewImage(int(pSize.X), int(pSize.Y))
-	img.DrawImage(cargoSprite.img, nil)
 	text.Draw(img, txt, platformFace, int(pSize.X/2)-textBounds.Max.X/2, int(pSize.Y/2)-textBounds.Min.Y/2, color.White)
 
 	// TODO: dupe from gameObj.Draw
