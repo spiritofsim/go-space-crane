@@ -24,6 +24,12 @@ type Game struct {
 	// TODO: to rect
 	boundsMin box2d.B2Vec2
 	boundsMax box2d.B2Vec2
+
+	// Optimizations
+	prevTargetDistance    int
+	prevTargetDistanceImg *ebiten.Image
+	prevTargetName        string
+	prevTargetNameImg     *ebiten.Image
 }
 
 func NewGame(
@@ -44,6 +50,9 @@ func NewGame(
 		tasks:      level.Tasks,
 		boundsMin:  level.boundsMin,
 		boundsMax:  level.boundsMax,
+
+		prevTargetDistanceImg: ebiten.NewImage(500, 30),
+		prevTargetNameImg:     ebiten.NewImage(500, 30),
 	}
 }
 
@@ -183,15 +192,35 @@ func (g *Game) Layout(w, h int) (int, int) {
 
 func (g *Game) drawHood(screen *ebiten.Image) {
 	screen.DrawImage(hoodImg, nil)
+	// Fuel
+	func() {
+		opts := &ebiten.DrawImageOptions{}
+		opts.GeoM.Scale(200, 30)
+		opts.GeoM.Translate(200, 974)
+		opts.ColorM.Translate(1, 0, 0, 1)
+		screen.DrawImage(oneImage, opts)
 
-	shipLabelsTxt := "FUEL\nENERGY"
-	shipLabelsBounds := text.BoundString(hoodFace, shipLabelsTxt)
+		opts = &ebiten.DrawImageOptions{}
+		opts.GeoM.Scale(Remap(g.ship.fuel, 0, g.ship.maxFuel, 0, 200), 30)
+		opts.GeoM.Translate(200, 974)
+		opts.ColorM.Translate(0, 1, 0, 1)
+		screen.DrawImage(oneImage, opts)
+	}()
 
-	text.Draw(screen, shipLabelsTxt, hoodFace, 50, 1000, color.White)
-	text.Draw(
-		screen,
-		fmt.Sprintf("%v/%v\n%v", int(g.ship.fuel), int(g.ship.maxFuel), int(g.ship.energy)),
-		hoodFace, 50+20+shipLabelsBounds.Max.X, 1000, color.White)
+	// Energy
+	func() {
+		opts := &ebiten.DrawImageOptions{}
+		opts.GeoM.Scale(200, 30)
+		opts.GeoM.Translate(200, 1018)
+		opts.ColorM.Translate(1, 0, 0, 1)
+		screen.DrawImage(oneImage, opts)
+
+		opts = &ebiten.DrawImageOptions{}
+		opts.GeoM.Scale(Remap(g.ship.energy, 0, g.ship.maxEnergy, 0, 200), 30)
+		opts.GeoM.Translate(200, 1018)
+		opts.ColorM.Translate(0, 1, 0, 1)
+		screen.DrawImage(oneImage, opts)
+	}()
 
 	g.drawRadar(screen)
 }
@@ -203,14 +232,34 @@ func (g *Game) drawRadar(screen *ebiten.Image) {
 	}
 
 	ang, dist := GetVecsAng(g.ship.GetPos(), g.tasks[0].Pos())
+	iDist := int(dist)
+	targetName := g.tasks[0].TargetName()
 
-	taskLabelsTxt := "TARGET\nDISTANCE"
-	taskLabelsBounds := text.BoundString(hoodFace, taskLabelsTxt)
+	if targetName != g.prevTargetName {
+		g.prevTargetNameImg.Clear()
+		txt := targetName
+		bounds := text.BoundString(hoodFace, txt)
 
-	text.Draw(screen, taskLabelsTxt, hoodFace, 550, 1000, color.White)
-	text.Draw(screen, fmt.Sprintf("%v\n%vm", g.tasks[0].TargetName(), int(dist)), hoodFace, 550+50+taskLabelsBounds.Max.X, 1000, color.White)
-
+		text.Draw(g.prevTargetNameImg, txt, hoodFace, -bounds.Min.X, -bounds.Min.Y, color.White)
+		g.prevTargetName = targetName
+	}
 	opts := &ebiten.DrawImageOptions{}
+	opts.GeoM.Translate(750, 974)
+	screen.DrawImage(g.prevTargetNameImg, opts)
+
+	if iDist != g.prevTargetDistance {
+		g.prevTargetDistanceImg.Clear()
+		txt := fmt.Sprintf("%vm", iDist)
+		bounds := text.BoundString(hoodFace, txt)
+
+		text.Draw(g.prevTargetDistanceImg, txt, hoodFace, -bounds.Min.X, -bounds.Min.Y, color.White)
+		g.prevTargetDistance = iDist
+	}
+	opts = &ebiten.DrawImageOptions{}
+	opts.GeoM.Translate(750, 1018)
+	screen.DrawImage(g.prevTargetDistanceImg, opts)
+
+	opts = &ebiten.DrawImageOptions{}
 	bounds := radarArrowImg.Bounds()
 	opts.GeoM.Translate(-float64(bounds.Max.X)/2, -float64(bounds.Max.Y)/2)
 	opts.GeoM.Rotate(ang)

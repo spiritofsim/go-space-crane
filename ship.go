@@ -27,9 +27,10 @@ type Ship struct {
 	// We need it to calculate ship orientation. At init it must be 0
 	originalAng float64
 
-	energy  float64
-	fuel    float64
-	maxFuel float64
+	energy    float64
+	maxEnergy float64
+	fuel      float64
+	maxFuel   float64
 
 	contactPlatform *Platform
 }
@@ -44,11 +45,12 @@ func NewShip(
 	shipSize := box2d.MakeB2Vec2(float64(len(partDefs[0])), float64(len(partDefs)))
 
 	ship := &Ship{
-		world:   world,
-		size:    shipSize,
-		energy:  def.Energy,
-		fuel:    def.Fuel,
-		maxFuel: def.MaxFuel,
+		world:     world,
+		size:      shipSize,
+		energy:    def.Energy,
+		maxEnergy: def.Energy,
+		fuel:      def.Fuel,
+		maxFuel:   def.MaxFuel,
 	}
 
 	parts := make([]Part, 0)

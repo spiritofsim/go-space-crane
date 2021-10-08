@@ -3,8 +3,10 @@ package main
 import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/examples/resources/fonts"
+	"github.com/hajimehoshi/ebiten/v2/text"
 	"golang.org/x/image/font"
 	"golang.org/x/image/font/opentype"
+	"image/color"
 	"math/rand"
 	"time"
 )
@@ -25,6 +27,7 @@ var cargoFace font.Face
 var hoodFace font.Face
 var radarArrowImg *ebiten.Image
 var hoodImg *ebiten.Image
+var oneImage = ebiten.NewImage(1, 1)
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
@@ -68,5 +71,9 @@ func init() {
 	flameParticleImg = loadImage("flame_particle.png")
 
 	radarArrowImg = loadImage("hood/radar_arrow.png")
+
 	hoodImg = loadImage("hood/hood.png")
+	// Print text on image for future localization
+	text.Draw(hoodImg, "FUEL\nENERGY", hoodFace, 50, 1000, color.White)
+	text.Draw(hoodImg, "TARGET\nDISTANCE", hoodFace, 550, 1000, color.White)
 }

@@ -45,6 +45,8 @@ func NewPlatform(id string, world *box2d.B2World, pos box2d.B2Vec2, size box2d.B
 }
 
 func (p *Platform) Draw(screen *ebiten.Image, cam Cam) {
+	return
+	// TODO: same as hood
 	pos := p.body.GetPosition()
 	px := box2d.MakeB2Vec2(-p.size.X/2, 0)
 	px = cam.Project(px, pos, 0)
