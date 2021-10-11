@@ -26,7 +26,6 @@ func FloatEquals(a, b float64) bool {
 	return delta < FloatTolerance
 }
 
-// TODO: use b2vec
 func Remap(val, from1, to1, from2, to2 float64) float64 {
 	return (val-from1)/(to1-from1)*(to2-from2) + from2
 }
