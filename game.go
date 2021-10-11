@@ -241,7 +241,6 @@ func (g *Game) drawRadar(screen *ebiten.Image) {
 		g.prevTargetNameImg = ebiten.NewImage(500, 30)
 		txt := targetName
 		bounds := text.BoundString(hoodFace, txt)
-
 		text.Draw(g.prevTargetNameImg, txt, hoodFace, -bounds.Min.X, -bounds.Min.Y, color.White)
 		g.prevTargetName = targetName
 	}
