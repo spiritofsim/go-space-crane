@@ -15,24 +15,8 @@ platforms:
   p2:
     fuel: 1000
 
-cargos:
-#  - deletecargo:
-#      id: c1
-#  - deletecargo:
-#      id: c2
-#  - deletecargo:
-#      id: c3
-#  - addcargo:
-#      id: c4
-#      pos:
-#        x: 75
-#        y: 5
-
 tasks:
-   - visitplatforms:
-       platforms:
-        - p1
-        - p2
-        - p1
-        - p2
-
+ - "v:p1"
+ - "v:p2"
+ - "d:1->p1"
+ - "d:1->p2"

@@ -9,8 +9,10 @@ import (
 
 type Cargo struct {
 	*GameObj
-	id   string
-	size box2d.B2Vec2
+	id       string
+	size     box2d.B2Vec2
+	platform *Platform
+	tasks    []Task
 }
 
 func NewCargo(id string, world *box2d.B2World, pos box2d.B2Vec2) *Cargo {
@@ -42,15 +44,10 @@ func NewCargo(id string, world *box2d.B2World, pos box2d.B2Vec2) *Cargo {
 	return cargo
 }
 
-//
-//func (c *Cargo) Draw(screen *ebiten.Image, cam Cam) {
-//	c.GameObj.Draw(screen, cam)
-//	return
-//	pos := c.body.GetPosition()
-//	px := box2d.MakeB2Vec2(-c.size.X/2, 0)
-//	px = cam.Project(px, pos, 0)
-//
-//	// TODO: draw text on image, then apply cam and copy image to screen
-//	msg := fmt.Sprintf("%v", c.id)
-//	text.Draw(screen, msg, face, int(px.X), int(px.Y), color.White)
-//}
+func (c *Cargo) Update() {
+	if c.platform != nil && FloatEquals(c.GetVel(), 0) {
+		for _, task := range c.tasks {
+			task.CargoOnPlatform(c, c.platform)
+		}
+	}
+}

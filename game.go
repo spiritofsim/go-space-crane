@@ -18,8 +18,8 @@ type Game struct {
 	terrain    *Terrain
 	background Background
 	ps         *ParticleSystem
-	platforms  []*Platform
-	cargos     []*Cargo
+	platforms  map[string]*Platform
+	cargos     map[string]*Cargo
 	tasks      []Task
 	// TODO: to rect
 	boundsMin box2d.B2Vec2
@@ -86,6 +86,9 @@ func (g *Game) Update() error {
 
 	g.ps.Update()
 	g.ship.Update()
+	for _, cargo := range g.cargos {
+		cargo.Update()
+	}
 
 	g.world.Step(1.0/60.0, 8, 3)
 	return nil
@@ -126,8 +129,10 @@ func (g *Game) Draw(screen *ebiten.Image) {
 
 	g.drawHood(screen)
 
-	if Debug {
+	if DrawDebugBodies {
 		g.drawDebugBodies(screen)
+	}
+	if PrintDebugInfo {
 		g.printDebugInfo(screen)
 	}
 
@@ -273,11 +278,20 @@ func (g *Game) resolveContact(ct ContactType, contact box2d.B2ContactInterface, 
 	b := contact.GetFixtureB().GetBody().GetUserData()
 
 	if part, ok := a.(Part); ok {
-		g.PartContact(ct, contact, impulse, part, b)
+		g.ShipPartContact(ct, contact, impulse, part, b)
 		return
 	}
 	if part, ok := b.(Part); ok {
-		g.PartContact(ct, contact, impulse, part, a)
+		g.ShipPartContact(ct, contact, impulse, part, a)
+		return
+	}
+
+	if cargo, ok := a.(*Cargo); ok {
+		g.CargoContact(ct, contact, impulse, cargo, b)
+		return
+	}
+	if cargo, ok := b.(*Cargo); ok {
+		g.CargoContact(ct, contact, impulse, cargo, a)
 		return
 	}
 }
@@ -298,7 +312,7 @@ func (g *Game) PostSolve(contact box2d.B2ContactInterface, impulse *box2d.B2Cont
 	g.resolveContact(ContactTypePostSolve, contact, impulse)
 }
 
-func (g *Game) PartContact(
+func (g *Game) ShipPartContact(
 	ct ContactType,
 	contact box2d.B2ContactInterface,
 	impulse *box2d.B2ContactImpulse,
@@ -317,13 +331,13 @@ func (g *Game) PartContact(
 
 	switch obj := other.(type) {
 	case *Platform:
-		g.PlatformContact(ct, obj)
+		g.ShipPlatformContact(ct, obj)
 	default:
 		//fmt.Printf("unknown body %v\n", obj)
 	}
 }
 
-func (g *Game) PlatformContact(
+func (g *Game) ShipPlatformContact(
 	ct ContactType,
 	platform *Platform) {
 
@@ -337,6 +351,38 @@ func (g *Game) PlatformContact(
 		platform.ship = nil
 	}
 }
+
+// ----------------------
+
+func (g *Game) CargoContact(
+	ct ContactType,
+	contact box2d.B2ContactInterface,
+	impulse *box2d.B2ContactImpulse,
+	cargo *Cargo,
+	other interface{}) {
+
+	switch obj := other.(type) {
+	case *Platform:
+		g.CargoPlatformContact(ct, cargo, obj)
+	default:
+		//fmt.Printf("unknown body %v\n", obj)
+	}
+}
+
+func (g *Game) CargoPlatformContact(
+	ct ContactType,
+	cargo *Cargo,
+	platform *Platform) {
+
+	switch ct {
+	case ContactTypeBegin:
+		cargo.platform = platform
+	case ContactTypeEnd:
+		cargo.platform = nil
+	}
+}
+
+// ----------------------
 
 type ContactType string
 
