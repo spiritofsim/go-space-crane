@@ -86,12 +86,11 @@ func (ps *ParticleSystem) Emit(pos box2d.B2Vec2, dir float64, angDisp float64) {
 		ttl := RandInt(20, 50)
 
 		c, s := math.Cos(ang), math.Sin(ang)
-		lvel := box2d.MakeB2Vec2(c, s)
-		lvel.OperatorScalarMulInplace(speed)
+		lVel := box2d.MakeB2Vec2(c, s)
+		lVel.OperatorScalarMulInplace(speed)
 
-		rpos := box2d.B2Vec2Add(pos, box2d.B2Vec2{RandFloat(-0.2, 0.2), RandFloat(-0.5, 0.5)})
-
-		p := NewParticle(ttl, rpos, lvel, ang, avel)
+		rPos := box2d.B2Vec2Add(pos, box2d.MakeB2Vec2(RandFloat(-0.2, 0.2), RandFloat(-0.5, 0.5)))
+		p := NewParticle(ttl, rPos, lVel, ang, avel)
 		ps.particles[p] = struct{}{}
 	}
 }
@@ -107,7 +106,7 @@ func (ps *ParticleSystem) Update() {
 }
 
 func (ps *ParticleSystem) Draw(screen *ebiten.Image, cam Cam) {
-	for particle, _ := range ps.particles {
+	for particle := range ps.particles {
 		particle.Draw(screen, cam)
 	}
 }

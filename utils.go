@@ -57,7 +57,7 @@ func getShapeSize(verts []box2d.B2Vec2) box2d.B2Vec2 {
 		}
 	}
 
-	return box2d.B2Vec2{max.X - min.X, max.Y - min.Y}
+	return box2d.MakeB2Vec2(max.X-min.X, max.Y-min.Y)
 }
 
 func GetVecsAng(a, b box2d.B2Vec2) (ang float64, dist float64) {

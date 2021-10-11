@@ -35,9 +35,9 @@ func NewCraneJaws(c *Crane) *CraneJaws {
 	// motor joint
 	rjd := box2d.MakeB2RevoluteJointDef()
 	rjd.BodyA = upper.body
-	rjd.LocalAnchorA = box2d.B2Vec2{-0.5, 0}
+	rjd.LocalAnchorA = box2d.MakeB2Vec2(-0.5, 0)
 	rjd.BodyB = lower.body
-	rjd.LocalAnchorB = box2d.B2Vec2{-0.5, 0}
+	rjd.LocalAnchorB = box2d.MakeB2Vec2(-0.5, 0)
 	rjd.CollideConnected = false
 	rjd.EnableMotor = true
 	rjd.EnableLimit = true
@@ -49,9 +49,9 @@ func NewCraneJaws(c *Crane) *CraneJaws {
 	// joint to last chain element (upper)
 	cjd := box2d.MakeB2RevoluteJointDef()
 	cjd.BodyA = c.chain[len(c.chain)-1].body
-	cjd.LocalAnchorA = box2d.B2Vec2{0, c.chainElSize.Y / 2}
+	cjd.LocalAnchorA = box2d.MakeB2Vec2(0, c.chainElSize.Y/2)
 	cjd.BodyB = upper.body
-	cjd.LocalAnchorB = box2d.B2Vec2{-0.5, 0}
+	cjd.LocalAnchorB = box2d.MakeB2Vec2(-0.5, 0)
 	cjd.CollideConnected = false
 	cjd.EnableMotor = true
 	c.world.CreateJoint(&cjd)
@@ -59,9 +59,9 @@ func NewCraneJaws(c *Crane) *CraneJaws {
 	// joint to last chain element (lower)
 	cjd = box2d.MakeB2RevoluteJointDef()
 	cjd.BodyA = c.chain[len(c.chain)-1].body
-	cjd.LocalAnchorA = box2d.B2Vec2{0, c.chainElSize.Y / 2}
+	cjd.LocalAnchorA = box2d.MakeB2Vec2(0, c.chainElSize.Y/2)
 	cjd.BodyB = lower.body
-	cjd.LocalAnchorB = box2d.B2Vec2{-0.5, 0}
+	cjd.LocalAnchorB = box2d.MakeB2Vec2(-0.5, 0)
 	cjd.CollideConnected = false
 	cjd.EnableMotor = true
 	c.world.CreateJoint(&cjd)

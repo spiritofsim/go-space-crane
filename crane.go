@@ -96,24 +96,21 @@ func (c *Crane) windup() {
 	c.world.DestroyBody(c.chain[0].body)
 	c.chain = c.chain[1:]
 
-	f := 100.0
-	c.jaws.upper.body.ApplyForce(box2d.B2Vec2{0, -f}, c.jaws.upper.body.GetPosition(), true)
-	c.jaws.lower.body.ApplyForce(box2d.B2Vec2{0, -f}, c.jaws.upper.body.GetPosition(), true)
-	//for _, chainEl := range c.chain {
-	//	chainEl.body.ApplyForce(box2d.B2Vec2{0, -f}, c.jaws.upper.body.GetPosition(), true)
-	//}
+	f := box2d.MakeB2Vec2(0, 100)
+	c.jaws.upper.body.ApplyForce(f, c.jaws.upper.body.GetPosition(), true)
+	c.jaws.lower.body.ApplyForce(f, c.jaws.upper.body.GetPosition(), true)
 
 	// TODO: apply additional force jaws
 	if len(c.chain) > 0 {
 		// TODO: check if previous join destroyed by destroying its body
 		// TODO: use part rotation. now it is hardcoded
-		c.createChainJoint(c.body, box2d.B2Vec2{0, 0}, c.chain[0].body, box2d.MakeB2Vec2(0, -c.chainElSize.Y/2))
+		c.createChainJoint(c.body, box2d.B2Vec2_zero, c.chain[0].body, box2d.MakeB2Vec2(0, -c.chainElSize.Y/2))
 	}
 }
 
 func (c *Crane) unwind() {
 	// TODO: use angle (see engine)
-	pos := box2d.B2Vec2Add(c.body.GetPosition(), box2d.B2Vec2{0, 0.5 + c.chainElSize.Y/2})
+	pos := box2d.B2Vec2Add(c.body.GetPosition(), box2d.MakeB2Vec2(0, 0.5+c.chainElSize.Y/2))
 
 	// Chain must be massive (see density) to joint work well
 	chainEl := NewGameObj(
@@ -130,7 +127,7 @@ func (c *Crane) unwind() {
 		c.createChainJoint(prevBody, box2d.MakeB2Vec2(0, -c.chainElSize.Y/2), chainEl.body, box2d.MakeB2Vec2(0, c.chainElSize.Y/2))
 	}
 	// TODO: use rotation. now its hardcoded
-	c.createChainJoint(c.body, box2d.B2Vec2{0, 0}, chainEl.body, box2d.MakeB2Vec2(0, -c.chainElSize.Y/2))
+	c.createChainJoint(c.body, box2d.B2Vec2_zero, chainEl.body, box2d.MakeB2Vec2(0, -c.chainElSize.Y/2))
 
 	// TODO: use linked list?
 	c.chain = append([]*GameObj{chainEl}, c.chain...)

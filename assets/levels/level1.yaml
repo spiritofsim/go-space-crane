@@ -17,6 +17,4 @@ platforms:
 
 tasks:
  - "v:p1"
- - "v:p2"
  - "d:1->p1"
- - "d:1->p2"

@@ -17,10 +17,10 @@ type Platform struct {
 
 func NewPlatform(id string, world *box2d.B2World, pos box2d.B2Vec2, size box2d.B2Vec2, fuel float64) *Platform {
 	verts := []box2d.B2Vec2{
-		{-size.X / 2, -size.Y / 2},
-		{size.X / 2, -size.Y / 2},
-		{size.X / 2, size.Y / 2},
-		{-size.X / 2, size.Y / 2},
+		box2d.MakeB2Vec2(-size.X/2, -size.Y/2),
+		box2d.MakeB2Vec2(size.X/2, -size.Y/2),
+		box2d.MakeB2Vec2(size.X/2, size.Y/2),
+		box2d.MakeB2Vec2(-size.X/2, size.Y/2),
 	}
 
 	bounds := text.BoundString(platformFace, id)
