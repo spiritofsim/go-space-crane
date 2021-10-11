@@ -21,25 +21,6 @@ type OneOfPart struct {
 	LegFastening *LegFasteningDef `yaml:",omitempty"`
 }
 
-func NewOneOfPart(d PartDef) *OneOfPart {
-	switch pd := d.(type) {
-	case CabinDef:
-		return &OneOfPart{Cabin: &pd}
-	case EngineDef:
-		return &OneOfPart{Engine: &pd}
-	case CraneDef:
-		return &OneOfPart{Crane: &pd}
-	case TankDef:
-		return &OneOfPart{Tank: &pd}
-	case LegDef:
-		return &OneOfPart{Leg: &pd}
-	case LegFasteningDef:
-		return &OneOfPart{LegFastening: &pd}
-	default:
-		panic("unknown part defenition")
-	}
-}
-
 func (p OneOfPart) ToPartDef() PartDef {
 	if p.Cabin != nil {
 		return p.Cabin

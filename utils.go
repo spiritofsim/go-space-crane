@@ -23,10 +23,7 @@ const FloatTolerance = 0.01
 
 func FloatEquals(a, b float64) bool {
 	delta := math.Abs(a - b)
-	if delta < FloatTolerance {
-		return true
-	}
-	return false
+	return delta < FloatTolerance
 }
 
 // TODO: use b2vec
