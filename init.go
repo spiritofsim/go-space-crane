@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/examples/resources/fonts"
 	"github.com/hajimehoshi/ebiten/v2/text"
@@ -76,4 +77,9 @@ func init() {
 	// Print text on image for future localization
 	text.Draw(hoodImg, "FUEL\nENERGY", hoodFace, 50, 1000, color.White)
 	text.Draw(hoodImg, "TARGET\nDISTANCE", hoodFace, 550, 1000, color.White)
+
+	// Cache distance glyphs
+	for i := 0; i < 50; i++ {
+		text.CacheGlyphs(hoodFace, fmt.Sprintf("%vm", i))
+	}
 }

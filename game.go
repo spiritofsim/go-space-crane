@@ -50,9 +50,6 @@ func NewGame(
 		tasks:      level.Tasks,
 		boundsMin:  level.boundsMin,
 		boundsMax:  level.boundsMax,
-
-		prevTargetDistanceImg: ebiten.NewImage(500, 30),
-		prevTargetNameImg:     ebiten.NewImage(500, 30),
 	}
 }
 
@@ -236,7 +233,7 @@ func (g *Game) drawRadar(screen *ebiten.Image) {
 	targetName := g.tasks[0].TargetName()
 
 	if targetName != g.prevTargetName {
-		g.prevTargetNameImg.Clear()
+		g.prevTargetNameImg = ebiten.NewImage(500, 30)
 		txt := targetName
 		bounds := text.BoundString(hoodFace, txt)
 
@@ -248,10 +245,9 @@ func (g *Game) drawRadar(screen *ebiten.Image) {
 	screen.DrawImage(g.prevTargetNameImg, opts)
 
 	if iDist != g.prevTargetDistance {
-		g.prevTargetDistanceImg.Clear()
+		g.prevTargetDistanceImg = ebiten.NewImage(500, 30)
 		txt := fmt.Sprintf("%vm", iDist)
 		bounds := text.BoundString(hoodFace, txt)
-
 		text.Draw(g.prevTargetDistanceImg, txt, hoodFace, -bounds.Min.X, -bounds.Min.Y, color.White)
 		g.prevTargetDistance = iDist
 	}

@@ -34,23 +34,6 @@ func Remap(val, from1, to1, from2, to2 float64) float64 {
 	return (val-from1)/(to1-from1)*(to2-from2) + from2
 }
 
-func Rotate(ang float64, vs ...box2d.B2Vec2) []box2d.B2Vec2 {
-	rot := box2d.NewB2RotFromAngle(ang)
-	result := make([]box2d.B2Vec2, len(vs))
-	for i := 0; i < len(vs); i++ {
-		result[i] = box2d.B2RotVec2Mul(*rot, vs[i])
-	}
-	return result
-}
-
-func Translate(pos box2d.B2Vec2, vs ...box2d.B2Vec2) []box2d.B2Vec2 {
-	result := make([]box2d.B2Vec2, len(vs))
-	for i := 0; i < len(vs); i++ {
-		result[i] = box2d.B2Vec2Add(vs[i], pos)
-	}
-	return result
-}
-
 func loadImage(name string) *ebiten.Image {
 	img, _, err := ebitenutil.NewImageFromFile(path.Join(AssetsDir, name))
 	checkErr(err)
