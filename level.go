@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/ByteArena/box2d"
+	"github.com/hajimehoshi/ebiten/v2/text"
 	svg2 "go-space-crane/svg"
 	"gopkg.in/yaml.v3"
 	"io/ioutil"
@@ -115,6 +116,7 @@ func LoadLevel(world *box2d.B2World, ps *ParticleSystem, name string) Level {
 	tasks := make([]Task, len(levelDef.TaskDefs))
 	for i, def := range levelDef.TaskDefs {
 		tasks[i] = ParseTaskDef(def, platforms, cargos)
+		text.CacheGlyphs(hoodFace, tasks[i].TargetName())
 	}
 
 	for _, cargo := range cargos {
