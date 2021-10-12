@@ -166,8 +166,8 @@ func (s *Ship) Update() {
 	if platform := s.GetLandedPlatform(); platform != nil {
 		// Refueling
 		if s.fuel < s.maxFuel && platform.fuel > 0 {
-			s.contactPlatform.fuel--
-			s.fuel++
+			s.contactPlatform.fuel -= 10
+			s.fuel += 10
 		}
 	}
 

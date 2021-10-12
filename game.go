@@ -194,19 +194,20 @@ func (g *Game) Layout(w, h int) (int, int) {
 
 func (g *Game) drawHood(screen *ebiten.Image) {
 	screen.DrawImage(hoodImg, nil)
+
 	// Fuel
 	func() {
 		opts := &ebiten.DrawImageOptions{}
 		opts.GeoM.Scale(200, 30)
 		opts.GeoM.Translate(200, 974)
 		opts.ColorM.Translate(1, 0, 0, 1)
-		screen.DrawImage(oneImage, opts)
+		screen.DrawImage(emptyImage, opts)
 
 		opts = &ebiten.DrawImageOptions{}
 		opts.GeoM.Scale(Remap(g.ship.fuel, 0, g.ship.maxFuel, 0, 200), 30)
 		opts.GeoM.Translate(200, 974)
 		opts.ColorM.Translate(0, 1, 0, 1)
-		screen.DrawImage(oneImage, opts)
+		screen.DrawImage(emptyImage, opts)
 	}()
 
 	// Energy
@@ -215,13 +216,13 @@ func (g *Game) drawHood(screen *ebiten.Image) {
 		opts.GeoM.Scale(200, 30)
 		opts.GeoM.Translate(200, 1018)
 		opts.ColorM.Translate(1, 0, 0, 1)
-		screen.DrawImage(oneImage, opts)
+		screen.DrawImage(emptyImage, opts)
 
 		opts = &ebiten.DrawImageOptions{}
 		opts.GeoM.Scale(Remap(g.ship.energy, 0, g.ship.maxEnergy, 0, 200), 30)
 		opts.GeoM.Translate(200, 1018)
 		opts.ColorM.Translate(0, 1, 0, 1)
-		screen.DrawImage(oneImage, opts)
+		screen.DrawImage(emptyImage, opts)
 	}()
 
 	g.drawRadar(screen)

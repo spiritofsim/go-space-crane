@@ -11,7 +11,7 @@ ship:
 #    y: 100
 platforms:
   p1:
-    fuel: 100
+    fuel: 1000
   p2:
     fuel: 1000
 

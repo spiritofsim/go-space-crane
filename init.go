@@ -28,7 +28,7 @@ var cargoFace font.Face
 var hoodFace font.Face
 var radarArrowImg *ebiten.Image
 var hoodImg *ebiten.Image
-var oneImage = ebiten.NewImage(1, 1)
+var emptyImage = ebiten.NewImage(1, 1)
 
 func init() {
 	rand.Seed(time.Now().UnixNano())

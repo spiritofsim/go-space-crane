@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/ByteArena/box2d"
 	"github.com/hajimehoshi/ebiten/v2/text"
 	svg2 "go-space-crane/svg"
@@ -11,21 +10,12 @@ import (
 	"strconv"
 )
 
-type PlatformDef struct {
-	Fuel float64
-}
-
 type LevelDef struct {
 	Name        string
 	Description string
 	Terrain     string
 	Ship        ShipDef
-
-	// Platforms overrides existing platforms props
-	PlatformDefs map[string]PlatformDef `yaml:"platforms"`
-	//Cargos map[string] // TODO
-
-	TaskDefs []string `yaml:"tasks"`
+	TaskDefs    []string `yaml:"tasks"`
 }
 
 type Level struct {
@@ -98,20 +88,6 @@ func LoadLevel(world *box2d.B2World, ps *ParticleSystem, name string) Level {
 		shipPos = *levelDef.Ship.Pos
 	}
 	ship := LoadShip(world, shipPos, ps, levelDef.Ship)
-
-	// TODO: platforms, cargos to map
-	for id, pd := range levelDef.PlatformDefs {
-		found := false
-		for _, platform := range platforms {
-			if platform.id == id {
-				found = true
-				platform.fuel = pd.Fuel
-			}
-		}
-		if !found {
-			checkErr(fmt.Errorf("%v platform not found in level", id))
-		}
-	}
 
 	tasks := make([]Task, len(levelDef.TaskDefs))
 	for i, def := range levelDef.TaskDefs {
