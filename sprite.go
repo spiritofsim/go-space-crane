@@ -8,6 +8,7 @@ import (
 )
 
 // Sprite contains sprite image and shape vertices
+// TODO: try to use only ebiten vectors, not sprites
 type Sprite struct {
 	img      *ebiten.Image
 	vertsSet [][]box2d.B2Vec2

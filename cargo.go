@@ -33,7 +33,7 @@ func NewCargo(id string, world *box2d.B2World, pos box2d.B2Vec2) *Cargo {
 		box2d.B2Vec2_zero,
 		DefaultFriction,
 		DefaultFixtureDensity,
-		DefaultFixtureRestitution)
+		DefaultFixtureRestitution, true)
 
 	cargo := &Cargo{
 		GameObj: gobj,

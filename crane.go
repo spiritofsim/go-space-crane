@@ -42,7 +42,7 @@ func (d CraneDef) Construct(
 			worldPos,
 			d.Dir.GetAng(), 0,
 			box2d.B2Vec2_zero,
-			DefaultFriction, DefaultFixtureDensity, DefaultFixtureRestitution),
+			DefaultFriction, DefaultFixtureDensity, DefaultFixtureRestitution, true),
 		chainElSize: getShapeSize(chainElSprite.vertsSet[0]),
 	}
 	crane.GetBody().SetUserData(crane)
@@ -120,7 +120,7 @@ func (c *Crane) unwind() {
 		chainElSprite,
 		pos, 0, 0,
 		box2d.B2Vec2_zero,
-		DefaultFriction, 100, DefaultFixtureRestitution)
+		DefaultFriction, 100, DefaultFixtureRestitution, true)
 
 	if len(c.chain) > 0 {
 		// TODO: apply additional force jaws

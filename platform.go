@@ -23,8 +23,7 @@ func NewPlatform(id string, world *box2d.B2World, pos box2d.B2Vec2, size box2d.B
 	}
 
 	// TODO: draw platform ID
-
-	gobj := NewGameObj(
+	gObj := NewGameObj(
 		world,
 		NewSprite(emptyTransparentImage, [][]box2d.B2Vec2{verts}),
 		pos,
@@ -33,10 +32,10 @@ func NewPlatform(id string, world *box2d.B2World, pos box2d.B2Vec2, size box2d.B
 		box2d.B2Vec2_zero,
 		DefaultFriction,
 		DefaultFixtureDensity,
-		DefaultFixtureRestitution)
+		DefaultFixtureRestitution, false)
 
 	platform := &Platform{
-		GameObj: gobj,
+		GameObj: gObj,
 		id:      id,
 		fuel:    fuel,
 		maxFuel: fuel,
@@ -49,21 +48,34 @@ func NewPlatform(id string, world *box2d.B2World, pos box2d.B2Vec2, size box2d.B
 func (p *Platform) Draw(screen *ebiten.Image, cam Cam) {
 	p.GameObj.Draw(screen, cam)
 
-	pos := p.GetPos()
-	size := box2d.MakeB2Vec2(p.size.X*cam.Zoom/2, p.size.Y*cam.Zoom/2)
+	// Draw platform
+	func() {
+		size := box2d.MakeB2Vec2(p.size.X*cam.Zoom, p.size.Y*cam.Zoom)
 
-	opts := &ebiten.DrawImageOptions{}
-	pos = cam.Project(box2d.B2Vec2_zero, pos, 0)
-	opts.ColorM.Translate(1, 0, 0, 1)
-	opts.GeoM.Scale(size.X, size.Y)
-	opts.GeoM.Translate(pos.X-(size.X/2), pos.Y-(size.Y/2))
-	screen.DrawImage(emptyTransparentImage, opts)
+		opts := &ebiten.DrawImageOptions{}
+		pos := cam.Project(box2d.B2Vec2_zero, p.GetPos(), 0)
+		opts.ColorM.Translate(0, 0, 0, 1)
+		opts.GeoM.Scale(size.X, size.Y)
+		opts.GeoM.Translate(pos.X-(size.X/2), pos.Y-(size.Y/2))
+		screen.DrawImage(emptyTransparentImage, opts)
 
-	opts = &ebiten.DrawImageOptions{}
-	opts.ColorM.Translate(0, 1, 0, 1)
+	}()
 
-	ln := Remap(p.fuel, 0, p.maxFuel, 0, size.X)
-	opts.GeoM.Scale(ln, size.Y)
-	opts.GeoM.Translate(pos.X-(size.X/2), pos.Y-(size.Y/2))
-	screen.DrawImage(emptyTransparentImage, opts)
+	// Draw fuel
+	func() {
+		size := box2d.MakeB2Vec2(p.size.X*cam.Zoom/2, p.size.Y*cam.Zoom/2)
+		opts := &ebiten.DrawImageOptions{}
+		pos := cam.Project(box2d.B2Vec2_zero, p.GetPos(), 0)
+		opts.ColorM.Translate(1, 0, 0, 1)
+		opts.GeoM.Scale(size.X, size.Y)
+		opts.GeoM.Translate(pos.X-(size.X/2), pos.Y-(size.Y/2))
+		screen.DrawImage(emptyTransparentImage, opts)
+
+		opts = &ebiten.DrawImageOptions{}
+		opts.ColorM.Translate(0, 1, 0, 1)
+		opts.GeoM.Scale(Remap(p.fuel, 0, p.maxFuel, 0, size.X), size.Y)
+		opts.GeoM.Translate(pos.X-(size.X/2), pos.Y-(size.Y/2))
+		screen.DrawImage(emptyTransparentImage, opts)
+	}()
+
 }

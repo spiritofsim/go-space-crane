@@ -23,9 +23,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="12.443435"
-     inkscape:cx="174.99188"
-     inkscape:cy="60.554021"
+     inkscape:zoom="35.195347"
+     inkscape:cx="348.66825"
+     inkscape:cy="31.865007"
      inkscape:window-width="2560"
      inkscape:window-height="1361"
      inkscape:window-x="2391"
@@ -43,24 +43,24 @@
        d="M 35.606528,9.07783 135.83071,8.686917 V 14.82125 L 35.636598,13.979283 Z"
        id="path1737" />
     <rect
-       style="fill:#000080;stroke:#140000;stroke-width:0.0499999;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#000080;stroke:#140000;stroke-width:0.0585343;stroke-miterlimit:4;stroke-dasharray:none"
        id="p1"
-       width="4.9315233"
-       height="0.48112419"
-       x="70.2174"
-       y="8.5365658">
+       width="4.9229889"
+       height="0.66052896"
+       x="70.221664"
+       y="8.5408325">
       <desc
          id="desc1845">10000</desc>
       <title
          id="title1843">platform</title>
     </rect>
     <rect
-       style="fill:#000080;stroke:#140000;stroke-width:0.0499999;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#000080;stroke:#140000;stroke-width:0.060408;stroke-miterlimit:4;stroke-dasharray:none"
        id="p2"
-       width="4.9315233"
-       height="0.48112419"
-       x="87.177032"
-       y="8.5064955">
+       width="4.9211154"
+       height="0.70376062"
+       x="87.182236"
+       y="8.5116997">
       <desc
          id="desc1845-9">10000</desc>
       <title
@@ -87,12 +87,12 @@
          id="title1620">cargo</title>
     </ellipse>
     <rect
-       style="fill:none;stroke:#140000;stroke-width:0.01"
+       style="fill:none;stroke:#140000;stroke-width:0.0146787"
        id="rect941"
-       width="65.312607"
-       height="84.798141"
-       x="54.848156"
-       y="-55.088718">
+       width="140.7301"
+       height="84.794998"
+       x="33.314995"
+       y="-55.087147">
       <title
          id="title1125">bounds</title>
     </rect>

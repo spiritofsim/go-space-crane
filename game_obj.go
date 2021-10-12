@@ -21,12 +21,17 @@ func NewGameObj(
 	lVel box2d.B2Vec2,
 	friction float64,
 	density float64,
-	restitution float64) *GameObj {
+	restitution float64,
+	isDynamic bool) *GameObj {
 
 	bd := box2d.MakeB2BodyDef()
 	bd.Position.Set(pos.X, pos.Y)
 	bd.Angle = ang
-	bd.Type = box2d.B2BodyType.B2_dynamicBody
+	if isDynamic {
+		bd.Type = box2d.B2BodyType.B2_dynamicBody
+	} else {
+		bd.Type = box2d.B2BodyType.B2_staticBody
+	}
 	body := world.CreateBody(&bd)
 
 	for _, verts := range sprite.vertsSet {

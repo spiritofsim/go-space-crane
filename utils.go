@@ -4,6 +4,7 @@ import (
 	"github.com/ByteArena/box2d"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
+	"go-space-crane/svg"
 	_ "image/jpeg"
 	_ "image/png"
 	"math"
@@ -66,4 +67,13 @@ func GetVecsAng(a, b box2d.B2Vec2) (ang float64, dist float64) {
 	}
 	ang = rot.GetAngle()
 	return
+}
+
+func SvgRectToVerts(rect svg.Rect) []box2d.B2Vec2 {
+	return []box2d.B2Vec2{
+		box2d.MakeB2Vec2(rect.Pos.X-rect.Size.X/2, rect.Pos.Y-rect.Size.Y/2),
+		box2d.MakeB2Vec2(rect.Pos.X+rect.Size.X/2, rect.Pos.Y-rect.Size.Y/2),
+		box2d.MakeB2Vec2(rect.Pos.X+rect.Size.X/2, rect.Pos.Y+rect.Size.Y/2),
+		box2d.MakeB2Vec2(rect.Pos.X-rect.Size.X/2, rect.Pos.Y+rect.Size.Y/2),
+	}
 }

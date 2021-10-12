@@ -40,11 +40,10 @@ func LoadLevel(world *box2d.B2World, ps *ParticleSystem, name string) Level {
 
 	// TODO: also load rects
 	// For now all terrain data stored in pathes
-	vertsSet := make([][]box2d.B2Vec2, len(svg.Layers[0].Pathes))
+	terrainVertsSet := make([][]box2d.B2Vec2, len(svg.Layers[0].Pathes))
 	for i, path := range svg.Layers[0].Pathes {
-		vertsSet[i] = path.Verts
+		terrainVertsSet[i] = path.Verts
 	}
-	terrain := NewTerrain(world, vertsSet)
 
 	// Platforms are rects with "platform" title
 	platforms := make(map[string]*Platform)
@@ -100,7 +99,7 @@ func LoadLevel(world *box2d.B2World, ps *ParticleSystem, name string) Level {
 
 	return Level{
 		Ship:      ship,
-		Terrain:   terrain,
+		Terrain:   NewTerrain(world, terrainVertsSet),
 		Platforms: platforms,
 		Cargos:    cargos,
 		Tasks:     tasks,

@@ -48,7 +48,7 @@ func (d EngineDef) Construct(
 			worldPos,
 			d.Dir.GetAng(), 0,
 			box2d.B2Vec2_zero,
-			DefaultFriction, DefaultFixtureDensity, DefaultFixtureRestitution),
+			DefaultFriction, DefaultFixtureDensity, DefaultFixtureRestitution, true),
 		ship:  ship,
 		power: d.Power,
 		ps:    ps,
