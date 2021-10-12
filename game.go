@@ -172,13 +172,13 @@ func (g *Game) drawHood(screen *ebiten.Image) {
 		opts.GeoM.Scale(200, 30)
 		opts.GeoM.Translate(200, 974)
 		opts.ColorM.Translate(1, 0, 0, 1)
-		screen.DrawImage(emptyImage, opts)
+		screen.DrawImage(emptyTransparentImage, opts)
 
 		opts = &ebiten.DrawImageOptions{}
 		opts.GeoM.Scale(Remap(g.ship.fuel, 0, g.ship.maxFuel, 0, 200), 30)
 		opts.GeoM.Translate(200, 974)
 		opts.ColorM.Translate(0, 1, 0, 1)
-		screen.DrawImage(emptyImage, opts)
+		screen.DrawImage(emptyTransparentImage, opts)
 	}()
 
 	// Energy
@@ -187,13 +187,13 @@ func (g *Game) drawHood(screen *ebiten.Image) {
 		opts.GeoM.Scale(200, 30)
 		opts.GeoM.Translate(200, 1018)
 		opts.ColorM.Translate(1, 0, 0, 1)
-		screen.DrawImage(emptyImage, opts)
+		screen.DrawImage(emptyTransparentImage, opts)
 
 		opts = &ebiten.DrawImageOptions{}
 		opts.GeoM.Scale(Remap(g.ship.energy, 0, g.ship.maxEnergy, 0, 200), 30)
 		opts.GeoM.Translate(200, 1018)
 		opts.ColorM.Translate(0, 1, 0, 1)
-		screen.DrawImage(emptyImage, opts)
+		screen.DrawImage(emptyTransparentImage, opts)
 	}()
 
 	g.drawRadar(screen)

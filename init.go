@@ -7,6 +7,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/text"
 	"golang.org/x/image/font"
 	"golang.org/x/image/font/opentype"
+	"image"
 	"image/color"
 	"math/rand"
 	"time"
@@ -28,9 +29,12 @@ var cargoFace font.Face
 var hoodFace font.Face
 var radarArrowImg *ebiten.Image
 var hoodImg *ebiten.Image
-var emptyImage = ebiten.NewImage(1, 1)
+var emptyTransparentImage = ebiten.NewImage(1, 1)
+var emptyImage = ebiten.NewImage(3, 3)
+var emptySubImage = emptyImage.SubImage(image.Rect(1, 1, 2, 2)).(*ebiten.Image)
 
 func init() {
+	emptyImage.Fill(color.White)
 	rand.Seed(time.Now().UnixNano())
 
 	f, err := opentype.Parse(fonts.MPlus1pRegular_ttf)

@@ -23,9 +23,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="24.886869"
-     inkscape:cx="259.35364"
-     inkscape:cy="26.459737"
+     inkscape:zoom="12.443435"
+     inkscape:cx="174.99188"
+     inkscape:cy="60.554021"
      inkscape:window-width="2560"
      inkscape:window-height="1361"
      inkscape:window-x="2391"
@@ -96,5 +96,13 @@
       <title
          id="title1125">bounds</title>
     </rect>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 76.4826,9.334407 1.488403,-3.6572163 0.425257,-0.7654639 0.520941,-0.3508378 0.531572,-0.2126289 0.382733,-0.063789 0.574098,-0.031894 0.340207,0.095683 0.350837,0.2232604 0.265785,0.361469 0.255156,0.4784151 0.361468,0.9355669 0.148842,0.8930412 0.180734,0.8717783 0.170103,0.9249357 -0.01064,0.6591493 z"
+       id="path1002" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 35.606527,9.07783 -0.93556697,9.9510306 -1.0206185,78.927832 223.0902,73.994843 212.88401,8.5051544 135.83071,8.6869168 120.85824,11.481958 38.443299,11.311855 Z"
+       id="path1022" />
   </g>
 </svg>

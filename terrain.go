@@ -3,16 +3,15 @@ package main
 import (
 	"github.com/ByteArena/box2d"
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/vector"
 )
 
 type Terrain struct {
 	body *box2d.B2Body
-	img  *ebiten.Image
+	vSet [][]box2d.B2Vec2
 }
 
-func NewTerrain(
-	world *box2d.B2World,
-	sprite Sprite) *Terrain {
+func NewTerrain(world *box2d.B2World, vSet [][]box2d.B2Vec2) *Terrain {
 
 	bd := box2d.MakeB2BodyDef()
 	bd.Position.Set(0, 0)
@@ -20,7 +19,7 @@ func NewTerrain(
 	body := world.CreateBody(&bd)
 
 	size := box2d.B2Vec2_zero
-	for _, verts := range sprite.vertsSet {
+	for _, verts := range vSet {
 		shape := box2d.MakeB2ChainShape()
 		shape.CreateLoop(verts, len(verts))
 
@@ -46,18 +45,34 @@ func NewTerrain(
 
 	return &Terrain{
 		body: body,
-		img:  sprite.img,
+		vSet: vSet,
 	}
 }
 
 func (g *Terrain) Draw(screen *ebiten.Image, cam Cam) {
-	opts := &ebiten.DrawImageOptions{}
+	for _, vecs := range g.vSet {
+		var path vector.Path
 
-	// resolution: 500px/cm
-	opts.GeoM.Scale(0.02, 0.02)
-	opts.GeoM.Translate(-cam.Pos.X, -cam.Pos.Y)
-	opts.GeoM.Scale(cam.Zoom, cam.Zoom)
-	opts.GeoM.Translate(ScreenWidth/2, ScreenHeight/2)
+		v := cam.Project(vecs[0], box2d.B2Vec2_zero, 0)
 
-	screen.DrawImage(g.img, opts)
+		path.MoveTo(float32(v.X), float32(v.Y))
+		for i := 1; i < len(vecs); i++ {
+			v := cam.Project(vecs[i], box2d.B2Vec2_zero, 0)
+			path.LineTo(float32(v.X), float32(v.Y))
+		}
+
+		opts := &ebiten.DrawTrianglesOptions{
+			FillRule: ebiten.EvenOdd,
+		}
+
+		vs, is := path.AppendVerticesAndIndicesForFilling(nil, nil)
+		for i := range vs {
+			vs[i].SrcX = 1
+			vs[i].SrcY = 1
+			vs[i].ColorR = 0
+			vs[i].ColorG = 0
+			vs[i].ColorB = 0
+		}
+		screen.DrawTriangles(vs, is, emptySubImage, opts)
+	}
 }

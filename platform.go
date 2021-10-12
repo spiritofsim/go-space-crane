@@ -26,7 +26,7 @@ func NewPlatform(id string, world *box2d.B2World, pos box2d.B2Vec2, size box2d.B
 
 	gobj := NewGameObj(
 		world,
-		NewSprite(emptyImage, [][]box2d.B2Vec2{verts}),
+		NewSprite(emptyTransparentImage, [][]box2d.B2Vec2{verts}),
 		pos,
 		0,
 		0,
@@ -57,7 +57,7 @@ func (p *Platform) Draw(screen *ebiten.Image, cam Cam) {
 	opts.ColorM.Translate(1, 0, 0, 1)
 	opts.GeoM.Scale(size.X, size.Y)
 	opts.GeoM.Translate(pos.X-(size.X/2), pos.Y-(size.Y/2))
-	screen.DrawImage(emptyImage, opts)
+	screen.DrawImage(emptyTransparentImage, opts)
 
 	opts = &ebiten.DrawImageOptions{}
 	opts.ColorM.Translate(0, 1, 0, 1)
@@ -65,5 +65,5 @@ func (p *Platform) Draw(screen *ebiten.Image, cam Cam) {
 	ln := Remap(p.fuel, 0, p.maxFuel, 0, size.X)
 	opts.GeoM.Scale(ln, size.Y)
 	opts.GeoM.Translate(pos.X-(size.X/2), pos.Y-(size.Y/2))
-	screen.DrawImage(emptyImage, opts)
+	screen.DrawImage(emptyTransparentImage, opts)
 }

@@ -44,8 +44,7 @@ func LoadLevel(world *box2d.B2World, ps *ParticleSystem, name string) Level {
 	for i, path := range svg.Layers[0].Pathes {
 		vertsSet[i] = path.Verts
 	}
-	terrainSprite := NewSprite(loadImage(path.Join(TerrainsDir, levelDef.Terrain+".png")), vertsSet)
-	terrain := NewTerrain(world, terrainSprite)
+	terrain := NewTerrain(world, vertsSet)
 
 	// Platforms are rects with "platform" title
 	platforms := make(map[string]*Platform)
