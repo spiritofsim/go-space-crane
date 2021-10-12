@@ -22,6 +22,8 @@ func NewPlatform(id string, world *box2d.B2World, pos box2d.B2Vec2, size box2d.B
 		box2d.MakeB2Vec2(-size.X/2, size.Y/2),
 	}
 
+	// TODO: draw platform ID
+
 	gobj := NewGameObj(
 		world,
 		NewSprite(emptyImage, [][]box2d.B2Vec2{verts}),

@@ -76,7 +76,6 @@ func (g *GameObj) Draw(screen *ebiten.Image, cam Cam) {
 	opts.GeoM.Translate(pos.X, pos.Y)
 	opts.GeoM.Translate(-cam.Pos.X, -cam.Pos.Y)
 	opts.GeoM.Scale(cam.Zoom, cam.Zoom)
-	opts.GeoM.Rotate(cam.Ang)
 	opts.GeoM.Translate(ScreenWidth/2, ScreenHeight/2)
 
 	screen.DrawImage(g.img, opts)

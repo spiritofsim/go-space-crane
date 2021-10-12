@@ -80,7 +80,7 @@ func (e *Engine) GetBody() *box2d.B2Body {
 
 func (e *Engine) Update() {
 	// TODO: pass keys from game
-	keys := inpututil.PressedKeys()
+	keys := inpututil.AppendPressedKeys(nil)
 	e.isActive = false
 	if e.ship.fuel <= 0 {
 		return

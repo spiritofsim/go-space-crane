@@ -6,9 +6,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/hajimehoshi/ebiten/v2/text"
-	"image"
 	"image/color"
-	"math"
 )
 
 type Game struct {
@@ -119,7 +117,6 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	g.ship.Draw(screen, *g.cam)
 
 	g.terrain.Draw(screen, *g.cam)
-
 	for _, platform := range g.platforms {
 		platform.Draw(screen, *g.cam)
 	}
@@ -135,32 +132,6 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	if PrintDebugInfo {
 		g.printDebugInfo(screen)
 	}
-
-	emptyImage := ebiten.NewImage(3, 3)
-	emptySubImage := emptyImage.SubImage(image.Rect(1, 1, 2, 2)).(*ebiten.Image)
-
-	colorToScale := func(clr color.Color) (float64, float64, float64, float64) {
-		cr, cg, cb, ca := clr.RGBA()
-		if ca == 0 {
-			return 0, 0, 0, 0
-		}
-		return float64(cr) / float64(ca), float64(cg) / float64(ca), float64(cb) / float64(ca), float64(ca) / 0xffff
-	}
-
-	dl := func(dst *ebiten.Image, x1, y1, x2, y2 float64, clr color.Color) {
-		length := math.Hypot(x2-x1, y2-y1)
-
-		op := &ebiten.DrawImageOptions{}
-		op.GeoM.Scale(length, 1)
-		op.GeoM.Rotate(math.Atan2(y2-y1, x2-x1))
-		op.GeoM.Translate(x1, y1)
-		op.ColorM.Scale(colorToScale(clr))
-		// Filter must be 'nearest' filter (default).
-		// Linear filtering would make edges blurred.
-		dst.DrawImage(emptySubImage, op)
-	}
-
-	dl(screen, 0, 0, 1000, 1000, color.Black)
 }
 
 func (g *Game) printDebugInfo(screen *ebiten.Image) {
@@ -251,7 +222,7 @@ func (g *Game) drawRadar(screen *ebiten.Image) {
 
 	if iDist != g.prevTargetDistance {
 		g.prevTargetDistanceImg = ebiten.NewImage(500, 30)
-		txt := fmt.Sprintf("%vm", iDist)
+		txt := fmt.Sprintf(DistanceText, iDist)
 		bounds := text.BoundString(hoodFace, txt)
 		text.Draw(g.prevTargetDistanceImg, txt, hoodFace, -bounds.Min.X, -bounds.Min.Y, color.White)
 		g.prevTargetDistance = iDist

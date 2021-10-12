@@ -75,11 +75,11 @@ func init() {
 
 	hoodImg = loadImage("hood/hood.png")
 	// Print text on image for future localization
-	text.Draw(hoodImg, "FUEL\nENERGY", hoodFace, 50, 1000, color.White)
-	text.Draw(hoodImg, "TARGET\nDISTANCE", hoodFace, 550, 1000, color.White)
+	text.Draw(hoodImg, fmt.Sprintf("%v\n%v", FuelLabelText, EnergyLabelText), hoodFace, 50, 1000, color.White)
+	text.Draw(hoodImg, fmt.Sprintf("%v\n%v", TargetLabelText, DistanceLabelText), hoodFace, 550, 1000, color.White)
 
 	// Cache distance glyphs
 	for i := 0; i < 50; i++ {
-		text.CacheGlyphs(hoodFace, fmt.Sprintf("%vm", i))
+		text.CacheGlyphs(hoodFace, fmt.Sprintf(DistanceText, i))
 	}
 }

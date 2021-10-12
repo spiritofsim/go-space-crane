@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/ByteArena/box2d"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
@@ -74,7 +75,7 @@ func (c *Crane) Update() {
 	c.lastControlled = time.Now()
 
 	// TODO: pass keys from game
-	keys := inpututil.PressedKeys()
+	keys := inpututil.AppendPressedKeys(nil)
 	for _, key := range keys {
 		if key == ebiten.KeyQ {
 			c.windup()
@@ -83,6 +84,7 @@ func (c *Crane) Update() {
 			c.unwind()
 		}
 		if key == ebiten.KeyTab {
+			fmt.Println("X")
 			c.jaws.OpenClose()
 		}
 	}

@@ -60,7 +60,6 @@ func (p *Particle) Draw(screen *ebiten.Image, cam Cam) {
 	opts.GeoM.Translate(p.pos.X, p.pos.Y)
 	opts.GeoM.Translate(-cam.Pos.X, -cam.Pos.Y)
 	opts.GeoM.Scale(cam.Zoom, cam.Zoom)
-	opts.GeoM.Rotate(cam.Ang)
 	opts.GeoM.Translate(ScreenWidth/2, ScreenHeight/2)
 
 	screen.DrawImage(p.img, opts)

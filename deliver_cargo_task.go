@@ -24,7 +24,7 @@ func (t *DeliverCargoTask) Pos() box2d.B2Vec2 {
 }
 
 func (t *DeliverCargoTask) TargetName() string {
-	return fmt.Sprintf("Deliver %v to %v", t.Cargo.id, t.Platform.id)
+	return fmt.Sprintf(DeliverCargoText, t.Cargo.id, t.Platform.id)
 }
 
 func (t *DeliverCargoTask) IsComplete() bool {

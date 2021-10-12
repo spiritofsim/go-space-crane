@@ -19,7 +19,7 @@ func (t *VisitPlatformTask) Pos() box2d.B2Vec2 {
 }
 
 func (t *VisitPlatformTask) TargetName() string {
-	return fmt.Sprintf("Visit platform %v", t.Platform.id)
+	return fmt.Sprintf(VisitPlatformText, t.Platform.id)
 }
 
 func (t *VisitPlatformTask) IsComplete() bool {
