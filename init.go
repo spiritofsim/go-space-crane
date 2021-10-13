@@ -41,7 +41,7 @@ func init() {
 	checkErr(err)
 
 	platformFace, err = opentype.NewFace(f, &opentype.FaceOptions{
-		Size:    50,
+		Size:    30,
 		DPI:     FontDpi,
 		Hinting: font.HintingFull,
 	})
