@@ -54,7 +54,6 @@ func (g *Terrain) Draw(screen *ebiten.Image, cam Cam) {
 		var path vector.Path
 
 		v := cam.Project(vecs[0], box2d.B2Vec2_zero, 0)
-
 		path.MoveTo(float32(v.X), float32(v.Y))
 		for i := 1; i < len(vecs); i++ {
 			v := cam.Project(vecs[i], box2d.B2Vec2_zero, 0)
@@ -69,9 +68,9 @@ func (g *Terrain) Draw(screen *ebiten.Image, cam Cam) {
 		for i := range vs {
 			vs[i].SrcX = 1
 			vs[i].SrcY = 1
-			vs[i].ColorR = 0
-			vs[i].ColorG = 0
-			vs[i].ColorB = 0
+			vs[i].ColorR = 0.2
+			vs[i].ColorG = 0.2
+			vs[i].ColorB = 0.2
 		}
 		screen.DrawTriangles(vs, is, emptySubImage, opts)
 	}
