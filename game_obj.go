@@ -62,6 +62,10 @@ func (g *GameObj) GetVel() float64 {
 	return math.Sqrt(lVel.X*lVel.X + lVel.Y*lVel.Y)
 }
 
+func (g *GameObj) GetVelVec() box2d.B2Vec2 {
+	return g.body.GetLinearVelocity()
+}
+
 func (g *GameObj) GetAng() float64 {
 	return g.body.GetAngle()
 }

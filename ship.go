@@ -129,7 +129,7 @@ func (s *Ship) destruct() {
 // Ship is landed when it has contact with platform and zero velocity
 // TODO: also check orientation!
 func (s *Ship) GetLandedPlatform() *Platform {
-	if s.contactPlatform != nil && FloatEquals(s.GetVelocity(), 0) {
+	if s.contactPlatform != nil && FloatEquals(s.GetVel(), 0) {
 		return s.contactPlatform
 	}
 	return nil
@@ -151,9 +151,16 @@ func (s *Ship) GetAng() float64 {
 	return s.parts[0].GetAng() - s.originalAng
 }
 
-func (s *Ship) GetVelocity() float64 {
+func (s *Ship) GetVel() float64 {
 	for _, part := range s.parts {
 		return part.GetVel()
+	}
+	panic("ship have no parts")
+}
+
+func (s *Ship) GetVelVec() box2d.B2Vec2 {
+	for _, part := range s.parts {
+		return part.GetVelVec()
 	}
 	panic("ship have no parts")
 }

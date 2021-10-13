@@ -74,7 +74,7 @@ func (g *Game) Update() error {
 
 	g.cam.Pos = g.ship.GetPos()
 
-	targetZoom := MaxCamZoom - g.ship.GetVelocity()*20
+	targetZoom := MaxCamZoom - g.ship.GetVel()*20
 	if targetZoom <= MinCamZoom {
 		targetZoom = MinCamZoom
 	}
@@ -99,21 +99,26 @@ func (g *Game) Update() error {
 
 // TODO: apply force depends on ship impulse just to stop it
 func (g *Game) checkWorldBounds() {
-	force := 50.0
+	//force := 50.0
 	shipPos := g.ship.GetPos()
+	shipVel := g.ship.GetVelVec()
+	mult := 10.0
 
+	force := box2d.B2Vec2_zero
 	if shipPos.X < g.boundsMin.X {
-		g.ship.ApplyForce(box2d.MakeB2Vec2(force, 0))
+		force = box2d.B2Vec2Add(force, box2d.MakeB2Vec2(-shipVel.X*(g.boundsMin.X-shipPos.X)*mult, 0))
 	}
 	if shipPos.Y < g.boundsMin.Y {
-		g.ship.ApplyForce(box2d.MakeB2Vec2(0, force))
+		force = box2d.B2Vec2Add(force, box2d.MakeB2Vec2(0, -shipVel.Y*(g.boundsMin.Y-shipPos.Y)*mult))
 	}
 	if shipPos.X > g.boundsMax.X {
-		g.ship.ApplyForce(box2d.MakeB2Vec2(-force, 0))
+		force = box2d.B2Vec2Add(force, box2d.MakeB2Vec2(-shipVel.X*(shipPos.X-g.boundsMax.X)*mult, 0))
 	}
 	if shipPos.Y > g.boundsMax.Y {
-		g.ship.ApplyForce(box2d.MakeB2Vec2(0, -force))
+		force = box2d.B2Vec2Add(force, box2d.MakeB2Vec2(0, -shipVel.Y*(shipPos.Y-g.boundsMax.Y)*mult))
 	}
+	g.ship.ApplyForce(force)
+
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
