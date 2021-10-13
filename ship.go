@@ -158,9 +158,9 @@ func (s *Ship) GetVelocity() float64 {
 	panic("ship have no parts")
 }
 
-func (s *Ship) Update() {
+func (s *Ship) Update(keys []ebiten.Key) {
 	for _, part := range s.parts {
-		part.Update()
+		part.Update(keys)
 	}
 
 	if platform := s.GetLandedPlatform(); platform != nil {

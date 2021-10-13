@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/ByteArena/box2d"
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"math"
 )
 
@@ -78,9 +77,7 @@ func (e *Engine) GetBody() *box2d.B2Body {
 	return e.body
 }
 
-func (e *Engine) Update() {
-	// TODO: pass keys from game
-	keys := inpututil.AppendPressedKeys(nil)
+func (e *Engine) Update(keys []ebiten.Key) {
 	e.isActive = false
 	if e.ship.fuel <= 0 {
 		return

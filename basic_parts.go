@@ -1,6 +1,9 @@
 package main
 
-import "github.com/ByteArena/box2d"
+import (
+	"github.com/ByteArena/box2d"
+	"github.com/hajimehoshi/ebiten/v2"
+)
 
 type BasicPart struct {
 	*GameObj
@@ -10,7 +13,7 @@ func (p *BasicPart) GetBody() *box2d.B2Body {
 	return p.body
 }
 
-func (p *BasicPart) Update() {}
+func (p *BasicPart) Update(keys []ebiten.Key) {}
 
 func ConstructBasicPart(
 	world *box2d.B2World,

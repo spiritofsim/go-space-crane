@@ -1,10 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"github.com/ByteArena/box2d"
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"time"
 )
 
@@ -14,9 +12,9 @@ type CraneDef struct {
 
 type Crane struct {
 	*GameObj
-	chain          []*GameObj
-	jaws           *CraneJaws
-	lastControlled time.Time
+	chain               []*GameObj
+	jaws                *CraneJaws
+	chainLastControlled time.Time
 
 	chainElSize box2d.B2Vec2
 }
@@ -65,27 +63,26 @@ func (c *Crane) GetBody() *box2d.B2Body {
 	return c.body
 }
 
-func (c *Crane) Update() {
+func (c *Crane) Update(keys []ebiten.Key) {
 	c.jaws.Update()
 
-	// TODO: delay to const
-	if c.lastControlled.Add(time.Second / 5).After(time.Now()) {
-		return
-	}
-	c.lastControlled = time.Now()
-
-	// TODO: pass keys from game
-	keys := inpututil.AppendPressedKeys(nil)
 	for _, key := range keys {
+		if key == ebiten.KeyTab {
+			c.jaws.OpenClose()
+		}
 		if key == ebiten.KeyQ {
+			if c.chainLastControlled.Add(time.Second / 5).After(time.Now()) {
+				return
+			}
+			c.chainLastControlled = time.Now()
 			c.windup()
 		}
 		if key == ebiten.KeyA {
+			if c.chainLastControlled.Add(time.Second / 5).After(time.Now()) {
+				return
+			}
+			c.chainLastControlled = time.Now()
 			c.unwind()
-		}
-		if key == ebiten.KeyTab {
-			fmt.Println("X")
-			c.jaws.OpenClose()
 		}
 	}
 }

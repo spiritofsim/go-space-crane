@@ -7,7 +7,7 @@ import (
 
 type Part interface {
 	GetBody() *box2d.B2Body
-	Update()
+	Update(keys []ebiten.Key)
 	Draw(screen *ebiten.Image, cam Cam)
 	GetVel() float64
 	GetAng() float64

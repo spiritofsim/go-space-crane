@@ -86,13 +86,13 @@ func (j *CraneJaws) Update() {
 }
 
 func (j *CraneJaws) OpenClose() {
-	if j.lastControlled.Add(time.Second / 2).After(time.Now()) {
+	if j.lastControlled.Add(time.Second / 5).After(time.Now()) {
 		return
 	}
 	j.lastControlled = time.Now()
 
 	ms := j.motor.GetMotorSpeed()
-	if ms < 0 {
+	if ms <= 0 {
 		j.motor.SetMotorSpeed(10)
 		return
 	}

@@ -5,6 +5,7 @@ import (
 	"github.com/ByteArena/box2d"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
+	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/hajimehoshi/ebiten/v2/text"
 	"image/color"
 )
@@ -52,6 +53,8 @@ func NewGame(
 }
 
 func (g *Game) Update() error {
+	keys := inpututil.AppendPressedKeys(nil)
+
 	// Tasks
 	if len(g.tasks) == 0 {
 		// TODO: level complete
@@ -83,7 +86,7 @@ func (g *Game) Update() error {
 	g.checkWorldBounds()
 
 	g.ps.Update()
-	g.ship.Update()
+	g.ship.Update(keys)
 	for _, cargo := range g.cargos {
 		cargo.Update()
 	}
