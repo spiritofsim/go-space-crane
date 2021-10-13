@@ -8,7 +8,7 @@ const (
 	ScreenHeight = 1080
 	FontDpi      = 72
 
-	Gravity                   = 0.6
+	Gravity                   = 1
 	DefaultFixtureDensity     = 20
 	DefaultFixtureRestitution = 0.2
 	DefaultFriction           = 1
