@@ -16,5 +16,6 @@ platforms:
     fuel: 1000
 
 tasks:
- - "v:p1"
  - "d:1->p1"
+ - "d:1->p2"
+ - "v:p1"
