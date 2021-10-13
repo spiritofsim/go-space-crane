@@ -40,7 +40,7 @@ func NewShip(
 	ps *ParticleSystem,
 	pos box2d.B2Vec2,
 	def ShipDef,
-	partDefs OneOfParts) *Ship {
+	partDefs [][]PartDef) *Ship {
 
 	shipSize := box2d.MakeB2Vec2(float64(len(partDefs[0])), float64(len(partDefs)))
 
@@ -59,7 +59,7 @@ func NewShip(
 		iparts[y] = make([]Part, len(row))
 		for x, partDef := range row {
 			if partDef != nil {
-				part := partDef.ToPartDef().Construct(
+				part := partDef.Construct(
 					world,
 					ship,
 					ps,

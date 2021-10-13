@@ -112,8 +112,17 @@ func LoadShip(world *box2d.B2World, pos box2d.B2Vec2, ps *ParticleSystem, def Sh
 	data, err := ioutil.ReadFile(path.Join(ShipsDir, def.Name+".yaml"))
 	checkErr(err)
 
-	var parts OneOfParts
-	checkErr(yaml.Unmarshal(data, &parts))
+	var partDefStrs [][]*string
+	checkErr(yaml.Unmarshal(data, &partDefStrs))
 
-	return NewShip(world, ps, pos, def, parts)
+	pDefs := make([][]PartDef, len(partDefStrs))
+	for y, row := range partDefStrs {
+		pDefRow := make([]PartDef, len(row))
+		for x, pds := range row {
+			pDefRow[x] = ParsePartDef(pds)
+		}
+		pDefs[y] = pDefRow
+	}
+
+	return NewShip(world, ps, pos, def, pDefs)
 }

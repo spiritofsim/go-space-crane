@@ -1,6 +1,31 @@
 package main
 
-import "github.com/ByteArena/box2d"
+import (
+	"fmt"
+	"github.com/ByteArena/box2d"
+	"github.com/hajimehoshi/ebiten/v2"
+	"strconv"
+	"strings"
+)
+
+type PartType string
+
+const (
+	PartTypeTank         PartType = "tnk"
+	PartTypeCabin        PartType = "cab"
+	PartTypeEngine       PartType = "eng"
+	PartTypeCrane        PartType = "crn"
+	PartTypeLeg          PartType = "leg"
+	PartTypeLegFastening PartType = "lft"
+)
+
+type PartParam string
+
+const (
+	PartParamDir   PartParam = "dir"
+	PartParamPower PartParam = "pow"
+	PartParamKeys  PartParam = "keys"
+)
 
 type PartDef interface {
 	Construct(world *box2d.B2World,
@@ -11,51 +36,77 @@ type PartDef interface {
 		pos box2d.B2Vec2) Part
 }
 
-// This is for serialization
-type OneOfPart struct {
-	Cabin        *CabinDef        `yaml:",omitempty"`
-	Engine       *EngineDef       `yaml:",omitempty"`
-	Crane        *CraneDef        `yaml:",omitempty"`
-	Tank         *TankDef         `yaml:",omitempty"`
-	Leg          *LegDef          `yaml:",omitempty"`
-	LegFastening *LegFasteningDef `yaml:",omitempty"`
-}
-
-func (p OneOfPart) ToPartDef() PartDef {
-	if p.Cabin != nil {
-		return p.Cabin
+func ParsePartDef(strP *string) PartDef {
+	if strP == nil {
+		return nil
 	}
-	if p.Engine != nil {
-		return p.Engine
-	}
-	if p.Crane != nil {
-		return p.Crane
-	}
-	if p.Tank != nil {
-		return p.Tank
-	}
-	if p.Leg != nil {
-		return p.Leg
-	}
-	if p.LegFastening != nil {
-		return p.LegFastening
-	}
-	return nil
-}
-
-type OneOfParts [][]*OneOfPart
-
-func (ps OneOfParts) ToPartDefs() [][]PartDef {
-	result := make([][]PartDef, len(ps))
-	for y, row := range ps {
-		result[y] = make([]PartDef, len(row))
-		for x, op := range row {
-			if op != nil {
-				result[y][x] = op.ToPartDef()
-			} else {
-				result[y][x] = nil
-			}
+	str := *strP
+	tp := strings.ToLower(str[:3])
+	params := parsePartParams(str[3:])
+	switch PartType(tp) {
+	case PartTypeTank:
+		return &TankDef{}
+	case PartTypeCabin:
+		return &CabinDef{
+			Dir: params[PartParamDir].AsDirection(),
 		}
+	case PartTypeEngine:
+		return &EngineDef{
+			Dir:   params[PartParamDir].AsDirection(),
+			Power: params[PartParamPower].AsFloat(),
+			Keys:  params[PartParamKeys].AsKeys(),
+		}
+	case PartTypeCrane:
+		return &CraneDef{
+			Dir: params[PartParamDir].AsDirection(),
+		}
+	case PartTypeLeg:
+		return &LegDef{
+			Dir: params[PartParamDir].AsDirection(),
+		}
+	case PartTypeLegFastening:
+		return &LegFasteningDef{
+			Dir: params[PartParamDir].AsDirection(),
+		}
+	default:
+		checkErr(fmt.Errorf("unknown part type %v", tp))
+		return nil
+	}
+}
+
+type paramVal string
+
+func (v paramVal) AsDirection() Direction {
+	return Direction(v)
+}
+func (v paramVal) AsFloat() float64 {
+	result, err := strconv.ParseFloat(string(v), 64)
+	checkErr(err)
+	return result
+}
+func (v paramVal) AsKeys() []ebiten.Key {
+	elems := strings.Split(string(v), ",")
+	result := make([]ebiten.Key, len(elems))
+	for i, elem := range elems {
+		k, err := strconv.Atoi(elem)
+		checkErr(err)
+		result[i] = ebiten.Key(k)
+	}
+	return result
+}
+
+func parsePartParams(str string) map[PartParam]paramVal {
+	result := make(map[PartParam]paramVal)
+	params := strings.Split(str, ";")
+	if len(params) == 1 && params[0] == "" {
+		return result
+	}
+	for _, param := range params {
+		kv := strings.Split(param, "=")
+		if len(kv) != 2 {
+			checkErr(fmt.Errorf("bad part param %v", str))
+		}
+		result[PartParam(strings.Trim(kv[0], " "))] = paramVal(strings.Trim(kv[1], " "))
 	}
 	return result
 }

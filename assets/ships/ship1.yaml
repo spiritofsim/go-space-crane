@@ -1,27 +1,12 @@
-  - - null
-    - cabin:
-          dir: U
-    - null
-  - - tank: {}
-    - crane:
-          dir: D
-    - tank: {}
-  - - engine:
-          dir: D
-          power: 150
-          keys:
-            - 30
-            - 31
-    - null
-    - engine:
-          dir: D
-          power: 150
-          keys:
-            - 29
-            - 31
-  - - null
-    - null
-    - null
+  - -
+    - cab dir=U
+    -
+  - - tnk
+    - crn dir=D
+    - tnk
+  - - eng dir=D;pow=150;keys=30,31
+    -
+    - eng dir=D;pow=150;keys=29,31
 
 energy: 100
 fuel: 5000

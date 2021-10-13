@@ -24,8 +24,9 @@ func (d Direction) GetAng() float64 {
 		return math.Pi
 	case DirectionUp:
 		return math.Pi + math.Pi/2
+	default:
+		panic("bad direction: " + d)
 	}
-	panic("bad direction")
 }
 
 func (d Direction) GetVec() box2d.B2Vec2 {
