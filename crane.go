@@ -120,7 +120,7 @@ func (c *Crane) unwind() {
 		chainElSprite,
 		pos, 0, 0,
 		box2d.B2Vec2_zero,
-		DefaultFriction, 100, DefaultFixtureRestitution, true)
+		DefaultFriction, 10, DefaultFixtureRestitution, true)
 
 	if len(c.chain) > 0 {
 		// TODO: apply additional force jaws

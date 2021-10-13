@@ -20,14 +20,14 @@ func NewCraneJaws(c *Crane) *CraneJaws {
 		box2d.B2Vec2Add(c.GetPos(), box2d.MakeB2Vec2(0, 0.5)),
 		DirectionDown.GetAng(), 0,
 		box2d.B2Vec2_zero,
-		1, 10, 0.0, true)
+		1, 1, 0.0, true)
 	lower := NewGameObj(
 		c.world,
 		craneLowerJawSprite,
 		box2d.B2Vec2Add(c.GetPos(), box2d.MakeB2Vec2(0, 0.5)),
 		DirectionDown.GetAng(), 0,
 		box2d.B2Vec2_zero,
-		1, 5, 0.0, true)
+		1, 1, 0.0, true)
 
 	lower.body.SetGravityScale(40)
 	upper.body.SetGravityScale(40)
