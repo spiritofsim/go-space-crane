@@ -73,15 +73,17 @@ func (g *Game) Update() error {
 	}
 
 	g.cam.Pos = g.ship.GetPos()
-	g.cam.Zoom = MaxCamZoom - g.ship.GetVelocity()*20
-	//g.cam.Ang = -g.ship.GetAng()
 
-	if g.cam.Zoom <= MinCamZoom {
-		g.cam.Zoom = MinCamZoom
+	targetZoom := MaxCamZoom - g.ship.GetVelocity()*20
+	if targetZoom <= MinCamZoom {
+		targetZoom = MinCamZoom
 	}
-	if g.cam.Zoom > MaxCamZoom {
-		g.cam.Zoom = MaxCamZoom
+	if targetZoom > MaxCamZoom {
+		targetZoom = MaxCamZoom
 	}
+
+	x := targetZoom - g.cam.Zoom
+	g.cam.Zoom += x / 100
 
 	g.checkWorldBounds()
 
