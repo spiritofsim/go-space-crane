@@ -12,9 +12,18 @@ Space Crane game
  - **Q**/**A** - wind/unwind crane chain
  - **Tab** - capture cargo
 
+
+## Screenshots
+![img_1.png](screens/1.png)
+
+
+
+
 ## Features
 ### Levels
  - Levels are simple svg's you can draw in any SVG editor
+   ![img_1.png](screens/level.png)
+
 
 ### Ships
 
@@ -54,8 +63,3 @@ tasks:
   - "d:1->p2"
   - "v:p1"
 ```
-
-## Screenshots
-![img_1.png](screens/1.png)
-
-
