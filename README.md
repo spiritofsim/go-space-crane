@@ -51,7 +51,7 @@ Ship consists of parts and described in simple yaml
 
 There are 2 task types:
  - [**v**] - visit platform task
- - [**d**] - transfer carco to platform
+ - [**d**] - transfer cargo to platform
 
 **Example**
 ```yaml
@@ -62,5 +62,5 @@ tasks:
 ```
 
 ## Libs
- - [box2d](github.com/ByteArena/box2d) : physics engine
- - [ebiten](https://ebiten.org/) : drawings, controls, etc.
+ - [Box2D](https://github.com/ByteArena/box2d) : physics engine
+ - [Ebiten](https://ebiten.org/) : drawings, controls, etc.
