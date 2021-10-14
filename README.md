@@ -20,7 +20,7 @@ Space Crane game
 
 Ship consists of parts and described in simple yaml
 
-####Parts
+**Parts**
  - Cabin [**cab**]
  - Engine [**eng**]
  - Crane [**crn**]
@@ -28,7 +28,7 @@ Ship consists of parts and described in simple yaml
  - Leg [**leg**]
  - LegFastening [**lft**]
 
-####Example
+**Example**
 ```yaml
   - -
     - cab dir=U
@@ -47,7 +47,7 @@ There are 2 tasks types:
  - [**v**] - visit platform task
  - [**d**] - transfer carco to platform
 
-####Example
+**Example**
 ```yaml
 tasks:
   - "d:1->p1"
