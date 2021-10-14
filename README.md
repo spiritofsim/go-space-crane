@@ -16,9 +16,6 @@ Space Crane game
 ## Screenshots
 ![img_1.png](screens/1.png)
 
-
-
-
 ## Features
 ### Levels
  - Levels are simple svg's you can draw in any SVG editor
@@ -52,7 +49,7 @@ Ship consists of parts and described in simple yaml
 
 ### Tasks
 
-There are 2 tasks types:
+There are 2 task types:
  - [**v**] - visit platform task
  - [**d**] - transfer carco to platform
 
@@ -63,3 +60,7 @@ tasks:
   - "d:1->p2"
   - "v:p1"
 ```
+
+## Libs
+ - [box2d](github.com/ByteArena/box2d) : physics engine
+ - [ebiten](https://ebiten.org/) : drawings, controls, etc.
