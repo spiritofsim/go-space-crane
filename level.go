@@ -18,6 +18,7 @@ type LevelDef struct {
 	TaskDefs    []string `yaml:"tasks"`
 }
 
+// TODO: get rid of level yaml. Move it to SVG!
 type Level struct {
 	Ship      *Ship
 	Terrain   *Terrain
