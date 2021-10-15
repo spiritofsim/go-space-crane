@@ -117,6 +117,17 @@ func NewShip(
 	return ship
 }
 
+func (s *Ship) GetFuel() float64 {
+	return s.fuel
+}
+
+func (s *Ship) ReduceFuel(val float64) {
+	s.fuel -= val
+	if s.fuel < 0 {
+		s.fuel = 0
+	}
+}
+
 func (s *Ship) destruct() {
 	for _, part := range s.parts {
 		for je := part.GetBody().GetJointList(); je != nil; je = je.Next {

@@ -29,7 +29,7 @@ const (
 
 type PartDef interface {
 	Construct(world *box2d.B2World,
-		ship *Ship, //TODO: pass interface
+		tanker Tanker,
 		ps *ParticleSystem,
 		shipPos box2d.B2Vec2,
 		shipSize box2d.B2Vec2,

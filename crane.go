@@ -21,8 +21,8 @@ type Crane struct {
 
 func (d CraneDef) Construct(
 	world *box2d.B2World,
-	ship *Ship,
-	ps *ParticleSystem,
+	_ Tanker,
+	_ *ParticleSystem,
 	shipPos box2d.B2Vec2,
 	shipSize box2d.B2Vec2,
 	pos box2d.B2Vec2) Part {
@@ -117,7 +117,8 @@ func (c *Crane) unwind() {
 		chainElSprite,
 		pos, 0, 0,
 		box2d.B2Vec2_zero,
-		DefaultFriction, 10, DefaultFixtureRestitution, true)
+		DefaultFriction, 100, DefaultFixtureRestitution, true)
+	chainEl.body.SetGravityScale(0.1)
 
 	if len(c.chain) > 0 {
 		// TODO: apply additional force jaws
@@ -138,7 +139,7 @@ func (c *Crane) createChainJoint(
 	bodyB *box2d.B2Body,
 	lpB box2d.B2Vec2) {
 
-	// TODO: try ropeJoint
+	//// TODO: try ropeJoint
 	rjd := box2d.MakeB2RevoluteJointDef()
 	rjd.BodyA = bodyA
 	rjd.LocalAnchorA = lpA

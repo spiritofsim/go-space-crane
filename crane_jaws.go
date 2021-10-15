@@ -7,6 +7,10 @@ import (
 	"time"
 )
 
+const (
+	motorSpeed = 10
+)
+
 type CraneJaws struct {
 	motor          *box2d.B2RevoluteJoint
 	upper, lower   *GameObj
@@ -14,20 +18,21 @@ type CraneJaws struct {
 }
 
 func NewCraneJaws(c *Crane) *CraneJaws {
+	density := 5.0
 	upper := NewGameObj(
 		c.world,
 		craneUpperJawSprite,
 		box2d.B2Vec2Add(c.GetPos(), box2d.MakeB2Vec2(0, 0.5)),
 		DirectionDown.GetAng(), 0,
 		box2d.B2Vec2_zero,
-		1, 1, 0.0, true)
+		1, density, 0.0, true)
 	lower := NewGameObj(
 		c.world,
 		craneLowerJawSprite,
 		box2d.B2Vec2Add(c.GetPos(), box2d.MakeB2Vec2(0, 0.5)),
 		DirectionDown.GetAng(), 0,
 		box2d.B2Vec2_zero,
-		1, 1, 0.0, true)
+		1, density, 0.0, true)
 
 	lower.body.SetGravityScale(40)
 	upper.body.SetGravityScale(40)
@@ -43,7 +48,7 @@ func NewCraneJaws(c *Crane) *CraneJaws {
 	rjd.EnableLimit = true
 	rjd.UpperAngle = math.Pi / 2
 	rjd.LowerAngle = -math.Pi / 4
-	rjd.MaxMotorTorque = 100
+	rjd.MaxMotorTorque = 300
 	m := c.world.CreateJoint(&rjd)
 
 	// joint to last chain element (upper)
@@ -79,6 +84,11 @@ func (j *CraneJaws) Draw(screen *ebiten.Image, cam Cam) {
 }
 
 func (j *CraneJaws) Update() {
+	//a := j.motor.GetJointAngle()
+	//if FloatEquals(a, math.Pi/2) && FloatEquals(j.motor.GetMotorSpeed(), 0.0) {
+	//	// TODO: crane is open: create angle joint
+	//}
+
 	if j.lastControlled.Add(time.Second).After(time.Now()) {
 		return
 	}
@@ -95,8 +105,9 @@ func (j *CraneJaws) OpenClose() {
 
 	ms := j.motor.GetMotorSpeed()
 	if ms < 0 {
-		j.motor.SetMotorSpeed(10)
+		j.motor.SetMotorSpeed(motorSpeed)
 		return
 	}
-	j.motor.SetMotorSpeed(-10)
+
+	j.motor.SetMotorSpeed(-motorSpeed)
 }

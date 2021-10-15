@@ -14,7 +14,7 @@ type EngineDef struct {
 
 type Engine struct {
 	*GameObj
-	ship     *Ship
+	tanker   Tanker
 	ps       *ParticleSystem
 	power    float64
 	km       map[ebiten.Key]struct{}
@@ -23,7 +23,7 @@ type Engine struct {
 
 func (d EngineDef) Construct(
 	world *box2d.B2World,
-	ship *Ship,
+	tanker Tanker,
 	ps *ParticleSystem,
 	shipPos box2d.B2Vec2,
 	shipSize box2d.B2Vec2,
@@ -48,10 +48,10 @@ func (d EngineDef) Construct(
 			d.Dir.GetAng(), 0,
 			box2d.B2Vec2_zero,
 			DefaultFriction, DefaultFixtureDensity, DefaultFixtureRestitution, true),
-		ship:  ship,
-		power: d.Power,
-		ps:    ps,
-		km:    km,
+		tanker: tanker,
+		power:  d.Power,
+		ps:     ps,
+		km:     km,
 	}
 	engine.GetBody().SetUserData(engine)
 
@@ -79,7 +79,7 @@ func (e *Engine) GetBody() *box2d.B2Body {
 
 func (e *Engine) Update(keys []ebiten.Key) {
 	e.isActive = false
-	if e.ship.fuel <= 0 {
+	if e.tanker.GetFuel() <= 0 {
 		return
 	}
 
@@ -101,9 +101,5 @@ func (e *Engine) Update(keys []ebiten.Key) {
 	force = force.OperatorNegate()
 	e.body.ApplyForce(force, e.body.GetPosition(), true)
 
-	// Reduce fuel
-	e.ship.fuel -= e.power * EngineFuelConsumption
-	if e.ship.fuel < 0 {
-		e.ship.fuel = 0
-	}
+	e.tanker.ReduceFuel(e.power * EngineFuelConsumption)
 }
