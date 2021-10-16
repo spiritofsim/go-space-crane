@@ -18,6 +18,10 @@ jobs:
       with:
         go-version: 1.17
 
+
+    - name: Update
+      run: sudo apt-get update
+
     - name: Install deps
       run: sudo apt install libc6-dev libglu1-mesa-dev libgl1-mesa-dev libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev libxxf86vm-dev libasound2-dev pkg-config
 
