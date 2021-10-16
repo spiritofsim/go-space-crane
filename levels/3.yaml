@@ -1,0 +1,21 @@
+name: Level3
+description: todo
+terrain: flat
+ship:
+  name: ship1
+  energy: 1000
+  fuel: 10000
+  maxfuel: 10000
+#  pos:
+#    x: 100
+#    y: 100
+platforms:
+  p1:
+    fuel: 1000
+  p2:
+    fuel: 1000
+
+tasks:
+ - "d:1->p1"
+ - "d:1->p2"
+ - "v:p1"

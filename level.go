@@ -29,7 +29,7 @@ type Level struct {
 }
 
 func LoadLevel(world *box2d.B2World, ps *ParticleSystem, name string) Level {
-	levelDefData, err := ioutil.ReadFile(path.Join(AssetsDir, LevelsDir, name+".yaml"))
+	levelDefData, err := ioutil.ReadFile(path.Join(LevelsDir, name))
 	checkErr(err)
 	var levelDef LevelDef
 	checkErr(yaml.Unmarshal(levelDefData, &levelDef))

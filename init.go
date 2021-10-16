@@ -35,6 +35,8 @@ var emptyImage = ebiten.NewImage(3, 3)
 var emptySubImage = emptyImage.SubImage(image.Rect(1, 1, 2, 2)).(*ebiten.Image)
 var modalTitleFace font.Face
 var modalTextFace font.Face
+var levelNameFace font.Face
+var levelDescFace font.Face
 
 func init() {
 	initEbiten()
@@ -75,6 +77,20 @@ func init() {
 
 	modalTextFace, err = opentype.NewFace(f, &opentype.FaceOptions{
 		Size:    20,
+		DPI:     FontDpi,
+		Hinting: font.HintingFull,
+	})
+	checkErr(err)
+
+	levelNameFace, err = opentype.NewFace(f, &opentype.FaceOptions{
+		Size:    30,
+		DPI:     FontDpi,
+		Hinting: font.HintingFull,
+	})
+	checkErr(err)
+
+	levelDescFace, err = opentype.NewFace(f, &opentype.FaceOptions{
+		Size:    30,
 		DPI:     FontDpi,
 		Hinting: font.HintingFull,
 	})
