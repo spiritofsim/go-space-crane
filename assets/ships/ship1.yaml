@@ -1,9 +1,9 @@
   - -
     - cab dir=U
     -
-  - - tnk
+  - - box
     - crn dir=D
-    - tnk
+    - box
   - - eng dir=D;pow=150;keys=30,31
     -
     - eng dir=D;pow=150;keys=29,31

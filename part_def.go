@@ -11,7 +11,7 @@ import (
 type PartType string
 
 const (
-	PartTypeTank         PartType = "tnk"
+	PartTypeBox          PartType = "box"
 	PartTypeCabin        PartType = "cab"
 	PartTypeEngine       PartType = "eng"
 	PartTypeCrane        PartType = "crn"
@@ -44,7 +44,7 @@ func ParsePartDef(strP *string) PartDef {
 	tp := strings.ToLower(str[:3])
 	params := parsePartParams(str[3:])
 	switch PartType(tp) {
-	case PartTypeTank:
+	case PartTypeBox:
 		return &BoxDef{}
 	case PartTypeCabin:
 		return &CabinDef{
@@ -84,13 +84,12 @@ func (v paramVal) AsFloat() float64 {
 	checkErr(err)
 	return result
 }
-func (v paramVal) AsKeys() []ebiten.Key {
-	elems := strings.Split(string(v), ",")
-	result := make([]ebiten.Key, len(elems))
-	for i, elem := range elems {
+func (v paramVal) AsKeys() Keys {
+	result := make(Keys)
+	for _, elem := range strings.Split(string(v), ",") {
 		k, err := strconv.Atoi(elem)
 		checkErr(err)
-		result[i] = ebiten.Key(k)
+		result[ebiten.Key(k)] = struct{}{}
 	}
 	return result
 }

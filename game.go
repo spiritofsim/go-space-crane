@@ -20,9 +20,7 @@ type Game struct {
 	platforms  map[string]*Platform
 	cargos     map[string]*Cargo
 	tasks      []Task
-	// TODO: to rect
-	boundsMin box2d.B2Vec2
-	boundsMax box2d.B2Vec2
+	bounds     box2d.B2AABB
 
 	// Optimizations
 	prevTargetDistance    int
@@ -47,13 +45,12 @@ func NewGame(
 		platforms:  level.Platforms,
 		cargos:     level.Cargos,
 		tasks:      level.Tasks,
-		boundsMin:  level.boundsMin,
-		boundsMax:  level.boundsMax,
+		bounds:     level.bounds,
 	}
 }
 
 func (g *Game) Update() error {
-	keys := inpututil.AppendPressedKeys(nil)
+	keys := KeysFromSlice(inpututil.AppendPressedKeys(nil))
 
 	// Tasks
 	if len(g.tasks) == 0 {
@@ -105,17 +102,17 @@ func (g *Game) checkWorldBounds() {
 	mult := 10.0
 
 	force := box2d.B2Vec2_zero
-	if shipPos.X < g.boundsMin.X {
-		force = box2d.B2Vec2Add(force, box2d.MakeB2Vec2(-shipVel.X*(g.boundsMin.X-shipPos.X)*mult, 0))
+	if shipPos.X < g.bounds.LowerBound.X {
+		force = box2d.B2Vec2Add(force, box2d.MakeB2Vec2(-shipVel.X*(g.bounds.LowerBound.X-shipPos.X)*mult, 0))
 	}
-	if shipPos.Y < g.boundsMin.Y {
-		force = box2d.B2Vec2Add(force, box2d.MakeB2Vec2(0, -shipVel.Y*(g.boundsMin.Y-shipPos.Y)*mult))
+	if shipPos.Y < g.bounds.LowerBound.Y {
+		force = box2d.B2Vec2Add(force, box2d.MakeB2Vec2(0, -shipVel.Y*(g.bounds.LowerBound.Y-shipPos.Y)*mult))
 	}
-	if shipPos.X > g.boundsMax.X {
-		force = box2d.B2Vec2Add(force, box2d.MakeB2Vec2(-shipVel.X*(shipPos.X-g.boundsMax.X)*mult, 0))
+	if shipPos.X > g.bounds.UpperBound.X {
+		force = box2d.B2Vec2Add(force, box2d.MakeB2Vec2(-shipVel.X*(shipPos.X-g.bounds.UpperBound.X)*mult, 0))
 	}
-	if shipPos.Y > g.boundsMax.Y {
-		force = box2d.B2Vec2Add(force, box2d.MakeB2Vec2(0, -shipVel.Y*(shipPos.Y-g.boundsMax.Y)*mult))
+	if shipPos.Y > g.bounds.UpperBound.Y {
+		force = box2d.B2Vec2Add(force, box2d.MakeB2Vec2(0, -shipVel.Y*(shipPos.Y-g.bounds.UpperBound.Y)*mult))
 	}
 	g.ship.ApplyForce(force)
 

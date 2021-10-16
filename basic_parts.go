@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/ByteArena/box2d"
-	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type BasicPart struct {
@@ -13,13 +12,13 @@ func (p *BasicPart) GetBody() *box2d.B2Body {
 	return p.body
 }
 
-func (p *BasicPart) Update(keys []ebiten.Key) {}
+func (p *BasicPart) Update(Keys) {}
 
 func ConstructBasicPart(
 	world *box2d.B2World,
-	tanker Tank,
-	ps *ParticleSystem,
-	shipPos box2d.B2Vec2,
+	_ Tank,
+	_ *ParticleSystem,
+	shipPos box2d.B2Vec2, // TODO: create interface: IHavePosAndSize
 	shipSize box2d.B2Vec2,
 	pos box2d.B2Vec2,
 	sprite Sprite,
@@ -59,7 +58,16 @@ func (d CabinDef) Construct(
 	shipPos box2d.B2Vec2,
 	shipSize box2d.B2Vec2,
 	pos box2d.B2Vec2) Part {
-	return ConstructBasicPart(world, tanker, ps, shipPos, shipSize, pos, cabinSprite, d.Dir.GetAng())
+
+	return ConstructBasicPart(
+		world,
+		tanker,
+		ps,
+		shipPos,
+		shipSize,
+		pos,
+		cabinSprite,
+		d.Dir.GetAng())
 }
 
 type BoxDef struct {
@@ -72,7 +80,16 @@ func (d BoxDef) Construct(
 	shipPos box2d.B2Vec2,
 	shipSize box2d.B2Vec2,
 	pos box2d.B2Vec2) Part {
-	return ConstructBasicPart(world, tanker, ps, shipPos, shipSize, pos, boxSprite, 0)
+
+	return ConstructBasicPart(
+		world,
+		tanker,
+		ps,
+		shipPos,
+		shipSize,
+		pos,
+		boxSprite,
+		0)
 }
 
 type LegDef struct {
@@ -87,7 +104,15 @@ func (d LegDef) Construct(
 	shipSize box2d.B2Vec2,
 	pos box2d.B2Vec2) Part {
 
-	return ConstructBasicPart(world, tanker, ps, shipPos, shipSize, pos, legSprite, d.Dir.GetAng())
+	return ConstructBasicPart(
+		world,
+		tanker,
+		ps,
+		shipPos,
+		shipSize,
+		pos,
+		legSprite,
+		d.Dir.GetAng())
 }
 
 type LegFasteningDef struct {
@@ -101,5 +126,13 @@ func (d LegFasteningDef) Construct(
 	shipPos box2d.B2Vec2,
 	shipSize box2d.B2Vec2,
 	pos box2d.B2Vec2) Part {
-	return ConstructBasicPart(world, tanker, ps, shipPos, shipSize, pos, legFasteningSprite, d.Dir.GetAng())
+
+	return ConstructBasicPart(
+		world,
+		tanker,
+		ps, shipPos,
+		shipSize,
+		pos,
+		legFasteningSprite,
+		d.Dir.GetAng())
 }

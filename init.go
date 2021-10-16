@@ -72,7 +72,7 @@ func init() {
 	craneLowerJawSprite = LoadPart("crane_lower_jaw")
 	chainElSprite = LoadPart("chain_el")
 
-	cargoSprite = LoadSpriteObj("cargo")
+	cargoSprite = LoadPart("cargo")
 	flameParticleImg = loadImage("flame_particle.png")
 
 	radarArrowImg = loadImage("hood/radar_arrow.png")

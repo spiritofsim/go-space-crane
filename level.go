@@ -25,8 +25,7 @@ type Level struct {
 	Platforms map[string]*Platform
 	Cargos    map[string]*Cargo
 	Tasks     []Task
-	boundsMin box2d.B2Vec2
-	boundsMax box2d.B2Vec2
+	bounds    box2d.B2AABB
 }
 
 func LoadLevel(world *box2d.B2World, ps *ParticleSystem, name string) Level {
@@ -48,8 +47,7 @@ func LoadLevel(world *box2d.B2World, ps *ParticleSystem, name string) Level {
 
 	// Platforms are rects with "platform" title
 	platforms := make(map[string]*Platform)
-	boundsMin := box2d.B2Vec2_zero
-	boundsMax := box2d.B2Vec2_zero
+	levelBounds := box2d.MakeB2AABB()
 	for _, rect := range svg.Layers[0].Rects {
 		switch rect.Title {
 		case "platform":
@@ -63,9 +61,8 @@ func LoadLevel(world *box2d.B2World, ps *ParticleSystem, name string) Level {
 				float64(fuel))
 			platforms[platform.id] = platform
 		case "bounds":
-			// TODO: bounds
-			boundsMin = box2d.MakeB2Vec2(rect.Pos.X, rect.Pos.Y)
-			boundsMax = box2d.MakeB2Vec2(rect.Pos.X+rect.Size.X, rect.Pos.Y+rect.Size.Y)
+			levelBounds.LowerBound = box2d.MakeB2Vec2(rect.Pos.X, rect.Pos.Y)
+			levelBounds.UpperBound = box2d.MakeB2Vec2(rect.Pos.X+rect.Size.X, rect.Pos.Y+rect.Size.Y)
 		}
 	}
 
@@ -104,8 +101,7 @@ func LoadLevel(world *box2d.B2World, ps *ParticleSystem, name string) Level {
 		Platforms: platforms,
 		Cargos:    cargos,
 		Tasks:     tasks,
-		boundsMin: boundsMin,
-		boundsMax: boundsMax,
+		bounds:    levelBounds,
 	}
 }
 

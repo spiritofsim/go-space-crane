@@ -12,13 +12,11 @@ type Terrain struct {
 }
 
 func NewTerrain(world *box2d.B2World, vSet [][]box2d.B2Vec2) *Terrain {
-
 	bd := box2d.MakeB2BodyDef()
 	bd.Position.Set(0, 0)
 	bd.Type = box2d.B2BodyType.B2_staticBody
 	body := world.CreateBody(&bd)
 
-	size := box2d.B2Vec2_zero
 	for _, verts := range vSet {
 		shape := box2d.MakeB2ChainShape()
 		shape.CreateLoop(verts, len(verts))
@@ -30,17 +28,6 @@ func NewTerrain(world *box2d.B2World, vSet [][]box2d.B2Vec2) *Terrain {
 		fd.Density = DefaultFixtureDensity
 		fd.Restitution = DefaultFixtureRestitution
 		body.CreateFixtureFromDef(&fd)
-
-		// calc level size
-		// TODO: add bounds to world metadata
-		for _, vert := range verts {
-			if vert.X > size.X {
-				size.X = vert.X
-			}
-			if vert.Y > size.Y {
-				size.Y = vert.Y
-			}
-		}
 	}
 
 	return &Terrain{

@@ -24,7 +24,7 @@ func NewCargo(id string, world *box2d.B2World, pos box2d.B2Vec2) *Cargo {
 	text.Draw(img, id, cargoFace, int(cargoSize.X/2)-textBounds.Max.X/2, int(cargoSize.Y/2)-textBounds.Min.Y/2, color.White)
 	sprite := NewSprite(img, cargoSprite.vertsSet)
 
-	gobj := NewGameObj(
+	gameObj := NewGameObj(
 		world,
 		sprite,
 		pos,
@@ -36,7 +36,7 @@ func NewCargo(id string, world *box2d.B2World, pos box2d.B2Vec2) *Cargo {
 		DefaultFixtureRestitution, true)
 
 	cargo := &Cargo{
-		GameObj: gobj,
+		GameObj: gameObj,
 		id:      id,
 		size:    getShapeSize(cargoSprite.vertsSet[0]),
 	}

@@ -63,27 +63,25 @@ func (c *Crane) GetBody() *box2d.B2Body {
 	return c.body
 }
 
-func (c *Crane) Update(keys []ebiten.Key) {
+func (c *Crane) Update(keys Keys) {
 	c.jaws.Update()
 
-	for _, key := range keys {
-		if key == ebiten.KeyTab {
-			c.jaws.OpenClose()
+	if keys.IsKeyPressed(ebiten.KeyTab) {
+		c.jaws.OpenClose()
+	}
+	if keys.IsKeyPressed(ebiten.KeyQ) {
+		if c.chainLastControlled.Add(time.Second / 5).After(time.Now()) {
+			return
 		}
-		if key == ebiten.KeyQ {
-			if c.chainLastControlled.Add(time.Second / 5).After(time.Now()) {
-				return
-			}
-			c.chainLastControlled = time.Now()
-			c.windup()
+		c.chainLastControlled = time.Now()
+		c.windup()
+	}
+	if keys.IsKeyPressed(ebiten.KeyA) {
+		if c.chainLastControlled.Add(time.Second / 5).After(time.Now()) {
+			return
 		}
-		if key == ebiten.KeyA {
-			if c.chainLastControlled.Add(time.Second / 5).After(time.Now()) {
-				return
-			}
-			c.chainLastControlled = time.Now()
-			c.unwind()
-		}
+		c.chainLastControlled = time.Now()
+		c.unwind()
 	}
 }
 
@@ -99,7 +97,6 @@ func (c *Crane) windup() {
 	c.jaws.upper.body.ApplyForce(f, c.jaws.upper.body.GetPosition(), true)
 	c.jaws.lower.body.ApplyForce(f, c.jaws.upper.body.GetPosition(), true)
 
-	// TODO: apply additional force jaws
 	if len(c.chain) > 0 {
 		// TODO: check if previous join destroyed by destroying its body
 		// TODO: use part rotation. now it is hardcoded

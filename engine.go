@@ -9,7 +9,7 @@ import (
 type EngineDef struct {
 	Dir   Direction
 	Power float64
-	Keys  []ebiten.Key
+	Keys  Keys
 }
 
 type Engine struct {
@@ -17,7 +17,7 @@ type Engine struct {
 	tanker   Tank
 	ps       *ParticleSystem
 	power    float64
-	km       map[ebiten.Key]struct{}
+	keys     Keys
 	isActive bool
 }
 
@@ -35,11 +35,6 @@ func (d EngineDef) Construct(
 	worldPos = box2d.B2Vec2Add(worldPos, shipHalfSize.OperatorNegate())
 	worldPos = box2d.B2Vec2Add(worldPos, box2d.MakeB2Vec2(0.5, 0.5))
 
-	km := make(map[ebiten.Key]struct{})
-	for _, key := range d.Keys {
-		km[key] = struct{}{}
-	}
-
 	engine := &Engine{
 		GameObj: NewGameObj(
 			world,
@@ -51,7 +46,7 @@ func (d EngineDef) Construct(
 		tanker: tanker,
 		power:  d.Power,
 		ps:     ps,
-		km:     km,
+		keys:   d.Keys,
 	}
 	engine.GetBody().SetUserData(engine)
 
@@ -77,7 +72,7 @@ func (e *Engine) GetBody() *box2d.B2Body {
 	return e.body
 }
 
-func (e *Engine) Update(keys []ebiten.Key) {
+func (e *Engine) Update(keys Keys) {
 	e.isActive = false
 	if e.tanker.GetFuel() <= 0 {
 		return
@@ -85,8 +80,8 @@ func (e *Engine) Update(keys []ebiten.Key) {
 
 	// TODO: to func
 	keyFound := false
-	for _, key := range keys {
-		if _, ok := e.km[key]; ok {
+	for key := range keys {
+		if _, ok := e.keys[key]; ok {
 			keyFound = true
 			break
 		}

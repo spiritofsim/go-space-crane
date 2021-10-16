@@ -24,7 +24,7 @@ func NewPlatform(id string, world *box2d.B2World, pos box2d.B2Vec2, size box2d.B
 		box2d.MakeB2Vec2(-size.X/2, size.Y/2),
 	}
 
-	gObj := NewGameObj(
+	gameObj := NewGameObj(
 		world,
 		NewSprite(emptyTransparentImage, [][]box2d.B2Vec2{verts}),
 		pos,
@@ -36,7 +36,7 @@ func NewPlatform(id string, world *box2d.B2World, pos box2d.B2Vec2, size box2d.B
 		DefaultFixtureRestitution, false)
 
 	platform := &Platform{
-		GameObj: gObj,
+		GameObj: gameObj,
 		id:      id,
 		fuel:    fuel,
 		maxFuel: fuel,

@@ -154,7 +154,7 @@ func (s *Ship) ApplyForce(force box2d.B2Vec2) {
 }
 
 func (s *Ship) GetPos() box2d.B2Vec2 {
-	// TODO:
+	// TODO: calc cabin pos
 	return s.parts[0].GetPos()
 }
 
@@ -176,7 +176,7 @@ func (s *Ship) GetVelVec() box2d.B2Vec2 {
 	panic("ship have no parts")
 }
 
-func (s *Ship) Update(keys []ebiten.Key) {
+func (s *Ship) Update(keys Keys) {
 	for _, part := range s.parts {
 		part.Update(keys)
 	}

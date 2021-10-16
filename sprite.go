@@ -8,7 +8,6 @@ import (
 )
 
 // Sprite contains sprite image and shape vertices
-// TODO: try to use only ebiten vectors, not sprites
 type Sprite struct {
 	img      *ebiten.Image
 	vertsSet [][]box2d.B2Vec2
@@ -19,10 +18,7 @@ func NewSprite(img *ebiten.Image, vertsSet [][]box2d.B2Vec2) Sprite {
 }
 
 func LoadPart(name string) Sprite {
-	return LoadSpriteObj(path.Join(PartsDir, name))
-}
-
-func LoadSpriteObj(name string) Sprite {
+	name = path.Join(PartsDir, name)
 	img := loadImage(name + ".png")
 	svg, err := svg2.Load(path.Join(AssetsDir, name+".svg"))
 	checkErr(err)
