@@ -8,4 +8,8 @@ const (
 	EnergyLabelText   = "ENERGY"
 	TargetLabelText   = "TARGET"
 	DistanceLabelText = "DISTANCE"
+
+	LevelCompleteText    = "Level Complete"
+	LevelFailedText      = "Level Failed"
+	PressEnterToContinue = "Press ENTER to continue"
 )

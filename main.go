@@ -6,24 +6,16 @@ import (
 )
 
 func main() {
-	ebiten.SetWindowSize(ScreenWidth, ScreenHeight)
-	ebiten.SetWindowTitle("Space Crane")
-	ebiten.SetWindowResizable(true)
-
-	gravity := box2d.MakeB2Vec2(0, Gravity)
-	world := box2d.MakeB2World(gravity)
+	world := box2d.MakeB2World(box2d.MakeB2Vec2(0, Gravity))
 
 	cam := NewCam()
 	ps := NewParticleSystem()
-
 	level := LoadLevel(&world, ps, "level1")
-
 	bg := NewBackground()
 	game := NewGame(&world, cam, bg, ps, level)
 	world.SetContactListener(game)
-	err := ebiten.RunGame(game)
-	checkErr(err)
 
+	checkErr(ebiten.RunGame(game))
 }
 
 func checkErr(err error) {

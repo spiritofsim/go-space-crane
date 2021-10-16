@@ -22,6 +22,9 @@ type Game struct {
 	tasks      []Task
 	bounds     box2d.B2AABB
 
+	endModal *Modal
+	err      error
+
 	// Optimizations
 	prevTargetDistance    int
 	prevTargetDistanceImg *ebiten.Image
@@ -46,16 +49,35 @@ func NewGame(
 		cargos:     level.Cargos,
 		tasks:      level.Tasks,
 		bounds:     level.bounds,
+		// Uncomment to debug modal
+		//endModal:   NewModal(LevelFailedText, PressEnterToContinue, Keys{ebiten.KeyEnter: struct{}{}, ebiten.KeyNumpadEnter: struct{}{}}),
+		//err:        levelComplete,
 	}
 }
 
 func (g *Game) Update() error {
 	keys := KeysFromSlice(inpututil.AppendPressedKeys(nil))
 
+	if g.endModal != nil {
+		if g.endModal.isClosed {
+			return g.err
+		}
+		g.endModal.Update(keys)
+	}
+
+	if g.ship.isDestroyed || g.ship.GetFuel() <= 0 {
+		if g.endModal == nil {
+			g.err = levelFailed
+			g.endModal = NewModal(LevelFailedText, PressEnterToContinue, Keys{ebiten.KeyEnter: struct{}{}, ebiten.KeyNumpadEnter: struct{}{}})
+		}
+	}
+
 	// Tasks
 	if len(g.tasks) == 0 {
-		// TODO: level complete
-		//return nil
+		if g.endModal == nil {
+			g.err = levelComplete
+			g.endModal = NewModal(LevelCompleteText, PressEnterToContinue, Keys{ebiten.KeyEnter: struct{}{}, ebiten.KeyNumpadEnter: struct{}{}})
+		}
 	} else {
 		if g.tasks[0].IsComplete() {
 			g.tasks = g.tasks[1:]
@@ -69,8 +91,8 @@ func (g *Game) Update() error {
 		}
 	}
 
+	// Cam
 	g.cam.Pos = g.ship.GetPos()
-
 	targetZoom := MaxCamZoom - g.ship.GetVel()*20
 	if targetZoom <= MinCamZoom {
 		targetZoom = MinCamZoom
@@ -78,14 +100,17 @@ func (g *Game) Update() error {
 	if targetZoom > MaxCamZoom {
 		targetZoom = MaxCamZoom
 	}
-
 	x := targetZoom - g.cam.Zoom
 	g.cam.Zoom += x / 100
 
 	g.checkWorldBounds()
 
 	g.ps.Update()
-	g.ship.Update(keys)
+
+	if g.endModal == nil {
+		g.ship.Update(keys)
+	}
+
 	for _, cargo := range g.cargos {
 		cargo.Update()
 	}
@@ -136,6 +161,11 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	if DrawDebugBodies {
 		g.drawDebugBodies(screen)
 	}
+
+	if g.endModal != nil {
+		g.endModal.Draw(screen)
+	}
+
 	if PrintDebugInfo {
 		g.printDebugInfo(screen)
 	}

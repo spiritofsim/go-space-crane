@@ -27,10 +27,11 @@ type Ship struct {
 	// We need it to calculate ship orientation. At init it must be 0
 	originalAng float64
 
-	energy    float64
-	maxEnergy float64
-	fuel      float64
-	maxFuel   float64
+	energy      float64
+	maxEnergy   float64
+	fuel        float64
+	maxFuel     float64
+	isDestroyed bool
 
 	contactPlatform *Platform
 }
@@ -128,12 +129,13 @@ func (s *Ship) ReduceFuel(val float64) {
 	}
 }
 
-func (s *Ship) destruct() {
+func (s *Ship) destroy() {
 	for _, part := range s.parts {
 		for je := part.GetBody().GetJointList(); je != nil; je = je.Next {
 			s.world.DestroyJoint(je.Joint)
 		}
 	}
+	s.isDestroyed = true
 }
 
 // GetLandedPlatform returns current landed platform or nil if ship is not landed
@@ -191,7 +193,7 @@ func (s *Ship) Update(keys Keys) {
 
 	// Destroy ship if no energy
 	if s.energy <= 0 {
-		s.destruct()
+		s.destroy()
 	}
 }
 

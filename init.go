@@ -29,11 +29,16 @@ var cargoFace font.Face
 var hoodFace font.Face
 var radarArrowImg *ebiten.Image
 var hoodImg *ebiten.Image
+var modalImg *ebiten.Image
 var emptyTransparentImage = ebiten.NewImage(1, 1)
 var emptyImage = ebiten.NewImage(3, 3)
 var emptySubImage = emptyImage.SubImage(image.Rect(1, 1, 2, 2)).(*ebiten.Image)
+var modalTitleFace font.Face
+var modalTextFace font.Face
 
 func init() {
+	initEbiten()
+
 	emptyImage.Fill(color.White)
 	rand.Seed(time.Now().UnixNano())
 
@@ -56,6 +61,20 @@ func init() {
 
 	hoodFace, err = opentype.NewFace(f, &opentype.FaceOptions{
 		Size:    30,
+		DPI:     FontDpi,
+		Hinting: font.HintingFull,
+	})
+	checkErr(err)
+
+	modalTitleFace, err = opentype.NewFace(f, &opentype.FaceOptions{
+		Size:    50,
+		DPI:     FontDpi,
+		Hinting: font.HintingFull,
+	})
+	checkErr(err)
+
+	modalTextFace, err = opentype.NewFace(f, &opentype.FaceOptions{
+		Size:    20,
 		DPI:     FontDpi,
 		Hinting: font.HintingFull,
 	})
@@ -86,4 +105,12 @@ func init() {
 	for i := 0; i < 50; i++ {
 		text.CacheGlyphs(hoodFace, fmt.Sprintf(DistanceText, i))
 	}
+
+	modalImg = loadImage("modal.png")
+}
+
+func initEbiten() {
+	ebiten.SetWindowSize(ScreenWidth, ScreenHeight)
+	ebiten.SetWindowTitle("Space Crane")
+	ebiten.SetWindowResizable(true)
 }
