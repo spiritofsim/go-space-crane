@@ -1,7 +1,7 @@
 package main
 
 const (
-	DrawDebugBodies = true
+	DrawDebugBodies = false
 	PrintDebugInfo  = true
 
 	ScreenWidth  = 1920

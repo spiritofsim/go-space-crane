@@ -1,6 +1,6 @@
 package main
 
-type Tanker interface {
+type Tank interface {
 	GetFuel() float64
 	// TODO: rename
 	ReduceFuel(val float64)

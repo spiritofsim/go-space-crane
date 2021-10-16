@@ -14,7 +14,7 @@ type EngineDef struct {
 
 type Engine struct {
 	*GameObj
-	tanker   Tanker
+	tanker   Tank
 	ps       *ParticleSystem
 	power    float64
 	km       map[ebiten.Key]struct{}
@@ -23,7 +23,7 @@ type Engine struct {
 
 func (d EngineDef) Construct(
 	world *box2d.B2World,
-	tanker Tanker,
+	tanker Tank,
 	ps *ParticleSystem,
 	shipPos box2d.B2Vec2,
 	shipSize box2d.B2Vec2,

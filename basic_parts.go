@@ -17,7 +17,7 @@ func (p *BasicPart) Update(keys []ebiten.Key) {}
 
 func ConstructBasicPart(
 	world *box2d.B2World,
-	tanker Tanker,
+	tanker Tank,
 	ps *ParticleSystem,
 	shipPos box2d.B2Vec2,
 	shipSize box2d.B2Vec2,
@@ -54,7 +54,7 @@ type CabinDef struct {
 
 func (d CabinDef) Construct(
 	world *box2d.B2World,
-	tanker Tanker,
+	tanker Tank,
 	ps *ParticleSystem,
 	shipPos box2d.B2Vec2,
 	shipSize box2d.B2Vec2,
@@ -62,17 +62,17 @@ func (d CabinDef) Construct(
 	return ConstructBasicPart(world, tanker, ps, shipPos, shipSize, pos, cabinSprite, d.Dir.GetAng())
 }
 
-type TankDef struct {
+type BoxDef struct {
 }
 
-func (d TankDef) Construct(
+func (d BoxDef) Construct(
 	world *box2d.B2World,
-	tanker Tanker,
+	tanker Tank,
 	ps *ParticleSystem,
 	shipPos box2d.B2Vec2,
 	shipSize box2d.B2Vec2,
 	pos box2d.B2Vec2) Part {
-	return ConstructBasicPart(world, tanker, ps, shipPos, shipSize, pos, tankSprite, 0)
+	return ConstructBasicPart(world, tanker, ps, shipPos, shipSize, pos, boxSprite, 0)
 }
 
 type LegDef struct {
@@ -81,7 +81,7 @@ type LegDef struct {
 
 func (d LegDef) Construct(
 	world *box2d.B2World,
-	tanker Tanker,
+	tanker Tank,
 	ps *ParticleSystem,
 	shipPos box2d.B2Vec2, // TODO: remove. use ship
 	shipSize box2d.B2Vec2,
@@ -96,7 +96,7 @@ type LegFasteningDef struct {
 
 func (d LegFasteningDef) Construct(
 	world *box2d.B2World,
-	tanker Tanker,
+	tanker Tank,
 	ps *ParticleSystem,
 	shipPos box2d.B2Vec2,
 	shipSize box2d.B2Vec2,

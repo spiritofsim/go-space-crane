@@ -29,7 +29,7 @@ const (
 
 type PartDef interface {
 	Construct(world *box2d.B2World,
-		tanker Tanker,
+		tanker Tank,
 		ps *ParticleSystem,
 		shipPos box2d.B2Vec2,
 		shipSize box2d.B2Vec2,
@@ -45,7 +45,7 @@ func ParsePartDef(strP *string) PartDef {
 	params := parsePartParams(str[3:])
 	switch PartType(tp) {
 	case PartTypeTank:
-		return &TankDef{}
+		return &BoxDef{}
 	case PartTypeCabin:
 		return &CabinDef{
 			Dir: params[PartParamDir].AsDirection(),

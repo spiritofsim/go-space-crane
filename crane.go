@@ -21,7 +21,7 @@ type Crane struct {
 
 func (d CraneDef) Construct(
 	world *box2d.B2World,
-	_ Tanker,
+	_ Tank,
 	_ *ParticleSystem,
 	shipPos box2d.B2Vec2,
 	shipSize box2d.B2Vec2,

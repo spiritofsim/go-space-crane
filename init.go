@@ -13,7 +13,7 @@ import (
 	"time"
 )
 
-var tankSprite Sprite
+var boxSprite Sprite
 var engineSprite Sprite
 var legSprite Sprite
 var legFasteningSprite Sprite
@@ -62,7 +62,7 @@ func init() {
 	checkErr(err)
 
 	// Ship parts
-	tankSprite = LoadPart("tank")
+	boxSprite = LoadPart("box")
 	engineSprite = LoadPart("engine")
 	legSprite = LoadPart("leg")
 	legFasteningSprite = LoadPart("leg_fastening")
