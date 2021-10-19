@@ -19,5 +19,5 @@ const (
 	TerrainsDir               = "terrains"
 	LevelsDir                 = "levels"
 
-	MinCamZoom, MaxCamZoom = 20, 80
+	MinCamZoom, MaxCamZoom = 20.0, 80.0
 )

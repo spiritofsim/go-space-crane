@@ -91,17 +91,20 @@ func (g *Game) Update() error {
 		}
 	}
 
-	// Cam
-	g.cam.Pos = g.ship.GetPos()
-	targetZoom := MaxCamZoom - g.ship.GetVel()*20
-	if targetZoom <= MinCamZoom {
-		targetZoom = MinCamZoom
+	// Cam follows ship
+	// Zoom level depends on ship speed
+	targetZoom := MinCamZoom
+	if !g.ship.isDestroyed {
+		g.cam.Pos = g.ship.GetPos()
+		targetZoom = MaxCamZoom - g.ship.GetVel()*20
+		if targetZoom <= MinCamZoom {
+			targetZoom = MinCamZoom
+		}
+		if targetZoom > MaxCamZoom {
+			targetZoom = MaxCamZoom
+		}
 	}
-	if targetZoom > MaxCamZoom {
-		targetZoom = MaxCamZoom
-	}
-	x := targetZoom - g.cam.Zoom
-	g.cam.Zoom += x / 100
+	g.cam.Zoom += (targetZoom - g.cam.Zoom) / 100
 
 	g.checkWorldBounds()
 
