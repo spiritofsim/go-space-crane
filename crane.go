@@ -66,17 +66,17 @@ func (c *Crane) GetBody() *box2d.B2Body {
 func (c *Crane) Update(keys Keys) {
 	c.jaws.Update()
 
-	if keys.IsKeyPressed(ebiten.KeyTab) {
+	if keys.IsPressed(ebiten.KeyTab) {
 		c.jaws.OpenClose()
 	}
-	if keys.IsKeyPressed(ebiten.KeyQ) {
+	if keys.IsPressed(ebiten.KeyQ) {
 		if c.chainLastControlled.Add(time.Second / 5).After(time.Now()) {
 			return
 		}
 		c.chainLastControlled = time.Now()
 		c.windup()
 	}
-	if keys.IsKeyPressed(ebiten.KeyA) {
+	if keys.IsPressed(ebiten.KeyA) {
 		if c.chainLastControlled.Add(time.Second / 5).After(time.Now()) {
 			return
 		}

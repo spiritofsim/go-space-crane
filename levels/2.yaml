@@ -2,7 +2,7 @@ name: Level2
 description: todo
 terrain: flat
 ship:
-  name: ship1
+  name: ship2
   energy: 1000
   fuel: 10000
   maxfuel: 10000

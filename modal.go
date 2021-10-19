@@ -24,7 +24,7 @@ func NewModal(title string, text string, closeKeys Keys) *Modal {
 func (m *Modal) Update(keys Keys) {
 	found := false
 	for key := range m.CloseKeys {
-		if keys.IsKeyPressed(key) {
+		if keys.IsPressed(key) {
 			found = true
 			break
 		}

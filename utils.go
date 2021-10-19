@@ -70,10 +70,11 @@ func GetVecsAng(a, b box2d.B2Vec2) (ang float64, dist float64) {
 
 type Keys map[ebiten.Key]struct{}
 
-func (keys Keys) IsKeyPressed(key ebiten.Key) bool {
+func (keys Keys) IsPressed(key ebiten.Key) bool {
 	_, ok := keys[key]
 	return ok
 }
+
 func KeysFromSlice(keys []ebiten.Key) Keys {
 	result := make(Keys)
 	for _, key := range keys {

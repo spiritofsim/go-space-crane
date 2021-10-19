@@ -51,16 +51,16 @@ func (ls *LevelSelector) Update() error {
 
 	keys := KeysFromSlice(inpututil.AppendPressedKeys(nil))
 
-	if keys.IsKeyPressed(ebiten.KeyEnter) || keys.IsKeyPressed(ebiten.KeyNumpadEnter) {
+	if keys.IsPressed(ebiten.KeyEnter) || keys.IsPressed(ebiten.KeyNumpadEnter) {
 		return NewLevelSelected(ls.fileNames[ls.index])
 	}
-	if keys.IsKeyPressed(ebiten.KeyArrowDown) {
+	if keys.IsPressed(ebiten.KeyArrowDown) {
 		ls.index++
 		if ls.index >= len(ls.levels) {
 			ls.index = 0
 		}
 	}
-	if keys.IsKeyPressed(ebiten.KeyArrowUp) {
+	if keys.IsPressed(ebiten.KeyArrowUp) {
 		ls.index--
 		if ls.index < 0 {
 			ls.index = len(ls.levels) - 1
