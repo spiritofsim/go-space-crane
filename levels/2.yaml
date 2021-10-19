@@ -1,5 +1,7 @@
-name: Heavy Crane
-description: Try to control heavy crane
+name: Crane
+description: |
+  Try to control crane
+  You task is to deliver cargo to p2
 terrain: flat
 ship:
   name: heavy_crane
@@ -16,6 +18,4 @@ platforms:
     fuel: 1000
 
 tasks:
- - "d:1->p1"
  - "d:1->p2"
- - "v:p1"

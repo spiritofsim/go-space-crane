@@ -1,5 +1,7 @@
 name: Rocket
-description: try to control rocket
+description: |
+  Try to control heavy rocket
+  Your task is to visit platform p2
 terrain: flat
 ship:
   name: rocket
@@ -16,6 +18,4 @@ platforms:
     fuel: 1000
 
 tasks:
- - "d:1->p1"
- - "d:1->p2"
- - "v:p1"
+ - "v:p2"

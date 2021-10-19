@@ -1,5 +1,7 @@
 name: Simplest
-description: Try to fly on siplest ship
+description: |
+  Try to fly on simplest ship
+  You task is to visit platform p2 and then return back to base p1
 terrain: flat
 ship:
   name: simplest
@@ -16,6 +18,6 @@ platforms:
     fuel: 1000
 
 tasks:
- - "d:1->p1"
- - "d:1->p2"
+ - "v:p2"
  - "v:p1"
+
