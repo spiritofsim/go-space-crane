@@ -58,6 +58,13 @@ func NewGame(
 func (g *Game) Update() error {
 	keys := KeysFromSlice(inpututil.AppendPressedKeys(nil))
 
+	if keys.IsPressed(ebiten.KeyEscape) {
+		if g.endModal == nil {
+			g.err = levelFailed
+			g.endModal = NewModal(LevelExitText, PressEnterToContinue, Keys{ebiten.KeyEnter: struct{}{}, ebiten.KeyNumpadEnter: struct{}{}})
+		}
+	}
+
 	if g.endModal != nil {
 		if g.endModal.isClosed {
 			return g.err

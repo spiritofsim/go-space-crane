@@ -11,5 +11,6 @@ const (
 
 	LevelCompleteText    = "Level Complete"
 	LevelFailedText      = "Level Failed"
+	LevelExitText        = "Exit Level"
 	PressEnterToContinue = "Press ENTER to continue"
 )
