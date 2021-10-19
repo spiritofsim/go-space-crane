@@ -91,6 +91,9 @@ func (g *Game) Update() error {
 		}
 	}
 
+	// TODO: maxZoom must depends on ship size. For large ships
+	// it is not always posible to see platform (see rocket)
+
 	// Cam follows ship
 	// Zoom level depends on ship speed
 	targetZoom := MinCamZoom

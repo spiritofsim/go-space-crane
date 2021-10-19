@@ -73,6 +73,9 @@ func NewShip(
 		}
 	}
 
+	// TODO: for now joins are not hard enough
+	// Try to add joints to upped and lower parts and maybe add some more joints
+
 	// Create Weld joints to upper and left parts
 	for y, row := range iparts {
 		for x, part := range row {
