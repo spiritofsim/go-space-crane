@@ -1,0 +1,22 @@
+  - -
+    - cab dir=U
+    -
+  - -
+    - box
+    -
+  - -
+    - box
+    -
+  - -
+    - box
+    -
+  - - lft dir=R
+    - box
+    - lft dir=D
+  - - eng dir=D;pow=150;keys=30,31
+    - eng dir=D;pow=150;keys=31
+    - eng dir=D;pow=150;keys=29,31
+
+energy: 100
+fuel: 5000
+maxfuel: 5000

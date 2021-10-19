@@ -1,8 +1,8 @@
-name: Level3
-description: todo
+name: Rocket
+description: try to control rocket
 terrain: flat
 ship:
-  name: ship1
+  name: rocket
   energy: 1000
   fuel: 10000
   maxfuel: 10000

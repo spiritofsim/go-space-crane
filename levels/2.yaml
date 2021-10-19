@@ -1,8 +1,8 @@
-name: Level2
-description: todo
+name: Heavy Crane
+description: Try to control heavy crane
 terrain: flat
 ship:
-  name: ship2
+  name: heavy_crane
   energy: 1000
   fuel: 10000
   maxfuel: 10000

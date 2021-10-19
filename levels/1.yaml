@@ -1,8 +1,8 @@
-name: Level1
-description: todo
+name: Simplest
+description: Try to fly on siplest ship
 terrain: flat
 ship:
-  name: ship1
+  name: simplest
   energy: 1000
   fuel: 10000
   maxfuel: 10000

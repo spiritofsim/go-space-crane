@@ -2,7 +2,7 @@
     - cab dir=U
     -
   - - box
-    - crn dir=D
+    - box
     - box
   - - eng dir=D;pow=150;keys=30,31
     -
