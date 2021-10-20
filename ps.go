@@ -6,8 +6,13 @@ import (
 	"math"
 )
 
+type ColorScale struct {
+	R, G, B, A float64
+}
+
 type Particle struct {
 	img *ebiten.Image
+	crl ColorScale
 
 	pos  box2d.B2Vec2
 	lvel box2d.B2Vec2
@@ -23,7 +28,8 @@ func NewParticle(
 	pos box2d.B2Vec2,
 	lvel box2d.B2Vec2,
 	ang float64,
-	avel float64) *Particle {
+	avel float64,
+	clr ColorScale) *Particle {
 
 	return &Particle{
 		img:  flameParticleImg,
@@ -33,6 +39,7 @@ func NewParticle(
 		avel: avel,
 		age:  0,
 		ttl:  ttl,
+		crl:  clr,
 	}
 }
 
@@ -61,6 +68,7 @@ func (p *Particle) Draw(screen *ebiten.Image, cam Cam) {
 	opts.GeoM.Translate(-cam.Pos.X, -cam.Pos.Y)
 	opts.GeoM.Scale(cam.Zoom, cam.Zoom)
 	opts.GeoM.Translate(ScreenWidth/2, ScreenHeight/2)
+	opts.ColorM.Scale(p.crl.R, p.crl.G, p.crl.B, p.crl.A)
 
 	screen.DrawImage(p.img, opts)
 }
@@ -76,12 +84,12 @@ func NewParticleSystem() *ParticleSystem {
 }
 
 func (ps *ParticleSystem) Emit(pos box2d.B2Vec2, dir float64, angDisp float64) {
-	count := RandInt(1, 50)
+	count := RandInt(1, 100)
 
 	for i := 0; i < count; i++ {
 		ang := RandFloat(dir-angDisp/2, dir+angDisp/2)
-		avel := RandFloat(-1, 1)
-		speed := RandFloat(0.1, 0.2)
+		avel := RandFloat(-1.0, 1.0)
+		speed := RandFloat(0.05, 0.2)
 		ttl := RandInt(20, 50)
 
 		c, s := math.Cos(ang), math.Sin(ang)
@@ -89,7 +97,13 @@ func (ps *ParticleSystem) Emit(pos box2d.B2Vec2, dir float64, angDisp float64) {
 		lVel.OperatorScalarMulInplace(speed)
 
 		rPos := box2d.B2Vec2Add(pos, box2d.MakeB2Vec2(RandFloat(-0.2, 0.2), RandFloat(-0.5, 0.5)))
-		p := NewParticle(ttl, rPos, lVel, ang, avel)
+		clr := ColorScale{
+			R: RandFloat(0.2, 0.5),
+			G: RandFloat(0.05, 0.1),
+			B: 0,
+			A: RandFloat(0.5, 1),
+		}
+		p := NewParticle(ttl, rPos, lVel, ang, avel, clr)
 		ps.particles[p] = struct{}{}
 	}
 }
