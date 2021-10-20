@@ -8,7 +8,7 @@
    version="1.1"
    id="svg5"
    inkscape:version="1.1 (c68e22c387, 2021-05-23)"
-   sodipodi:docname="flat.svg"
+   sodipodi:docname="long_trip.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -23,9 +23,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="6.2217173"
-     inkscape:cx="612.45149"
-     inkscape:cy="-400.61287"
+     inkscape:zoom="2.1997092"
+     inkscape:cx="354.36502"
+     inkscape:cy="62.962867"
      inkscape:window-width="2560"
      inkscape:window-height="1361"
      inkscape:window-x="2391"
@@ -61,12 +61,12 @@
          id="title1616">ship</title>
     </ellipse>
     <rect
-       style="fill:none;stroke:#140000;stroke-width:0.0138581"
+       style="fill:none;stroke:#140000;stroke-width:0.026596"
        id="rect941"
-       width="125.43462"
-       height="84.795525"
-       x="37.298889"
-       y="-54.066792">
+       width="251.48695"
+       height="155.77689"
+       x="46.679031"
+       y="-125.05215">
       <title
          id="title1125">bounds</title>
     </rect>
@@ -76,7 +76,7 @@
        id="path1269" />
     <rect
        style="fill:#000080;stroke:#140000;stroke-width:0.0585343;stroke-miterlimit:4;stroke-dasharray:none"
-       id="p1-9"
+       id="p2"
        width="4.9229889"
        height="0.66052896"
        x="106.27691"
@@ -88,7 +88,7 @@
     </rect>
     <rect
        style="fill:#000080;stroke:#140000;stroke-width:0.0585343;stroke-miterlimit:4;stroke-dasharray:none"
-       id="p1-5"
+       id="p3"
        width="4.9229889"
        height="0.66052896"
        x="175.49858"
@@ -100,7 +100,7 @@
     </rect>
     <rect
        style="fill:#000080;stroke:#140000;stroke-width:0.0585343;stroke-miterlimit:4;stroke-dasharray:none"
-       id="p1-7"
+       id="p4"
        width="4.9229889"
        height="0.66052896"
        x="172.36278"
@@ -112,7 +112,7 @@
     </rect>
     <rect
        style="fill:#000080;stroke:#140000;stroke-width:0.0585343;stroke-miterlimit:4;stroke-dasharray:none"
-       id="p1-96"
+       id="p5"
        width="4.9229889"
        height="0.66052896"
        x="190.35036"
@@ -124,7 +124,7 @@
     </rect>
     <rect
        style="fill:#000080;stroke:#140000;stroke-width:0.0585343;stroke-miterlimit:4;stroke-dasharray:none"
-       id="p1-76"
+       id="p7"
        width="4.9229889"
        height="0.66052896"
        x="218.07716"
@@ -136,7 +136,7 @@
     </rect>
     <rect
        style="fill:#000080;stroke:#140000;stroke-width:0.0585343;stroke-miterlimit:4;stroke-dasharray:none"
-       id="p1-6"
+       id="p6"
        width="4.9229889"
        height="0.66052896"
        x="210.7202"
@@ -148,7 +148,7 @@
     </rect>
     <rect
        style="fill:#000080;stroke:#140000;stroke-width:0.0585343;stroke-miterlimit:4;stroke-dasharray:none"
-       id="p1-70"
+       id="p8"
        width="4.9229889"
        height="0.66052896"
        x="256.7756"

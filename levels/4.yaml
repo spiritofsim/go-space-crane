@@ -1,0 +1,27 @@
+name: Long trip
+description: |
+  Visit all platforms
+terrain: long_trip
+ship:
+  name: simplest
+  energy: 1000
+  fuel: 10000
+  maxfuel: 10000
+#  pos:
+#    x: 100
+#    y: 100
+#platforms:
+#  p1:
+#    fuel: 1000
+#  p2:
+#    fuel: 1000
+
+tasks:
+  - "v:p1"
+  - "v:p2"
+  - "v:p3"
+  - "v:p4"
+  - "v:p5"
+  - "v:p6"
+  - "v:p7"
+  - "v:p8"

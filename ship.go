@@ -73,40 +73,42 @@ func NewShip(
 		}
 	}
 
-	// TODO: for now joins are not hard enough
-	// Try to add joints to upped and lower parts and maybe add some more joints
-
 	// Create Weld joints to upper and left parts
+	// TODO: dont need GetLeftPart, GetUpperPart. Can cache in loop
 	for y, row := range iparts {
 		for x, part := range row {
 			if part != nil {
-				left := GetLeftPart(iparts, x, y)
-				if left != nil {
-					jd := box2d.MakeB2WeldJointDef()
-					jd.BodyA = part.GetBody()
-					jd.BodyB = left.GetBody()
+				// TODO a lot of dupes
+				// Simplify and move to func
+				// TODO: for now joins are not hard enough
+				// Try to add joints to upped and lower parts and maybe add some more joints
+				// TODO: try to simplify with distance+revolute joint
 
-					jd.ReferenceAngle = left.GetAng() - part.GetAng()
+				if other := GetLeftPart(iparts, x, y); other != nil {
+					jd := box2d.MakeB2WeldJointDef()
+					jd.CollideConnected = false
+					jd.BodyA = part.GetBody()
+					jd.BodyB = other.GetBody()
+					jd.ReferenceAngle = other.GetAng() - part.GetAng()
 
 					rotA := box2d.NewB2RotFromAngle(math.Pi - part.GetAng())
 					jd.LocalAnchorA = box2d.MakeB2Vec2(rotA.C/2, rotA.S/2)
-
-					rotB := box2d.NewB2RotFromAngle(0 - left.GetAng())
+					rotB := box2d.NewB2RotFromAngle(0 - other.GetAng())
 					jd.LocalAnchorB = box2d.MakeB2Vec2(rotB.C/2, rotB.S/2)
+
 					world.CreateJoint(&jd)
 				}
 
-				upper := GetUpperPart(iparts, x, y)
-				if upper != nil {
+				if other := GetUpperPart(iparts, x, y); other != nil {
 					jd := box2d.MakeB2WeldJointDef()
+					jd.CollideConnected = false
 					jd.BodyA = part.GetBody()
-					jd.BodyB = upper.GetBody()
-
-					jd.ReferenceAngle = upper.GetAng() - part.GetAng()
+					jd.BodyB = other.GetBody()
+					jd.ReferenceAngle = other.GetAng() - part.GetAng()
 
 					rotA := box2d.NewB2RotFromAngle(-math.Pi/2 - part.GetAng())
 					jd.LocalAnchorA = box2d.MakeB2Vec2(rotA.C/2, rotA.S/2)
-					rotB := box2d.NewB2RotFromAngle(math.Pi/2 - upper.GetAng())
+					rotB := box2d.NewB2RotFromAngle(math.Pi/2 - other.GetAng())
 					jd.LocalAnchorB = box2d.MakeB2Vec2(rotB.C/2, rotB.S/2)
 
 					world.CreateJoint(&jd)
