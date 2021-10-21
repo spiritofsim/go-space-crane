@@ -97,6 +97,7 @@ func (ps *ParticleSystem) Emit(pos box2d.B2Vec2, dir float64, angDisp float64) {
 		lVel.OperatorScalarMulInplace(speed)
 
 		rPos := box2d.B2Vec2Add(pos, box2d.MakeB2Vec2(RandFloat(-0.2, 0.2), RandFloat(-0.5, 0.5)))
+		// TODO: fix colors: add more yellow
 		clr := ColorScale{
 			R: RandFloat(0.2, 0.5),
 			G: RandFloat(0.05, 0.1),

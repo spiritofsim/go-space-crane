@@ -1,10 +1,10 @@
-name: Train
+name: Train2
 description: |
-  Try to fly on simplest ship
+  Try to fly on rocket like ship
   You task is to visit platform p2 and then return back to base p1
 terrain: flat
 ship:
-  name: corvette
+  name: ship1
   energy: 1000
   fuel: 10000
   maxfuel: 10000

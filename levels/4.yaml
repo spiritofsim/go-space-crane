@@ -3,7 +3,7 @@ description: |
   Visit all platforms
 terrain: long_trip
 ship:
-  name: simplest
+  name: corvette
   energy: 1000
   fuel: 10000
   maxfuel: 10000

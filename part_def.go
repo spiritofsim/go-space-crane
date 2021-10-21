@@ -24,6 +24,7 @@ type PartParam string
 const (
 	PartParamDir   PartParam = "dir"
 	PartParamPower PartParam = "pow"
+	PartParamSize  PartParam = "size"
 	PartParamKeys  PartParam = "keys"
 )
 
@@ -51,10 +52,15 @@ func ParsePartDef(strP *string) PartDef {
 			Dir: params[PartParamDir].AsDirection(),
 		}
 	case PartTypeEngine:
+		size := 1.0
+		if s, ok := params[PartParamSize]; ok {
+			size = s.AsFloat()
+		}
 		return &EngineDef{
 			Dir:   params[PartParamDir].AsDirection(),
 			Power: params[PartParamPower].AsFloat(),
 			Keys:  params[PartParamKeys].AsKeys(),
+			Size:  size,
 		}
 	case PartTypeCrane:
 		return &CraneDef{

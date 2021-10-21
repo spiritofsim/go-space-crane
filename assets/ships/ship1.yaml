@@ -1,0 +1,16 @@
+  - -
+    - cab dir=U
+    -
+  - - eng dir=L;pow=20;keys=30;size=0.5
+    - box
+    - eng dir=R;pow=20;keys=29;size=0.5
+  - - lft dir=R
+    - box
+    - lft dir=D
+  - - leg dir=D
+    - eng dir=D;pow=100;keys=31
+    - leg dir=D
+
+energy: 100
+fuel: 5000
+maxfuel: 5000

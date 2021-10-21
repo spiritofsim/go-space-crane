@@ -3,7 +3,10 @@ package main
 import (
 	"github.com/ByteArena/box2d"
 	"github.com/hajimehoshi/ebiten/v2"
+	"gopkg.in/yaml.v3"
+	"io/ioutil"
 	"math"
+	"path"
 )
 
 const (
@@ -17,6 +20,25 @@ type ShipDef struct {
 	Fuel    float64
 	MaxFuel float64
 	Pos     *box2d.B2Vec2
+}
+
+func LoadShip(world *box2d.B2World, pos box2d.B2Vec2, ps *ParticleSystem, def ShipDef) *Ship {
+	data, err := ioutil.ReadFile(path.Join(ShipsDir, def.Name+".yaml"))
+	checkErr(err)
+
+	var partDefStrs [][]*string
+	checkErr(yaml.Unmarshal(data, &partDefStrs))
+
+	pDefs := make([][]PartDef, len(partDefStrs))
+	for y, row := range partDefStrs {
+		pDefRow := make([]PartDef, len(row))
+		for x, pds := range row {
+			pDefRow[x] = ParsePartDef(pds)
+		}
+		pDefs[y] = pDefRow
+	}
+
+	return NewShip(world, ps, pos, def, pDefs)
 }
 
 type Ship struct {
